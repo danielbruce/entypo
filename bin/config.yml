@@ -1,0 +1,31 @@
+---
+# This is configuration file for font builder and other support scripts.
+# Format is descriped below.
+#
+#
+# css-prefix: "icon-"               # prefix for css-generated classes
+# 
+# glyphs:
+#   glyph1_file:                    # file name, without extention
+#     code: 0xNNN                   # Symbol code 0x - hex
+#     css: icon-gpyph1-name         # For generated CSS
+#     search: [word1, word2]        # Search aliases (array). CSS name will be
+                                    # included automatically
+
+glyphs:
+
+  contact_user:
+    code: 0x1f464
+    css: user
+    search: [profile, contact]
+
+  movie_film:
+    code: 0x1f3ac
+    css: film
+    search: [movie, video]
+
+  shopping_bag:
+    code: 0xe000
+    css: shopping-cart
+    search: [basket, shopping, cart]
+
