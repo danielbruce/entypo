@@ -44,7 +44,7 @@ font.generate('../font/entypo.woff')
 #css file
 
 theString="@font-face { font-family: 'EntypoUni'; src: url('entypo.eot'); src: url('entypo.eot?#iefix') format('embedded-opentype'), url('entypo.ttf') format('truetype'), url('entypo.svg#entypo') format('svg'); font-weight: normal; font-style: normal; }"
-theString+=".entypo { display:inline-block; font-family: 'EntypoUni'; }"
+theString+=".entypo { display:inline-block; font-family: 'EntypoUni'; font-size:13px; line-height: 18px }"
 for file_name, char in data.iteritems():
 	theString += "." + file_name + ":before {content:'\\" + char + "';}"
 
@@ -54,7 +54,7 @@ f.close()
 
 #html file
 theString="<html><head><title>Entypo Font-embedding demo</title><link rel='stylesheet' href='entypo.css' type='text/css' media='screen' /><style> body {font-family:'Helvetica', arial, sans-serif;} /*span { font-size:36px; }*/</style><body>"
-theString += "<table style='font-size:14px;'><tr><th>Name</th><th>Entypo Icon</th><th>Unicode Icon</th><th>Hexidecimal Code</th>"
+theString += "<table style='font-size:13px; line-height: 18px'><tr><th>Name</th><th>Entypo Icon</th><th>Unicode Icon</th><th>Hexidecimal Code</th>"
 for file_name, char in data.iteritems():
 	theString += "<tr><td>" + file_name + "</td><td><span class='entypo " + file_name + "'></span></td><td><span class='" + file_name + "'></span></td><td>" + char + "</td></tr>"
 
