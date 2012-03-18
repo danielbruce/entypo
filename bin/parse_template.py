@@ -4,6 +4,7 @@ import argparse
 import yaml
 import pystache
 
+
 parser = argparse.ArgumentParser(description='Generate file by mustache template')
 parser.add_argument('-c', '--config', type=str, help='Config example: ../config.yml', required=True)
 parser.add_argument('template', type=str, help='Mustache template')
@@ -22,13 +23,13 @@ for name, glyph_info in config['glyphs'].iteritems():
     # code to sting in hex format
     glyph_info['code'] = hex(glyph_info['code'])
 
-    glyph_info['name'] = name
-
     glyphs.append(glyph_info)
+
+config['glyphs'] = glyphs
 
 template = open(args.template, 'r').read()
 
-output = pystache.render(template, {'glyphs': glyphs})
+output = pystache.render(template, config)
 
 f = open(args.output, 'w')
 f.write(output)

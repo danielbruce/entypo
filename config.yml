@@ -29,3 +29,4 @@ glyphs:
     css: shopping-cart
     search: [basket, shopping, cart]
 
+css-prefix: "icon-"
