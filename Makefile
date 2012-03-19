@@ -24,7 +24,7 @@ ttfautohint:
 	# TODO: add qmake and onther build tools test
 	cd ./support/ttfautohint \
 		&& ./bootstrap \
-		&& ./configure \
+		&& ./configure --without-qt \
 		&& make
 
 
@@ -42,7 +42,7 @@ dev-deps:
 		fontforge python python-fontforge \
 		python-argparse python-yaml python-pip \
 		build-essential \
-		qt4-qmake
+		autoconf automake libtool
 	pip -q install pystache
 
 
