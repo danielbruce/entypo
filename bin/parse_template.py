@@ -21,7 +21,7 @@ for name, glyph_info in config['glyphs'].iteritems():
         glyph_info['css'] = name
 
     # code to sting in hex format
-    glyph_info['code'] = hex(glyph_info['code'])
+    glyph_info['code'] = hex(glyph_info['code'])[2:]
 
     glyphs.append(glyph_info)
 

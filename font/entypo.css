@@ -1,1 +1,17 @@
-@font-face { font-family: 'EntypoUni'; src: url('entypo.eot'); src: url('entypo.eot?#iefix') format('embedded-opentype'), url('entypo.ttf') format('truetype'), url('entypo.svg#entypo') format('svg'); font-weight: normal; font-style: normal; }.entypo { display:inline-block; font-family: 'EntypoUni'; font-size:13px; line-height: 18px }.shopping_bag:before {content:'\e000';}.contact_user:before {content:'\1f464';}.movie_film:before {content:'\1f3ac';}
+@font-face {
+  font-family: 'EntypoUni'; 
+  src: url('entypo.eot'); 
+  src: url('entypo.eot?#iefix') format('embedded-opentype'), url('entypo.ttf') format('truetype'), url('entypo.svg#entypo') format('svg'); 
+  font-weight: normal; font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: EntypoUni;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.icon-shopping-cart:before { content: "\e000"; }
+.icon-user:before { content: "\1f464"; }
+.icon-film:before { content: "\1f3ac"; }
+

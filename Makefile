@@ -2,8 +2,12 @@ dist:
 	./bin/fontbuild.py -c ./config.yml -i ./src/svg -o ./font/entypo.ttf
 	#autohint will be here
 	./bin/fontconvert.py -i ./font/entypo.ttf -o ./font
-	./bin/parse_template.py -c ./config.yml ./src/css.mustache ./font
+	./bin/parse_template.py -c ./config.yml ./src/css.mustache ./font/entypo.css
+	./bin/parse_template.py -c ./config.yml ./src/demo.mustache ./font/demo.html
 
+html:
+	./bin/parse_template.py -c ./config.yml ./src/css.mustache ./font/entypo.css
+	./bin/parse_template.py -c ./config.yml ./src/demo.mustache ./font/demo.html
 
 dev-deps:
 	if test 0 -ne `id -u` ; then \
