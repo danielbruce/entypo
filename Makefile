@@ -1,16 +1,29 @@
+# TODO: try to find ttf2eot and ttfautohint globally installed first
+
+
+TTF2EOT_BIN     = ./support/ttf2eot/ttf2eot
+TTFAUTOHINT_BIN = ./support/ttfautohint/frontend/ttfautohint
+
+
 dist: font html
 
 
 font:
-	@if test ! -f ./support/ttf2eot/ttf2eot ; then \
-		echo "ttf2eot not found. make sure you have run:" >&2 ; \
-		echo "  sudo make dev-deps" >&2 ; \
+	@if test ! -f ${TTF2EOT_BIN} ; then \
+		echo "ttf2eot not found. run:" >&2 ; \
+		echo "  make support" >&2 ; \
+		exit 128 ; \
+		fi
+	@if test ! -f ${TTFAUTOHINT_BIN} ; then \
+		echo "ttfautohint not found. run:" >&2 ; \
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
 	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/entypo.ttf
+	${TTFAUTOHINT_BIN} ./font/entypo.ttf ./font/entypo-hinted.ttf \
+		&& mv ./font/entypo-hinted.ttf ./font/entypo.ttf
 	./bin/fontconvert.py -i ./font/entypo.ttf -o ./font
-	./support/ttf2eot/ttf2eot < ./font/entypo.ttf >./font/entypo.eot
+	${TTF2EOT_BIN} < ./font/entypo.ttf >./font/entypo.eot
 
 
 support: ttf2eot ttfautohint
@@ -24,6 +37,7 @@ ttfautohint:
 	cd ./support/ttfautohint \
 		&& ./configure --without-qt \
 		&& make
+	git clean -f -d ./support/ttfautohint
 
 
 html:
