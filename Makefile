@@ -13,7 +13,7 @@ font:
 	./support/ttf2eot/ttf2eot < ./font/entypo.ttf >./font/entypo.eot
 
 
-support: ttf2eot
+support: ttf2eot ttfautohint
 
 
 ttf2eot:
@@ -21,9 +21,7 @@ ttf2eot:
 
 
 ttfautohint:
-	# TODO: add qmake and onther build tools test
 	cd ./support/ttfautohint \
-		&& ./bootstrap \
 		&& ./configure --without-qt \
 		&& make
 
@@ -51,4 +49,4 @@ clean:
 
 
 .SILENT: dev-deps
-.PHONY: font
+.PHONY: font support

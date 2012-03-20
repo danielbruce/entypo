@@ -1,0 +1,10 @@
+This package doesn't provide a detailed ChangeLog.  Instead, please check
+out the git repository of `ttfautohint' and use a program like `gitk' to
+inspect the various commits directly.  Alternatively, you might directly go
+to the URL below to view the commits with your web browser.
+
+The URL of the git repository is
+
+  http://repo.or.cz/w/ttfautohint.git
+
+EOF

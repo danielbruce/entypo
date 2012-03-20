@@ -1,0 +1,44 @@
+ttfautohint 0.7
+---------------
+
+by Werner Lemberg <wl@gnu.org>
+
+
+This project provides a library which takes a TrueType font as the input,
+remove its bytecode instructions (if any), and return a new font where all
+glyphs are bytecode hinted using the information given by FreeType's
+autohinting module.  The idea is to provide the excellent quality of the
+autohinter on platforms which don't use FreeType.
+
+The library has a single API function, `TTF_autohint'; see
+`lib/ttfautohint.h' for a detailed description.  Note that the library
+itself won't get installed currently.
+
+A command-line interface to the library is the `ttfautohint' program; after
+compilation and installation, say
+
+  ttfautohint --help
+
+for usage information, or say
+
+  man ttfautohint
+
+to read its manual page.
+
+A GUI to the library is `ttfautohintGUI'; it uses the Qt4 framework.  The
+compilation of this application can be disabled with the `--without-qt'
+configuration option.
+
+-----------------------------------------------------------------------------
+
+Copyright (C) 2011-2012 by Werner Lemberg.
+
+This file is part of the ttfautohint library, and may only be used,
+modified, and distributed under the terms given in `COPYING'.  By
+continuing to use, modify, or distribute this file you indicate that you
+have read `COPYING' and understand and accept it fully.
+
+The file `COPYING' mentioned in the previous paragraph is distributed
+with the ttfautohint library.
+
+EOF
