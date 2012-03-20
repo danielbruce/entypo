@@ -9,31 +9,32 @@ dist: font html
 
 
 font:
-	@if test ! -f ${TTF2EOT_BIN} ; then \
+	@if test ! -f $(TTF2EOT_BIN) ; then \
 		echo "ttf2eot not found. run:" >&2 ; \
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
-	@if test ! -f ${TTFAUTOHINT_BIN} ; then \
+	@if test ! -f $(TTFAUTOHINT_BIN) ; then \
 		echo "ttfautohint not found. run:" >&2 ; \
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
 	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/entypo.ttf
-	${TTFAUTOHINT_BIN} ./font/entypo.ttf ./font/entypo-hinted.ttf \
+	#$(TTFAUTOHINT_BIN) ./font/entypo.ttf ./font/entypo-hinted.ttf \
 		&& mv ./font/entypo-hinted.ttf ./font/entypo.ttf
 	./bin/fontconvert.py -i ./font/entypo.ttf -o ./font
-	${TTF2EOT_BIN} < ./font/entypo.ttf >./font/entypo.eot
+	$(TTF2EOT_BIN) < ./font/entypo.ttf >./font/entypo.eot
 
 
-support: ttf2eot ttfautohint
+support: $(TTF2EOT_BIN) $(TTFAUTOHINT_BIN)
 
 
-ttf2eot:
-	cd ./support/ttf2eot && $(MAKE) $@
+$(TTF2EOT_BIN):
+	cd ./support/ttf2eot \
+		&& $(MAKE) ttf2eot
 
 
-ttfautohint:
+$(TTFAUTOHINT_BIN):
 	cd ./support/ttfautohint \
 		&& ./configure --without-qt \
 		&& make
