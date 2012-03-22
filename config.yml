@@ -14,6 +14,7 @@
                                     # included automatically
 
 css-prefix: "icon-"
+demo-columns: 4
 
 glyphs:
 
