@@ -10,23 +10,395 @@
 #     code: 0xNNN                   # Symbol code 0x - hex
 #     css: icon-gpyph1-name         # For generated CSS
 #     search: [word1, word2]        # Search aliases (array). CSS name will be
+
                                     # included automatically
+
+css-prefix: "icon-"
 
 glyphs:
 
-  contact_user:
+  add-contact-add-user:
+    code: 0xe001
+    css: user-add
+    search: [profile, contact, user, add]
+
+  address:
+    code: 0xe002
+    css: address
+    search: [address]
+
+  add-to-list:
+    code: 0xe003
+    css: list-add
+    search: [add, list]
+
+  alert:
+    code: 0x1f514
+    css: bell
+    search: [alert, bell, jingle]
+
+  attach:
+    code: 0xe004
+    css: attach
+    search: [attach, clip]
+
+  back:
+    code: 0xe005
+    css: back
+    search: [back]
+
+  block:
+    code: 0x1f6ab
+    css: block
+    search: [block, deny]
+
+  broadcast:
+    code: 0xe006
+    css: wifi
+    search: [broadcast, wifi]
+
+  calendar:
+    code: 0x1f4c5
+    css: calendar
+    search: [calendar]
+
+  camera:
+    code: 0x1f4f7
+    css: camera
+    search: [camera, photo]
+
+  center-crosshair:
+    code: 0x1f3af
+    css: target
+    search: [target]
+
+  chat:
+    code: 0xe007
+    css: chat
+    search: [chat, talk]
+
+  check-not-ok:
+    code: 0x2715
+    css: close
+    search: [close, cancel]
+
+  check-ok:
+    code: 0x2713
+    css: check
+    search: [check, mark]
+
+  close-circle:
+    code: 0x2716
+    css: cancel
+    search: [cancel, close]
+
+  comment:
+    code: 0xe008
+    css: comment
+    search: [comment, reply]
+
+  compass:
+    code: 0xe009
+    css: compass
+    search: [compass]
+
+  contact-card:
+    code: 0xe00a
+    css: vcard
+    search: [contact, card, vcard]
+
+  contact-user:
     code: 0x1f464
     css: user
-    search: [profile, contact]
+    search: [profile, contact, user]
 
-  movie_film:
+  contacts-users:
+    code: 0x1f465
+    css: users
+    search: [users, contacts, friends]
+
+  direction:
+    code: 0xe00b
+    css: direction
+    search: [direction]
+
+  email:
+    code: 0x2709
+    css: mail
+    search: [mail, email]
+
+  export:
+    code: 0xe00c
+    css: export
+    search: [export]
+
+  flag:
+    code: 0x2691
+    css: flag
+    search: [flag]
+
+  flash:
+    code: 0x26a1
+    css: flash
+    search: [flash, bolt]
+
+  flight:
+    code: 0x2708
+    css: flight
+    search: [flight, plane, airplane]
+
+  forward:
+    code: 0x27a6
+    css: forward
+    search: [forward]
+
+  google-circles:
+    code: 0xe00d
+    css: google-circles
+    search: [google, circles]
+
+  heart:
+    code: 0x2665
+    css: heart
+    search: [heart]
+
+  help:
+    code: 0x2753
+    css: help
+    search: [help]
+
+  help-circle:
+    code: 0xe00e
+    css: help-circle
+    search: [help]
+
+  image-list:
+    code: 0x268f
+    css: image-list
+    search: [image, list]
+
+  info:
+    code: 0x2139
+    css: info
+    search: [info]
+
+  info-circle:
+    code: 0xe00f
+    css: info-circle
+    search: [info]
+
+  leaf:
+    code: 0x1f342
+    css: leaf
+    search: [leaf]
+
+  level-down:
+    code: 0x21b3
+    css: level-down
+    search: [down]
+
+  lifebuoy:
+    code: 0xe010
+    css: lifebuoy
+    search: [lifebuoy]
+
+  like-thumbs-up:
+    code: 0x1f4dd
+    css: thumbs-up
+    search: [thumbs, up, like, vote]
+
+  link:
+    code: 0x1f517
+    css: link
+    search: [link, url]
+
+  list:
+    code: 0x2630
+    css: list
+    search: [list]
+
+  location:
+    code: 0xe011
+    css: location
+    search: [location, marker]
+
+  lock:
+    code: 0x1f512
+    css: lock
+    search: [lock]
+
+  map:
+    code: 0xe012
+    css: map
+    search: [down]
+
+  mic:
+    code: 0x1f3a4
+    css: mic
+    search: [mic]
+
+  minus:
+    code: 0x2796
+    css: minus
+    search: [minus]
+
+  minus-circle:
+    code: 0xe013
+    css: minus-circle
+    search: [minus]
+
+  mobile:
+    code: 0x1f4f1
+    css: mobile
+    search: [mobile, iphone]
+
+  mouse-website:
+    code: 0xe014
+    css: mouse
+    search: [mouse, website]
+
+  movie-film:
     code: 0x1f3ac
     css: film
     search: [movie, video]
 
-  shopping_bag:
+  music:
+    code: 0x1f3b5
+    css: music
+    search: [music, note]
+
+  offer-price-tag:
+    code: 0xe015
+    css: tag
+    search: [tag, price, offer]
+
+  palette:
+    code: 0x1f3a8
+    css: palette
+    search: [palette]
+
+  phone:
+    code: 0x1f4de
+    css: phone
+    search: [phone, telephone]
+
+  plus:
+    code: 0x2795
+    css: plus
+    search: [plus]
+
+  plus-circle:
+    code: 0xe016
+    css: plus-circle
+    search: [plus]
+
+  print:
+    code: 0xe017
+    css: print
+    search: [print]
+
+  quote:
+    code: 0x275e
+    css: quote-right
+    search: [quote]
+
+  reload-CCW:
+    code: 0x27f2
+    css: reload-CCW
+    search: [reload]
+
+  reload-CW:
+    code: 0x27f3
+    css: reload-CW
+    search: [reload]
+
+  reply:
+    code: 0xe018
+    css: reply
+    search: [reply]
+
+  reply-to-all:
+    code: 0xe019
+    css: reply-all
+    search: [reply]
+
+  retweet:
+    code: 0xe01a
+    css: retweet
+    search: [retweet]
+
+  rss:
+    code: 0xe01b
+    css: rss
+    search: [rss]
+
+  search:
+    code: 0x1f50d
+    css: search
+    search: [search, find]
+
+  settings:
+    code: 0x2699
+    css: settings
+    search: [settings, cog]
+
+  share:
+    code: 0xe01c
+    css: share
+    search: [share]
+
+  shopping-bag:
     code: 0xe000
     css: shopping-cart
     search: [basket, shopping, cart]
 
-css-prefix: "icon-"
+  shuffle:
+    code: 0x1f500
+    css: shuffle
+    search: [shuffle]
+
+  sleep:
+    code: 0x263d
+    css: moon
+    search: [moon, sleep]
+
+  star:
+    code: 0x2605
+    css: star
+    search: [star]
+
+  time-clock:
+    code: 0x1f554
+    css: clock
+    search: [clock, time]
+
+  time-glass:
+    code: 0x23f3
+    css: hourglass
+    search: [clock, hourglass, busy, wait]
+
+  top-list:
+    code: 0x1f3c9
+    css: top-list
+    search: [top, trophy]
+
+  unlocked:
+    code: 0x1f513
+    css: lock-open
+    search: [lock, unlock]
+
+  view-eye:
+    code: 0xe01d
+    css: eye
+    search: [eye, subscribe]
+
+  warning:
+    code: 0x26a0
+    css: warning
+    search: [warning]
+
+  write-new:
+    code: 0x2703
+    css: pencil
+    search: [pencil, write]
+
