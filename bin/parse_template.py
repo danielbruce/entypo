@@ -12,10 +12,10 @@ parser.add_argument('output', type=str, help='Output file')
 
 args = parser.parse_args()
 
-config = yaml.load(open(args.config, 'r'))
+data = yaml.load(open(args.config, 'r'))
 
 glyphs = []
-for name, glyph_info in config['glyphs'].iteritems():
+for name, glyph_info in data['glyphs'].iteritems():
     # use giph name if css field is absent
     if (not 'css' in glyph_info):
         glyph_info['css'] = name
@@ -25,11 +25,14 @@ for name, glyph_info in config['glyphs'].iteritems():
 
     glyphs.append(glyph_info)
 
-config['glyphs'] = glyphs
+data['glyphs'] = glyphs
+
+columns_count = data['demo-columns']
+data['columns'] = [glyphs[i:i + columns_count] for i in range(0, len(glyphs), columns_count)]
 
 template = open(args.template, 'r').read()
 
-output = pystache.render(template, config)
+output = pystache.render(template, data)
 
 f = open(args.output, 'w')
 f.write(output)
