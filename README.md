@@ -11,7 +11,7 @@ License
 Artwork by Daniel Bruce:
 
 - http://www.entypo.com
-- daniel@precinct.net
+- me@danielbruce.se
 - [twitter](http://twitter.com/danielbruce_)
 - [dribble](http://dribbble.com/danielbruce)
 
