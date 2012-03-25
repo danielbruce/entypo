@@ -305,12 +305,12 @@ glyphs:
 
   - reload-CCW:
       code: 0x27f2
-      css: reload-CCW
+      css: reload-ccw
       search: [reload]
 
   - reload-CW:
       code: 0x27f3
-      css: reload-CW
+      css: reload-cw
       search: [reload]
 
   - reply:
