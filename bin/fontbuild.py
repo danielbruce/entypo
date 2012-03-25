@@ -27,7 +27,10 @@ for item in config['glyphs']:
     c.importOutlines(args.svg_dir + '/' + name + '.svg')
     c.left_side_bearing = KERNING
     c.right_side_bearing = KERNING
-    c.addExtrema()
-#    c.autoHint()
+
+    # small optimization, should not affect quality
+    c.simplify()
+    c.round()
+#    c.addExtrema()
 
 font.generate(args.ttf_file)
