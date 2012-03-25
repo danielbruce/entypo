@@ -20,8 +20,8 @@ font:
 #		exit 128 ; \
 #		fi
 	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/entypo.ttf
-	#$(TTFAUTOHINT_BIN) ./font/entypo.ttf ./font/entypo-hinted.ttf \
-	#	&& mv ./font/entypo-hinted.ttf ./font/entypo.ttf
+	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/entypo.ttf ./font/entypo-hinted.ttf \
+		&& mv ./font/entypo-hinted.ttf ./font/entypo.ttf
 	./bin/fontconvert.py -i ./font/entypo.ttf -o ./font
 	$(TTF2EOT_BIN) < ./font/entypo.ttf >./font/entypo.eot
 
