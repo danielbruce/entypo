@@ -3,17 +3,13 @@ FontName: EntypoUni
 FullName: EntypoUni
 FamilyName: Entypo
 Weight: Medium
-Copyright: Copyright © Daniel Bruce
+Copyright: Copyright (C) 2012 by Daniel Bruce
 Version: 1.0
 ItalicAngle: 0
-UnderlinePosition: -100
-UnderlineWidth: 50
-Ascent: 800
-Descent: 200
+Ascent: 1638
+Descent: 410
 AntiAlias: 1
 FitToEm: 1
-WinInfo: 27 27 9
-OnlyBitmaps: 1
 BeginChars: 256 0
 EndChars
 EndSplineFont
