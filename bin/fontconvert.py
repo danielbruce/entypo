@@ -15,7 +15,6 @@ font_name_template = args.fonts_dir + '/' + font_name
 
 font = fontforge.open(args.src_font)
 
-font.generate(font_name_template + '.otf')
 font.generate(font_name_template + '.woff')
 font.generate(font_name_template + '.svg')
 
