@@ -3,7 +3,7 @@
 import argparse
 import yaml
 import pystache
-
+import math
 
 parser = argparse.ArgumentParser(description='Generate file by mustache template')
 parser.add_argument('-c', '--config', type=str, help='Config example: ../config.yml', required=True)
@@ -27,8 +27,8 @@ for name, glyph_info in data['glyphs'].iteritems():
 
 data['glyphs'] = glyphs
 
-columns_count = data['demo-columns']
-data['columns'] = [glyphs[i:i + columns_count] for i in range(0, len(glyphs), columns_count)]
+chunk_size = int(math.ceil(len(glyphs) / float(data['demo-columns'])))
+data['columns'] = [{'glyphs': glyphs[i:i + chunk_size]} for i in range(0, len(glyphs), chunk_size)]
 
 template = open(args.template, 'r').read()
 
