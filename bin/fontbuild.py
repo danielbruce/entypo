@@ -18,7 +18,10 @@ config = yaml.load(open(args.config, 'r'))
 
 font = fontforge.open(args.sfd_template)
 
-for name, glyph in config['glyphs'].iteritems():
+for item in config['glyphs']:
+    name = item.keys()[0]
+    glyph = item[name]
+
     c = font.createChar(int(glyph['code']))
 
     c.importOutlines(args.svg_dir + '/' + name + '.svg')
@@ -28,4 +31,3 @@ for name, glyph in config['glyphs'].iteritems():
 #    c.autoHint()
 
 font.generate(args.ttf_file)
-

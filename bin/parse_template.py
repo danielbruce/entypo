@@ -15,7 +15,11 @@ args = parser.parse_args()
 data = yaml.load(open(args.config, 'r'))
 
 glyphs = []
-for name, glyph_info in data['glyphs'].iteritems():
+
+for item in data['glyphs']:
+    name = item.keys()[0]
+    glyph_info = item[name]
+
     # use giph name if css field is absent
     if (not 'css' in glyph_info):
         glyph_info['css'] = name
