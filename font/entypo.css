@@ -79,8 +79,8 @@
 .icon-plus-circle:before { content: "\e016"; }
 .icon-print:before { content: "\e017"; }
 .icon-quote-right:before { content: "\275e"; }
-.icon-reload-CCW:before { content: "\27f2"; }
-.icon-reload-CW:before { content: "\27f3"; }
+.icon-reload-ccw:before { content: "\27f2"; }
+.icon-reload-cw:before { content: "\27f3"; }
 .icon-reply:before { content: "\e018"; }
 .icon-reply-all:before { content: "\e019"; }
 .icon-retweet:before { content: "\e01a"; }
