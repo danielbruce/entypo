@@ -24,6 +24,9 @@ for item in data['glyphs']:
     if (not 'css' in glyph_info):
         glyph_info['css'] = name
 
+    # code to unicode char
+    glyph_info['char'] = unichr(glyph_info['code']);
+
     # code to sting in hex format
     glyph_info['code'] = hex(glyph_info['code'])[2:]
 
@@ -36,7 +39,7 @@ data['columns'] = [{'glyphs': glyphs[i:i + chunk_size]} for i in range(0, len(gl
 
 template = open(args.template, 'r').read()
 
-output = pystache.render(template, data)
+output = pystache.render(template, data).encode('utf-8');
 
 f = open(args.output, 'w')
 f.write(output)
