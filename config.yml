@@ -10,8 +10,16 @@
 #       code: 0xNNN                   # Symbol code 0x - hex
 #       css: icon-gpyph1-name         # For generated CSS
 #       search: [word1, word2]        # Search aliases (array). CSS name will be
+#                                     # included automatically
+#
+#
+################################################################################
+#
+# Mapping rules:
+#
+# 1. Downshift 1Fxxx -> Fxxx, because 1Fxxx codes not shown in Chrome/Opera
+#
 
-                                    # included automatically
 
 css-prefix: "icon-"
 demo-columns: 4
@@ -34,7 +42,8 @@ glyphs:
       search: [add, list]
 
   - alert:
-      code: 0x1f514
+      # 0x1f514
+      code: 0xf514
       css: bell
       search: [alert, bell, jingle]
 
@@ -49,7 +58,8 @@ glyphs:
       search: [back]
 
   - block:
-      code: 0x1f6ab
+      # 0x1f6ab
+      code: 0xf6ab
       css: block
       search: [block, deny]
 
@@ -59,17 +69,20 @@ glyphs:
       search: [broadcast, wifi]
 
   - calendar:
-      code: 0x1f4c5
+      # 0x1f4c5
+      code: 0xf4c5
       css: calendar
       search: [calendar]
 
   - camera:
-      code: 0x1f4f7
+      # 0x1f4f7
+      code: 0xf4f7
       css: camera
       search: [camera, photo]
 
   - center-crosshair:
-      code: 0x1f3af
+      # 0x1f3af
+      code: 0xf3af
       css: target
       search: [target]
 
@@ -109,12 +122,14 @@ glyphs:
       search: [contact, card, vcard]
 
   - contact-user:
-      code: 0x1f464
+      # 0x1f464
+      code: 0xf464
       css: user
       search: [profile, contact, user]
 
   - contacts-users:
-      code: 0x1f465
+      # 0x1f465
+      code: 0xf465
       css: users
       search: [users, contacts, friends]
 
@@ -195,7 +210,8 @@ glyphs:
       search: [info]
 
   - leaf:
-      code: 0x1f342
+      # 0x1f342
+      code: 0xf342
       css: leaf
       search: [leaf]
 
@@ -210,12 +226,14 @@ glyphs:
       search: [lifebuoy]
 
   - like-thumbs-up:
-      code: 0x1f4dd
+      # 0x1f4dd
+      code: 0xf4dd
       css: thumbs-up
       search: [thumbs, up, like, vote]
 
   - link:
-      code: 0x1f517
+      # 0x1f517
+      code: 0xf517
       css: link
       search: [link, url]
 
@@ -230,7 +248,8 @@ glyphs:
       search: [location, marker]
 
   - lock:
-      code: 0x1f512
+      # 0x1f512
+      code: 0xf512
       css: lock
       search: [lock]
 
@@ -240,7 +259,8 @@ glyphs:
       search: [down]
 
   - mic:
-      code: 0x1f3a4
+      # 0x1f3a4
+      code: 0xf3a4
       css: mic
       search: [mic]
 
@@ -255,7 +275,8 @@ glyphs:
       search: [minus]
 
   - mobile:
-      code: 0x1f4f1
+      # 0x1f4f1
+      code: 0xf4f1
       css: mobile
       search: [mobile, iphone]
 
@@ -265,12 +286,14 @@ glyphs:
       search: [mouse, website]
 
   - movie-film:
-      code: 0x1f3ac
+      # 0x1f3ac
+      code: 0xf3ac
       css: film
       search: [movie, video]
 
   - music:
-      code: 0x1f3b5
+      # 0x1f3b5
+      code: 0xf3b5
       css: music
       search: [music, note]
 
@@ -280,12 +303,14 @@ glyphs:
       search: [tag, price, offer]
 
   - palette:
-      code: 0x1f3a8
+      # 0x1f3a8
+      code: 0xf3a8
       css: palette
       search: [palette]
 
   - phone:
-      code: 0x1f4de
+      # 0x1f4de
+      code: 0xf4de
       css: phone
       search: [phone, telephone]
 
@@ -341,11 +366,13 @@ glyphs:
 
 
   - classic-search:
-      code: 0x1f50d
+      # 0x1f50d
+      code: 0xf50d
       css: search
       search: [search, find]
   - search:
-      code: 0x1f50e
+      # 0x1f50e
+      code: 0xf50e
       css: search-alt
       search: [search, find]
 
@@ -366,7 +393,8 @@ glyphs:
       search: [basket, shopping, cart]
 
   - shuffle:
-      code: 0x1f500
+      # 0x1f500
+      code: 0xf500
       css: shuffle
       search: [shuffle]
 
@@ -387,7 +415,8 @@ glyphs:
 
 
   - time-clock:
-      code: 0x1f554
+      # 0x1f554
+      code: 0xf554
       css: clock
       search: [clock, time]
 
@@ -397,12 +426,14 @@ glyphs:
       search: [clock, hourglass, busy, wait]
 
   - top-list:
-      code: 0x1f3c9
+      # 0x1f3c9
+      code: 0xf3c9
       css: top-list
       search: [top, trophy]
 
   - unlocked:
-      code: 0x1f513
+      # 0x1f513
+      code: 0xf513
       css: lock-open
       search: [lock, unlock]
 
@@ -597,17 +628,20 @@ glyphs:
 
 
   - book:
-      code: 0x1f4d6
+      # 0x1f4d6
+      code: 0xf4d6
       css: book-open
       search: [book]
 
   - bookmark:
-      code: 0x1f516
+      # 0x1f516
+      code: 0xf516
       css: bookmark
       search: [bookmark]
 
   - battery:
-      code: 0x1f50b
+      # 0x1f50b
+      code: 0xf50b
       css: battery
       search: [battery]
 
@@ -635,16 +669,19 @@ glyphs:
       search: [dot]
 
   - light-bulb:
-      code: 0x1f4a1
+      # 0x1f4a1
+      code: 0xf4a1
       css: lamp
       search: [idea, lamp, light]
 
   - light-down:
-      code: 0x1f505
+      # 0x1f505
+      code: 0xf505
       css: light-down
       search: [light, dim, bright]
   - light-up:
-      code: 0x1f506
+      # 0x1f506
+      code: 0xf506
       css: light-up
       search: [light, dim, bright]
 
@@ -666,18 +703,21 @@ glyphs:
       css: docs-landscape
       search: [doc, article]
   - text-document:
-      code: 0x1f4c4
+      # 0x1f4c4
+      code: 0xf4c4
       css: doc-text
       search: [doc, text, article]
 
 
   # Sound
   - mute:
-      code: 0x1f507
+      # 0x1f507
+      code: 0xf507
       css: volume-off
       search: [volume, sound, mute]
   - sound:
-      code: 0x1f50a
+      # 0x1f50a
+      code: 0xf50a
       css: volume-up
       search: [volume, sound]
   - volume:
@@ -697,7 +737,8 @@ glyphs:
       search: [keyboard]
 
   - folder:
-      code: 0x1f4c1
+      # 0x1f4c1
+      code: 0xf4c1
       css: folder
       search: [folder]
 
@@ -750,22 +791,26 @@ glyphs:
       search: [globe]
 
   - video:
-      code: 0x1f3ac
+      # 0x1f3ac
+      code: 0xf3ac
       css: video
       search: [video, movie, film]
 
   - vinyl-record:
-      code: 0x1f4bf
+      # 0x1f4bf
+      code: 0xf4bf
       css: cd
       search: [cd, vinyl]
 
   - tv-screen:
-      code: 0x1f4bb
+      # 0x1f4bb
+      code: 0xf4bb
       css: monitor
       search: [tv, screen, monitor]
 
   - image:
-      code: 0x1f304
+      # 0x1f304
+      code: 0xf304
       css: image
       search: [image]
 
