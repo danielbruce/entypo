@@ -43,7 +43,7 @@ glyphs:
 
   - alert:
       # 0x1f514
-      code: 0xf514
+      code: 0x1f514
       css: bell
       search: [alert, bell, jingle]
 
@@ -59,7 +59,7 @@ glyphs:
 
   - block:
       # 0x1f6ab
-      code: 0xf6ab
+      code: 0x1f6ab
       css: block
       search: [block, deny]
 
@@ -70,7 +70,7 @@ glyphs:
 
   - calendar:
       # 0x1f4c5
-      code: 0xf4c5
+      code: 0x1f4c5
       css: calendar
       search: [calendar]
 
