@@ -304,7 +304,7 @@ glyphs:
       css: mouse
       search: [mouse, website]
 
-  - movie-film:
+  - movie:
       # 0x1f3ac
       code: 0xf3ac
       css: film
@@ -808,12 +808,6 @@ glyphs:
       code: 0xe065
       css: globe 
       search: [globe]
-
-  - video:
-      # 0x1f3ac
-      code: 0xf3ac
-      css: video
-      search: [video, movie, film]
 
   - vinyl-record:
       # 0x1f4bf
