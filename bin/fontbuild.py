@@ -16,8 +16,20 @@ args = parser.parse_args()
 
 config = yaml.load(open(args.config, 'r'))
 
-font = fontforge.open(args.sfd_template)
+#font = fontforge.open(args.sfd_template)
+font = fontforge.font()
 
+# set font params
+font.version = config['font']['version']
+font.fontname = config['font']['fontname']
+font.fullname = config['font']['fullname']
+font.familyname = config['font']['familyname']
+font.copyright = config['font']['copyright']
+font.ascent = config['font']['ascent']
+font.descent = config['font']['descent']
+font.weight = config['font']['weight']
+
+# process glyphs
 for item in config['glyphs']:
     name = item.keys()[0]
     glyph = item[name]

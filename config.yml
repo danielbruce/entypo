@@ -3,14 +3,19 @@
 # Format is descriped below.
 #
 #
-# css-prefix: "icon-"               # prefix for css-generated classes
-# 
+# css-prefix: "icon-"             # prefix for css-generated classes
+# demo-columns: 4                 # used for html demo page generation
+#
+# font:                           # all vars from here will be used as font
+#                                 # params in fontforge
+#   ...                           # http://fontforge.sourceforge.net/python.html
+#
 # glyphs:
-#   - glyph1_file:                    # file name, without extention
-#       code: 0xNNN                   # Symbol code 0x - hex
-#       css: icon-gpyph1-name         # For generated CSS
-#       search: [word1, word2]        # Search aliases (array). CSS name will be
-#                                     # included automatically
+#   - glyph1_file:                # file name, without extention
+#       code: 0xNNN               # Symbol code 0x - hex
+#       css: icon-gpyph1-name     # For generated CSS
+#       search: [word1, word2]    # Search aliases (array). CSS name will be
+#                                 # included automatically
 #
 #
 ################################################################################
@@ -23,6 +28,20 @@
 
 css-prefix: "icon-"
 demo-columns: 4
+
+
+font:
+  version: "1.0"
+
+  fontname: Entypo
+  fullname: Entypo
+  familyname: Entypo
+  copyright: Copyright (C) 2012 by Daniel Bruce
+
+  ascent: 1638
+  descent: 410
+  weight: Medium
+
 
 glyphs:
 
