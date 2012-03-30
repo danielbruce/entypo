@@ -16,7 +16,6 @@ args = parser.parse_args()
 
 config = yaml.load(open(args.config, 'r'))
 
-#font = fontforge.open(args.sfd_template)
 font = fontforge.font()
 
 # set font params
