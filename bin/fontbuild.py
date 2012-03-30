@@ -18,15 +18,9 @@ config = yaml.load(open(args.config, 'r'))
 
 font = fontforge.font()
 
-# set font params
-font.version = config['font']['version']
-font.fontname = config['font']['fontname']
-font.fullname = config['font']['fullname']
-font.familyname = config['font']['familyname']
-font.copyright = config['font']['copyright']
-font.ascent = config['font']['ascent']
-font.descent = config['font']['descent']
-font.weight = config['font']['weight']
+# load font properties from config
+for key, value in config['font'].items():
+    setattr(font, key, value)
 
 # process glyphs
 for item in config['glyphs']:
