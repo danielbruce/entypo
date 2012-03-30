@@ -30,6 +30,7 @@
 .icon-bell:before { content: "🔔"; }
 .icon-attach:before { content: ""; }
 .icon-back:before { content: ""; }
+.icon-back-alt:before { content: ""; }
 .icon-block:before { content: "🚫"; }
 .icon-wifi:before { content: ""; }
 .icon-calendar:before { content: "📅"; }
@@ -173,7 +174,6 @@
 .icon-resize-full:before { content: ""; }
 .icon-resize-small:before { content: ""; }
 .icon-globe:before { content: ""; }
-.icon-video:before { content: ""; }
 .icon-cd:before { content: ""; }
 .icon-monitor:before { content: ""; }
 .icon-image:before { content: ""; }
@@ -183,6 +183,7 @@
 .icon-inbox:before { content: ""; }
 .icon-install:before { content: ""; }
 .icon-bag:before { content: ""; }
+.icon-bag-alt:before { content: ""; }
 .icon-net:before { content: ""; }
 .icon-cc:before { content: ""; }
 .icon-logo-entypo:before { content: ""; }

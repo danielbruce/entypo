@@ -76,6 +76,11 @@ glyphs:
       css: back
       search: [back]
 
+  - back-alt:
+      code: 0xe035
+      css: back-alt
+      search: [back]
+
   - block:
       # 0x1f6ab
       code: 0x1f6ab
@@ -855,6 +860,11 @@ glyphs:
   - suitecase:
       code: 0xe05d
       css: bag
+      search: [bag]
+
+  - suitcase-alt:
+      code: 0xe06d
+      css: bag-alt
       search: [bag]
 
   - network:
