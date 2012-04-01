@@ -75,7 +75,7 @@ dev-deps:
 		exit 128 ; \
 		fi
 	apt-get -qq install \
-		fontforge python python-fontforge \
+		fontforge python python-fontforge libfreetype6-dev \
 		python-yaml python-pip \
 		build-essential \
 		autoconf automake libtool
