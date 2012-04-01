@@ -660,6 +660,9 @@ TA_sfnt_split_glyf_table(SFNT* sfnt,
 
         /* use the last contour's end point to compute number of points */
         off = 10 + (glyph->num_contours - 1) * 2;
+        if (off >= len - 1)
+          return FT_Err_Invalid_Table;
+
         glyph->num_points = buf[off] << 8;
         glyph->num_points += buf[off + 1] + 1;
       }

@@ -143,7 +143,23 @@ Exit:
 
 #ifdef TA_DEBUG
 
-#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+
+
+void
+_ta_message(const char *format,
+            ...)
+{
+  va_list ap;
+
+
+  va_start(ap, format);
+  vfprintf(stderr, format, ap);
+  va_end(ap);
+}
+
 
 static const char*
 ta_dir_str(TA_Direction dir)
@@ -186,29 +202,29 @@ ta_glyph_hints_dump_points(TA_GlyphHints hints)
   TA_Point point;
 
 
-  printf("Table of points:\n");
-  printf("  [ index |  xorg |  yorg | xscale | yscale"
-           " |  xfit |  yfit |  flags ]\n");
+  fprintf(stderr, "Table of points:\n");
+  fprintf(stderr, "  [ index |  xorg |  yorg | xscale | yscale"
+                  " |  xfit |  yfit |  flags ]\n");
 
   for (point = points; point < limit; point++)
   {
-    printf("  [ %5d | %5d | %5d | %6.2f | %6.2f"
-             " | %5.2f | %5.2f | %c%c%c%c%c%c ]\n",
-           point - points,
-           point->fx,
-           point->fy,
-           point->ox / 64.0,
-           point->oy / 64.0,
-           point->x / 64.0,
-           point->y / 64.0,
-           (point->flags & TA_FLAG_WEAK_INTERPOLATION) ? 'w' : ' ',
-           (point->flags & TA_FLAG_INFLECTION) ? 'i' : ' ',
-           (point->flags & TA_FLAG_EXTREMA_X) ? '<' : ' ',
-           (point->flags & TA_FLAG_EXTREMA_Y) ? 'v' : ' ',
-           (point->flags & TA_FLAG_ROUND_X) ? '(' : ' ',
-           (point->flags & TA_FLAG_ROUND_Y) ? 'u' : ' ');
+    fprintf(stderr, "  [ %5d | %5d | %5d | %6.2f | %6.2f"
+                    " | %5.2f | %5.2f | %c%c%c%c%c%c ]\n",
+            point - points,
+            point->fx,
+            point->fy,
+            point->ox / 64.0,
+            point->oy / 64.0,
+            point->x / 64.0,
+            point->y / 64.0,
+            (point->flags & TA_FLAG_WEAK_INTERPOLATION) ? 'w' : ' ',
+            (point->flags & TA_FLAG_INFLECTION) ? 'i' : ' ',
+            (point->flags & TA_FLAG_EXTREMA_X) ? '<' : ' ',
+            (point->flags & TA_FLAG_EXTREMA_Y) ? 'v' : ' ',
+            (point->flags & TA_FLAG_ROUND_X) ? '(' : ' ',
+            (point->flags & TA_FLAG_ROUND_Y) ? 'u' : ' ');
   }
-  printf("\n");
+  fprintf(stderr, "\n");
 }
 
 
@@ -248,7 +264,9 @@ ta_glyph_hints_dump_segments(TA_GlyphHints hints)
   FT_Int dimension;
 
 
-  for (dimension = 1; dimension >= 0; dimension--)
+  for (dimension = TA_DEBUG_STARTDIM;
+       dimension >= TA_DEBUG_ENDDIM;
+       dimension--)
   {
     TA_AxisHints axis = &hints->axis[dimension];
     TA_Point points = hints->points;
@@ -258,30 +276,30 @@ ta_glyph_hints_dump_segments(TA_GlyphHints hints)
     TA_Segment seg;
 
 
-    printf("Table of %s segments:\n",
-           dimension == TA_DIMENSION_HORZ ? "vertical"
-                                          : "horizontal");
-    printf("  [ index |  pos  |  dir  | from |  to  | link | serif | edge |"
-             " height | extra |    flags    ]\n");
+    fprintf(stderr, "Table of %s segments:\n",
+            dimension == TA_DIMENSION_HORZ ? "vertical"
+                                           : "horizontal");
+    fprintf(stderr, "  [ index |  pos  |  dir  | from |  to  | link | serif | edge |"
+                    " height | extra |    flags    ]\n");
 
     for (seg = segments; seg < limit; seg++)
     {
-      printf("  [ %5d | %5.2g | %5s | %4d | %4d | %4d | %5d | %4d |"
-               " %6d | %5d | %11s ]\n",
-             seg - segments,
-             dimension == TA_DIMENSION_HORZ ? (int)seg->first->ox / 64.0
-                                            : (int)seg->first->oy / 64.0,
-             ta_dir_str((TA_Direction)seg->dir),
-             TA_INDEX_NUM(seg->first, points),
-             TA_INDEX_NUM(seg->last, points),
-             TA_INDEX_NUM(seg->link, segments),
-             TA_INDEX_NUM(seg->serif, segments),
-             TA_INDEX_NUM(seg->edge, edges),
-             seg->height,
-             seg->height - (seg->max_coord - seg->min_coord),
-             ta_edge_flags_to_string(seg->flags));
+      fprintf(stderr, "  [ %5d | %5.2g | %5s | %4d | %4d | %4d | %5d | %4d |"
+                      " %6d | %5d | %11s ]\n",
+              seg - segments,
+              dimension == TA_DIMENSION_HORZ ? (int)seg->first->ox / 64.0
+                                             : (int)seg->first->oy / 64.0,
+              ta_dir_str((TA_Direction)seg->dir),
+              TA_INDEX_NUM(seg->first, points),
+              TA_INDEX_NUM(seg->last, points),
+              TA_INDEX_NUM(seg->link, segments),
+              TA_INDEX_NUM(seg->serif, segments),
+              TA_INDEX_NUM(seg->edge, edges),
+              seg->height,
+              seg->height - (seg->max_coord - seg->min_coord),
+              ta_edge_flags_to_string(seg->flags));
     }
-    printf("\n");
+    fprintf(stderr, "\n");
   }
 }
 
@@ -294,7 +312,9 @@ ta_glyph_hints_dump_edges(TA_GlyphHints hints)
   FT_Int dimension;
 
 
-  for (dimension = 1; dimension >= 0; dimension--)
+  for (dimension = TA_DEBUG_STARTDIM;
+       dimension >= TA_DEBUG_ENDDIM;
+       dimension--)
   {
     TA_AxisHints axis = &hints->axis[dimension];
     TA_Edge edges = axis->edges;
@@ -304,27 +324,27 @@ ta_glyph_hints_dump_edges(TA_GlyphHints hints)
 
     /* note that TA_DIMENSION_HORZ corresponds to _vertical_ edges */
     /* since they have a constant X coordinate */
-    printf("Table of %s edges:\n",
-           dimension == TA_DIMENSION_HORZ ? "vertical"
-                                          : "horizontal");
-    printf("  [ index |  pos  |  dir  | link |"
-             " serif | blue | opos  |  pos  |    flags    ]\n");
+    fprintf(stderr, "Table of %s edges:\n",
+            dimension == TA_DIMENSION_HORZ ? "vertical"
+                                           : "horizontal");
+    fprintf(stderr, "  [ index |  pos  |  dir  | link |"
+                    " serif | blue | opos  |  pos  |    flags    ]\n");
 
     for (edge = edges; edge < limit; edge++)
     {
-      printf("  [ %5d | %5.2g | %5s | %4d |"
-               " %5d |   %c  | %5.2f | %5.2f | %11s ]\n",
-             edge - edges,
-             (int)edge->opos / 64.0,
-             ta_dir_str((TA_Direction)edge->dir),
-             TA_INDEX_NUM(edge->link, edges),
-             TA_INDEX_NUM(edge->serif, edges),
-             edge->blue_edge ? 'y' : 'n',
-             edge->opos / 64.0,
-             edge->pos / 64.0,
-             ta_edge_flags_to_string(edge->flags));
+      fprintf(stderr, "  [ %5d | %5.2g | %5s | %4d |"
+                      " %5d |   %c  | %5.2f | %5.2f | %11s ]\n",
+              edge - edges,
+              (int)edge->opos / 64.0,
+              ta_dir_str((TA_Direction)edge->dir),
+              TA_INDEX_NUM(edge->link, edges),
+              TA_INDEX_NUM(edge->serif, edges),
+              edge->blue_edge ? 'y' : 'n',
+              edge->opos / 64.0,
+              edge->pos / 64.0,
+              ta_edge_flags_to_string(edge->flags));
     }
-    printf("\n");
+    fprintf(stderr, "\n");
   }
 }
 
@@ -335,7 +355,9 @@ ta_glyph_hints_dump_edge_links(TA_GlyphHints hints)
   FT_Int dimension;
 
 
-  for (dimension = 1; dimension >= 0; dimension--)
+  for (dimension = TA_DEBUG_STARTDIM;
+       dimension >= TA_DEBUG_ENDDIM;
+       dimension--)
   {
     TA_AxisHints axis = &hints->axis[dimension];
     TA_Segment segments = axis->segments;
@@ -346,23 +368,23 @@ ta_glyph_hints_dump_edge_links(TA_GlyphHints hints)
     TA_Segment seg;
 
 
-    printf("%s edges consist of the following segments:\n",
-           dimension == TA_DIMENSION_HORZ ? "Vertical"
-                                          : "Horizontal");
+    fprintf(stderr, "%s edges consist of the following segments:\n",
+            dimension == TA_DIMENSION_HORZ ? "Vertical"
+                                           : "Horizontal");
     for (edge = edges; edge < limit; edge++)
     {
-      printf("  %2d:", edge - edges);
+      fprintf(stderr, "  %2d:", edge - edges);
 
       seg = edge->first;
       do
       {
-        printf(" %d", seg - segments);
+        fprintf(stderr, " %d", seg - segments);
         seg = seg->edge_next;
       } while (seg != edge->first);
 
-      printf("\n");
+      fprintf(stderr, "\n");
     }
-    printf("\n");
+    fprintf(stderr, "\n");
   }
 }
 

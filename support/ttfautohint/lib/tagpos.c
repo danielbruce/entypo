@@ -654,14 +654,19 @@ FT_Error
 TA_sfnt_update_GPOS_table(SFNT* sfnt,
                           FONT* font)
 {
-  SFNT_Table* GPOS_table = &font->tables[sfnt->GPOS_idx];
-  FT_Byte* buf = GPOS_table->buf;
+  SFNT_Table* GPOS_table;
+  FT_Byte* buf;
 
   FT_Byte* LookupList;
   FT_UShort LookupCount;
   FT_Byte* p;
 
 
+  if (sfnt->GPOS_idx == MISSING)
+    return TA_Err_Ok;
+
+  GPOS_table = &font->tables[sfnt->GPOS_idx];
+  buf = GPOS_table->buf;
   p = buf;
 
   if (GPOS_table->processed)

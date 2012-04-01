@@ -18,6 +18,32 @@
 
 #define PREP(snippet_name) prep_ ## snippet_name
 
+
+unsigned char PREP(hinting_limit_a) [] =
+{
+
+  /* first of all, check whether we do hinting at all */
+
+  MPPEM,
+  PUSHW_1,
+
+};
+
+/*  %d, hinting size limit */
+
+unsigned char PREP(hinting_limit_b) [] =
+{
+
+  GT,
+  IF,
+    PUSHB_2,
+      1, /* switch off hinting */
+      1,
+    INSTCTRL,
+  EIF,
+
+};
+
 /* we often need 0x10000 which can't be pushed directly onto the stack, */
 /* thus we provide it in the CVT as `cvtl_0x10000'; */
 /* at the same time, we store it in CVT index `cvtl_funits_to_pixels' also */
@@ -64,10 +90,50 @@ unsigned char PREP(align_top_b) [] =
   RCVT,
   DUP,
   DUP,
+
+};
+
+unsigned char PREP(align_top_c1) [] =
+{
+
+  /* this is for option `increase_x_height': */
+  /* apply much `stronger' rounding up of x height for 5 < PPEM < 15 */
+  MPPEM,
+  PUSHB_1,
+    15,
+  LT,
+  MPPEM,
+  PUSHB_1,
+    5,
+  GT,
+  AND,
+  IF,
+    PUSHB_1,
+      52, /* threshold = 52 */
+
+  ELSE,
+    PUSHB_1,
+      40, /* threshold = 40 */
+
+  EIF,
+  ADD,
+  FLOOR, /* fitted = FLOOR(scaled + threshold) */
+
+};
+
+unsigned char PREP(align_top_c2) [] =
+{
+
   PUSHB_1,
     40,
   ADD,
   FLOOR, /* fitted = FLOOR(scaled + 40) */
+
+};
+
+unsigned char PREP(align_top_d) [] =
+{
+
   DUP, /* s: scaled scaled fitted fitted */
   ROLL,
   NEQ,
@@ -219,9 +285,11 @@ unsigned char PREP(reset_component_counter) [] =
 
 
 #define COPY_PREP(snippet_name) \
-          memcpy(buf_p, prep_ ## snippet_name, \
-                 sizeof (prep_ ## snippet_name)); \
-          buf_p += sizeof (prep_ ## snippet_name);
+          do { \
+            memcpy(buf_p, prep_ ## snippet_name, \
+                   sizeof (prep_ ## snippet_name)); \
+            buf_p += sizeof (prep_ ## snippet_name); \
+          } while (0)
 
 static FT_Error
 TA_table_build_prep(FT_Byte** prep,
@@ -229,33 +297,45 @@ TA_table_build_prep(FT_Byte** prep,
                     FONT* font)
 {
   TA_LatinAxis vaxis;
-  TA_LatinBlue blue_adjustment;
+  TA_LatinBlue blue_adjustment = NULL;
   FT_UInt i;
 
-  FT_UInt buf_len;
+  FT_UInt buf_len = 0;
   FT_UInt len;
   FT_Byte* buf;
   FT_Byte* buf_p;
 
 
-  vaxis = &((TA_LatinMetrics)font->loader->hints.metrics)->axis[1];
-  blue_adjustment = NULL;
-
-  for (i = 0; i < vaxis->blue_count; i++)
+  if (font->loader->hints.metrics->clazz->script == TA_SCRIPT_NONE)
+    vaxis = NULL;
+  else
   {
-    if (vaxis->blues[i].flags & TA_LATIN_BLUE_ADJUSTMENT)
+    vaxis = &((TA_LatinMetrics)font->loader->hints.metrics)->axis[1];
+
+    for (i = 0; i < vaxis->blue_count; i++)
     {
-      blue_adjustment = &vaxis->blues[i];
-      break;
+      if (vaxis->blues[i].flags & TA_LATIN_BLUE_ADJUSTMENT)
+      {
+        blue_adjustment = &vaxis->blues[i];
+        break;
+      }
     }
   }
 
-  buf_len = sizeof (PREP(store_0x10000));
+  if (font->hinting_limit)
+    buf_len += sizeof (PREP(hinting_limit_a))
+               + 2
+               + sizeof (PREP(hinting_limit_b));
+
+  buf_len += sizeof (PREP(store_0x10000));
 
   if (blue_adjustment)
     buf_len += sizeof (PREP(align_top_a))
                + 1
                + sizeof (PREP(align_top_b))
+               + (font->increase_x_height ? sizeof (PREP(align_top_c1))
+                                          : sizeof (PREP(align_top_c2)))
+               + sizeof (PREP(align_top_d))
                + sizeof (PREP(loop_cvt_a))
                + 2
                + sizeof (PREP(loop_cvt_b))
@@ -290,6 +370,14 @@ TA_table_build_prep(FT_Byte** prep,
   /* copy cvt program into buffer and fill in the missing variables */
   buf_p = buf;
 
+  if (font->hinting_limit)
+  {
+    COPY_PREP(hinting_limit_a);
+    *(buf_p++) = HIGH(font->hinting_limit);
+    *(buf_p++) = LOW(font->hinting_limit);
+    COPY_PREP(hinting_limit_b);
+  }
+
   COPY_PREP(store_0x10000);
 
   if (blue_adjustment)
@@ -298,6 +386,11 @@ TA_table_build_prep(FT_Byte** prep,
     *(buf_p++) = (unsigned char)(CVT_BLUE_SHOOTS_OFFSET(font)
                                  + blue_adjustment - vaxis->blues);
     COPY_PREP(align_top_b);
+    if (font->increase_x_height)
+      COPY_PREP(align_top_c1);
+    else
+      COPY_PREP(align_top_c2);
+    COPY_PREP(align_top_d);
 
     COPY_PREP(loop_cvt_a);
     *(buf_p++) = (unsigned char)CVT_VERT_WIDTHS_OFFSET(font);

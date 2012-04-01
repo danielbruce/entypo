@@ -1,7 +1,20 @@
+New in 0.8:
+
+* Implement option `-x' to increase the x height of the font for small PPEM
+  values by rounding up far more often then rounding down.
+
+* Add option `-G N' to switch off hinting completely above value N.
+
+* ttfautohint now appends version information and the used parameters to the
+  `Version' field(s) in the `name' table.  This can be suppressed with
+  option `-n'.
+
+
 New in 0.7:
 
 * A GUI has been added, using the Qt framework.  The binary is called
   `ttfautohintGUI'.
+
 
 New in 0.6.1:
 

@@ -1,16 +1,18 @@
-essential fixes
----------------
-
-write a platform-independent GUI
-  -> direct control over `actions'
-  -> preview similar to ftgrid
-
 
 important improvements
 ----------------------
 
+try to reduce size of hints
+  -> handling strong points separately
+  -> `compress' data
+  -> more subroutines to avoid flags
+
+add features to the GUI
+  -> direct control over `actions'
+  -> preview similar to ftgrid
+
 improve handling of GDI ClearType by snapping to the pixel grid (this is,
-integer coordinates of horizontal segments)
+  integer coordinates of horizontal segments)
 
 handle OT features
   -> use HarfBuzz?
@@ -32,15 +34,12 @@ control `gasp' table; Adam Twardoch suggest the following:
   parameter > 0, then up to that parameter value the gasp value 7 should be
   applied, and gasp value 15 should be applied above.
 
-disable hinting at large ppem values (> ~2000) to avoid numeric overflows
-
 control activation threshold of blue zone widths
 
 control the width of blue zones
 
-handle normal and bold fonts differently; cf. Infinality patches
-  Maybe an option `never shrink the glyphs vertically'?  This should help
-  avoid filling of bowls (like in `e') for bold shapes.
+handle normal and bold fonts differently; cf. Infinality patches;
+  this should help avoid filling of bowls (like in `e') for bold shapes.
 
 control the minimum stem width
 
@@ -48,7 +47,6 @@ try to `embolden' fonts at small sizes to avoid drop-outs; cf. Infinality
   patches
 
 implement `x-height-snapping-exceptions'
-  cf. the `never shrink the glyph vertically' idea above
 
 improve `pre-hinting' by making the used PPEM value configurable
 
@@ -70,8 +68,6 @@ apply hinting in x direction also?
   -> warper: shifting with and without scaling
   -> `standard' autofit hinting
 
-try to reduce size of hints by handling strong points separately
-
 add a config and/or command file for batch handling
 
 warn against overwrite of output file?
@@ -79,6 +75,9 @@ warn against overwrite of output file?
 reduce output size of option -p:
   1. compare outline rendered at EM value with unhinted outline
   2. pre-hint only if 1. differs more than given threshold (default 0.5%?)
+
+make it possible to hint fonts which aren't alphabetic at all, for example,
+  icons; to do so, provide means to skip the global feature analysis
 
 
 later enhancements
@@ -95,14 +94,11 @@ Windows/Mac installer
 various
 -------
 
-testing with Windows font checker
+testing with Windows and Apple font checkers
 
 man page for ttfautohint library
+
 install library
-
-add GNU copyright exception so that created fonts don't inherit the GPL
-
-add notice to font that it has been processed by ttfautohint
 
 
 EOF

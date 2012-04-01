@@ -20,11 +20,16 @@ FT_Error
 TA_sfnt_update_hmtx_table(SFNT* sfnt,
                           FONT* font)
 {
-  SFNT_Table* hmtx_table = &font->tables[sfnt->hmtx_idx];
+  SFNT_Table* hmtx_table;
   FT_Byte* buf_new;
   FT_ULong buf_len;
   FT_ULong i;
 
+
+  if (sfnt->hmtx_idx == MISSING)
+    return TA_Err_Ok;
+
+  hmtx_table = &font->tables[sfnt->hmtx_idx];
 
   if (hmtx_table->processed)
     return TA_Err_Ok;

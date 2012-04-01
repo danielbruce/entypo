@@ -125,6 +125,8 @@ TA_sfnt_build_glyph_segments(SFNT* sfnt,
 
   FT_Int n;
   FT_UInt i, j;
+  FT_UInt base;
+  FT_UInt num_packed_segments;
   FT_UInt num_storage;
   FT_UInt num_stack_elements;
   FT_UInt num_twilight_points;
@@ -133,12 +135,38 @@ TA_sfnt_build_glyph_segments(SFNT* sfnt,
   seg_limit = segments + axis->num_segments;
   num_segments = axis->num_segments;
 
+  /* to pack the data in the bytecode more tightly, */
+  /* we store up to the first nine segments in nibbles if possible, */
+  /* using delta values */
+  base = 0;
+  num_packed_segments = 0;
+  for (seg = segments; seg < seg_limit; seg++)
+  {
+    FT_UInt first = seg->first - points;
+    FT_UInt last = seg->last - points;
+
+
+    first = TA_adjust_point_index(recorder, first);
+    last = TA_adjust_point_index(recorder, last);
+
+    if (first - base >= 16)
+      break;
+    if (first > last || last - first >= 16)
+      break;
+    if (num_packed_segments == 9)
+      break;
+    num_packed_segments++;
+    base = last;
+  }
+
   /* some segments can `wrap around' */
   /* a contour's start point like 24-25-26-0-1-2 */
   /* (there can be at most one such segment per contour); */
   /* we thus append additional records to split them into 24-26 and 0-2 */
   wrap_around_segment = recorder->wrap_around_segments;
-  for (seg = segments; seg < seg_limit; seg++)
+  /* `num_packed_segments' segments */
+  /* have already been checked in previous loop */
+  for (seg = segments + num_packed_segments; seg < seg_limit; seg++)
     if (seg->first > seg->last)
     {
       /* the stored data is used later for edge linking */
@@ -149,8 +177,12 @@ TA_sfnt_build_glyph_segments(SFNT* sfnt,
                              - recorder->wrap_around_segments;
   num_segments += num_wrap_around_segments;
 
-  /* wrap-around segments are pushed with four arguments */
-  num_args = 2 * num_segments + 2 * num_wrap_around_segments + 2;
+  /* wrap-around segments are pushed with four arguments; */
+  /* a segment stored in nibbles needs only one byte instead of two */
+  num_args = num_packed_segments
+             + 2 * (num_segments - num_packed_segments)
+             + 2 * num_wrap_around_segments
+             + 2;
 
   /* collect all arguments temporarily in an array (in reverse order) */
   /* so that we can easily split into chunks of 255 args */
@@ -164,13 +196,37 @@ TA_sfnt_build_glyph_segments(SFNT* sfnt,
   if (num_segments > 0xFF)
     need_words = 1;
 
+  /* the number of packed segments is indicated by the function number */
   if (recorder->glyph->num_components)
-    *(arg--) = bci_create_segments_composite;
+    *(arg--) = bci_create_segments_composite_0 + num_packed_segments;
   else
-    *(arg--) = bci_create_segments;
+    *(arg--) = bci_create_segments_0 + num_packed_segments;
   *(arg--) = num_segments;
 
-  for (seg = segments; seg < seg_limit; seg++)
+  base = 0;
+  for (seg = segments; seg < segments + num_packed_segments; seg++)
+  {
+    FT_UInt first = seg->first - points;
+    FT_UInt last = seg->last - points;
+    FT_UInt low_nibble;
+    FT_UInt high_nibble;
+
+
+    first = TA_adjust_point_index(recorder, first);
+    last = TA_adjust_point_index(recorder, last);
+
+    low_nibble = first - base;
+    high_nibble = last - first;
+
+    *(arg--) = 16 * high_nibble + low_nibble;
+
+    base = last;
+
+    if (last > 0xFF)
+      need_words = 1;
+  }
+
+  for (seg = segments + num_packed_segments; seg < seg_limit; seg++)
   {
     FT_UInt first = seg->first - points;
     FT_UInt last = seg->last - points;
@@ -352,8 +408,16 @@ TA_sfnt_build_glyph_scaler(SFNT* sfnt,
         max = q;
     }
 
-    *(arg--) = TA_adjust_point_index(recorder, min);
-    *(arg--) = TA_adjust_point_index(recorder, max);
+    if (min > max)
+    {
+      *(arg--) = TA_adjust_point_index(recorder, max);
+      *(arg--) = TA_adjust_point_index(recorder, min);
+    }
+    else
+    {
+      *(arg--) = TA_adjust_point_index(recorder, min);
+      *(arg--) = TA_adjust_point_index(recorder, max);
+    }
 
     start = end + 1;
   }
@@ -1053,8 +1117,6 @@ TA_hints_recorder(TA_Action action,
   FT_UInt* wraps = recorder->wrap_around_segments;
   FT_Byte* p = recorder->hints_record.buf;
 
-  FT_Byte bound_offset = 0;
-
   FT_UInt* ip;
   FT_UInt* limit;
 
@@ -1150,21 +1212,16 @@ TA_hints_recorder(TA_Action action,
 
   case ta_bound:
     /* we ignore the BOUND action since we signal this information */
-    /* with the `bound_offset' parameter below */
+    /* with the proper function number */
     return;
 
   default:
     break;
   }
 
-  if (lower_bound)
-    bound_offset += 1;
-  if (upper_bound)
-    bound_offset += 2;
-
-  /* this reflects the order in the TA_Action enumeration */
-  *(p++) = 0;
-  *(p++) = (FT_Byte)action + bound_offset + ACTION_OFFSET;
+  /* some enum values correspond to four or eight bytecode functions; */
+  /* if the value is n, the function numbers are n, ..., n+7, */
+  /* to be differentiated with flags */
 
   switch (action)
   {
@@ -1175,9 +1232,10 @@ TA_hints_recorder(TA_Action action,
 
 
       *(p++) = 0;
-      *(p++) = stem_edge->flags & TA_EDGE_SERIF;
-      *(p++) = 0;
-      *(p++) = base_edge->flags & TA_EDGE_ROUND;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + ((stem_edge->flags & TA_EDGE_SERIF) != 0)
+               + 2 * ((base_edge->flags & TA_EDGE_ROUND) != 0);
+
       *(p++) = HIGH(base_edge->first - segments);
       *(p++) = LOW(base_edge->first - segments);
       *(p++) = HIGH(stem_edge->first - segments);
@@ -1194,9 +1252,10 @@ TA_hints_recorder(TA_Action action,
 
 
       *(p++) = 0;
-      *(p++) = edge2->flags & TA_EDGE_SERIF;
-      *(p++) = 0;
-      *(p++) = edge->flags & TA_EDGE_ROUND;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + ((edge2->flags & TA_EDGE_SERIF) != 0)
+               + 2 * ((edge->flags & TA_EDGE_ROUND) != 0);
+
       *(p++) = HIGH(edge->first - segments);
       *(p++) = LOW(edge->first - segments);
       *(p++) = HIGH(edge2->first - segments);
@@ -1214,9 +1273,11 @@ TA_hints_recorder(TA_Action action,
 
 
       *(p++) = 0;
-      *(p++) = edge2->flags & TA_EDGE_SERIF;
-      *(p++) = 0;
-      *(p++) = edge->flags & TA_EDGE_ROUND;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + ((edge2->flags & TA_EDGE_SERIF) != 0)
+               + 2 * ((edge->flags & TA_EDGE_ROUND) != 0)
+               + 4 * (edge_minus_one != NULL);
+
       *(p++) = HIGH(edge->first - segments);
       *(p++) = LOW(edge->first - segments);
       *(p++) = HIGH(edge2->first - segments);
@@ -1237,6 +1298,9 @@ TA_hints_recorder(TA_Action action,
       TA_Edge edge = (TA_Edge)arg1;
       TA_Edge blue = arg2;
 
+
+      *(p++) = 0;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET;
 
       *(p++) = HIGH(blue->first - segments);
       *(p++) = LOW(blue->first - segments);
@@ -1267,9 +1331,11 @@ TA_hints_recorder(TA_Action action,
 
 
       *(p++) = 0;
-      *(p++) = edge2->flags & TA_EDGE_SERIF;
-      *(p++) = 0;
-      *(p++) = edge->flags & TA_EDGE_ROUND;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + ((edge2->flags & TA_EDGE_SERIF) != 0)
+               + 2 * ((edge->flags & TA_EDGE_ROUND) != 0)
+               + 4 * (edge_minus_one != NULL);
+
       *(p++) = HIGH(edge->first - segments);
       *(p++) = LOW(edge->first - segments);
       *(p++) = HIGH(edge2->first - segments);
@@ -1290,6 +1356,9 @@ TA_hints_recorder(TA_Action action,
     {
       TA_Edge edge = (TA_Edge)arg1;
 
+
+      *(p++) = 0;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET;
 
       if (edge->best_blue_is_shoot)
       {
@@ -1314,6 +1383,11 @@ TA_hints_recorder(TA_Action action,
       TA_Edge serif = (TA_Edge)arg1;
       TA_Edge base = serif->serif;
 
+
+      *(p++) = 0;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + (lower_bound != NULL)
+               + 2 * (upper_bound != NULL);
 
       *(p++) = HIGH(serif->first - segments);
       *(p++) = LOW(serif->first - segments);
@@ -1341,6 +1415,11 @@ TA_hints_recorder(TA_Action action,
       TA_Edge edge = (TA_Edge)arg1;
 
 
+      *(p++) = 0;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + (lower_bound != NULL)
+               + 2 * (upper_bound != NULL);
+
       *(p++) = HIGH(edge->first - segments);
       *(p++) = LOW(edge->first - segments);
 
@@ -1366,6 +1445,11 @@ TA_hints_recorder(TA_Action action,
       TA_Edge after = arg3;
 
 
+      *(p++) = 0;
+      *(p++) = (FT_Byte)action + ACTION_OFFSET
+               + (lower_bound != NULL)
+               + 2 * (upper_bound != NULL);
+
       *(p++) = HIGH(before->first - segments);
       *(p++) = LOW(before->first - segments);
       *(p++) = HIGH(edge->first - segments);
@@ -1390,7 +1474,7 @@ TA_hints_recorder(TA_Action action,
 
   default:
     /* there are more cases in the enumeration */
-    /* which are handled with the `bound_offset' parameter */
+    /* which are handled with flags */
     break;
   }
 
@@ -1541,7 +1625,12 @@ TA_sfnt_build_glyph_instructions(SFNT* sfnt,
   FT_UInt size;
 
 
+  /* XXX: right now, we abuse this flag to control */
+  /*      the global behaviour of the auto-hinter */
   load_flags = font->fallback_script << 30;
+  load_flags |= 1 << 28; /* vertical hinting only */
+  if (font->increase_x_height)
+    load_flags |= 1 << 29;
   if (!font->pre_hinting)
     load_flags |= FT_LOAD_NO_SCALE;
 
@@ -1561,6 +1650,10 @@ TA_sfnt_build_glyph_instructions(SFNT* sfnt,
     return FT_Err_Ok;
 
   hints = &font->loader->hints;
+
+  /* do nothing if the setup delivered the dummy module only */
+  if (!hints->num_points)
+    return FT_Err_Ok;
 
   /* we allocate a buffer which is certainly large enough */
   /* to hold all of the created bytecode instructions; */
@@ -1623,7 +1716,16 @@ TA_sfnt_build_glyph_instructions(SFNT* sfnt,
   /* to find hints records which get pushed onto the bytecode stack */
 
 #ifdef DEBUGGING
-  printf("glyph %ld\n", idx);
+  {
+    int num_chars, i;
+
+
+    num_chars = fprintf(stderr, "glyph %ld\n", idx);
+    for (i = 0; i < num_chars - 1; i++)
+      putc('=', stderr);
+    fprintf(stderr, "\n\n");
+
+  }
 #endif
 
   /* we temporarily use `ins_buf' to record the current glyph hints, */
@@ -1663,10 +1765,16 @@ TA_sfnt_build_glyph_instructions(SFNT* sfnt,
     {
 #ifdef DEBUGGING
       {
-        printf("  %d:\n", size);
+        fprintf(stderr, "  size %d:\n", size);
+
+        ta_glyph_hints_dump_edges(_ta_debug_hints);
+        ta_glyph_hints_dump_segments(_ta_debug_hints);
+        ta_glyph_hints_dump_points(_ta_debug_hints);
+
+        fprintf(stderr, "  hints record:\n");
         for (p = bufp; p < recorder.hints_record.buf; p += 2)
-          printf(" %2d", *p * 256 + *(p + 1));
-        printf("\n");
+          fprintf(stderr, " %2d", *p * 256 + *(p + 1));
+        fprintf(stderr, "\n");
       }
 #endif
 

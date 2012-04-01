@@ -25,7 +25,7 @@
 #   known workaround is to choose shorter directory names for the build
 #   directory and/or the installation directory.
 
-# All known linkers require a `.a' archive for static linking (except MSVC,
+# All known linkers require a '.a' archive for static linking (except MSVC,
 # which needs '.lib').
 libext=a
 shrext=.so

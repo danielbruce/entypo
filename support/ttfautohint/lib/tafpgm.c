@@ -617,6 +617,62 @@ unsigned char FPGM(bci_get_point_extrema) [] =
 
 
 /*
+ * bci_nibbles
+ *
+ *   Pop a byte with two delta arguments in its nibbles and push the
+ *   expanded arguments separately as two bytes.
+ *
+ * in: 16 * (end - start) + (start - base)
+ *
+ * out: start
+ *      end
+ *
+ * sal: sal_base (set to `end' at return)
+ */
+
+
+unsigned char FPGM(bci_nibbles) [] =
+{
+  PUSHB_1,
+    bci_nibbles,
+  FDEF,
+
+  DUP,
+  PUSHW_1,
+    0x04, /* 16*64 */
+    0x00,
+  DIV, /* s: in hnibble */
+  DUP,
+  PUSHW_1,
+    0x04, /* 16*64 */
+    0x00,
+  MUL, /* s: in hnibble (hnibble * 16) */
+  ROLL,
+  SWAP,
+  SUB, /* s: hnibble lnibble */
+
+  PUSHB_1,
+    sal_base,
+  RS,
+  ADD, /* s: hnibble start */
+  DUP,
+  ROLL,
+  ADD, /* s: start end */
+
+  DUP,
+  PUSHB_1,
+    sal_base,
+  SWAP,
+  WS, /* sal_base = end */
+
+  SWAP,
+
+  ENDF,
+
+};
+
+
+/*
  * bci_create_segment
  *
  *   Store start and end point of a segment in the storage area,
@@ -630,15 +686,21 @@ unsigned char FPGM(bci_get_point_extrema) [] =
  *       [first (if wrap-around segment)]
  *
  * uses: bci_get_point_extrema
+ *       bci_nibbles
  *
  * sal: sal_i (start of current segment)
  *      sal_j (current twilight point)
  *      sal_point_min
  *      sal_point_max
+ *      sal_base
+ *      sal_num_packed_segments
  *
  * CVT: cvtl_scale
  *      cvtl_0x10000
  *      cvtl_temp
+ *
+ * If `sal_num_packed_segments' is > 0, the start/end pair is stored as
+ * delta values in nibbles (without a wrap-around segment).
  */
 
 unsigned char FPGM(bci_create_segment) [] =
@@ -647,6 +709,26 @@ unsigned char FPGM(bci_create_segment) [] =
   PUSHB_1,
     bci_create_segment,
   FDEF,
+
+  PUSHB_2,
+    0,
+    sal_num_packed_segments,
+  RS,
+  NEQ,
+  IF,
+    PUSHB_2,
+      sal_num_packed_segments,
+      sal_num_packed_segments,
+    RS,
+    PUSHB_1,
+      1,
+    SUB,
+    WS, /* sal_num_packed_segments = sal_num_packed_segments - 1 */
+
+    PUSHB_1,
+      bci_nibbles,
+    CALL,
+  EIF,
 
   PUSHB_1,
     sal_i,
@@ -804,7 +886,8 @@ unsigned char FPGM(bci_create_segment) [] =
  *   Set up segments by defining point ranges which defines them
  *   and computing twilight points to represent them.
  *
- * in: num_segments (N)
+ * in: num_packed_segments
+ *     num_segments (N)
  *     segment_start_0
  *     segment_end_0
  *       [contour_last 0 (if wrap-around segment)]
@@ -823,8 +906,17 @@ unsigned char FPGM(bci_create_segment) [] =
  *
  * sal: sal_i (start of current segment)
  *      sal_j (current twilight point)
+ *      sal_num_packed_segments
+ *      sal_base (the base for delta values in nibbles)
  *
  * CVT: cvtl_is_subglyph
+ *
+ * If `num_packed_segments' is set to p, the first p start/end pairs are
+ * stored as delta values in nibbles, with the `start' delta in the lower
+ * nibble (and there are no wrap-around segments).  For example, if the
+ * first three pairs are 1/3, 5/8, and 12/13, the topmost three bytes on the
+ * stack are 0x21, 0x32, and 0x14.
+ *
  */
 
 unsigned char FPGM(bci_create_segments) [] =
@@ -844,18 +936,26 @@ unsigned char FPGM(bci_create_segments) [] =
     /* all our measurements are taken along the y axis */
     SVTCA_y,
 
+    PUSHB_1,
+      sal_num_packed_segments,
+    SWAP,
+    WS,
+
     DUP,
     ADD,
     PUSHB_1,
       1,
     SUB, /* delta = (2*num_segments - 1) */
 
-    PUSHB_4,
+    PUSHB_6,
       sal_segment_offset,
       sal_segment_offset,
 
       sal_j,
       0,
+      sal_base,
+      0,
+    WS, /* sal_base = 0 */
     WS, /* sal_j = 0 (point offset) */
 
     ROLL,
@@ -871,6 +971,173 @@ unsigned char FPGM(bci_create_segments) [] =
   ELSE,
     CLEAR,
   EIF,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_create_segments_X
+ *
+ * Top-level routines for calling `bci_create_segments'.
+ */
+
+unsigned char FPGM(bci_create_segments_0) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_0,
+  FDEF,
+
+  PUSHB_2,
+    0,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_1) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_1,
+  FDEF,
+
+  PUSHB_2,
+    1,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_2) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_2,
+  FDEF,
+
+  PUSHB_2,
+    2,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_3) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_3,
+  FDEF,
+
+  PUSHB_2,
+    3,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_4) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_4,
+  FDEF,
+
+  PUSHB_2,
+    4,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_5) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_5,
+  FDEF,
+
+  PUSHB_2,
+    5,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_6) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_6,
+  FDEF,
+
+  PUSHB_2,
+    6,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_7) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_7,
+  FDEF,
+
+  PUSHB_2,
+    7,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_8) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_8,
+  FDEF,
+
+  PUSHB_2,
+    8,
+    bci_create_segments,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_9) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_9,
+  FDEF,
+
+  PUSHB_2,
+    9,
+    bci_create_segments,
+  CALL,
 
   ENDF,
 
@@ -909,18 +1176,26 @@ unsigned char FPGM(bci_create_segments_composite) [] =
     /* all our measurements are taken along the y axis */
     SVTCA_y,
 
+    PUSHB_1,
+      sal_num_packed_segments,
+    SWAP,
+    WS,
+
     DUP,
     ADD,
     PUSHB_1,
       1,
     SUB, /* delta = (2*num_segments - 1) */
 
-    PUSHB_4,
+    PUSHB_6,
       sal_segment_offset,
       sal_segment_offset,
 
       sal_j,
       0,
+      sal_base,
+      0,
+    WS, /* sal_base = 0 */
     WS, /* sal_j = 0 (point offset) */
 
     ROLL,
@@ -936,6 +1211,173 @@ unsigned char FPGM(bci_create_segments_composite) [] =
   ELSE,
     CLEAR,
   EIF,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_create_segments_composite_X
+ *
+ * Top-level routines for calling `bci_create_segments_composite'.
+ */
+
+unsigned char FPGM(bci_create_segments_composite_0) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_0,
+  FDEF,
+
+  PUSHB_2,
+    0,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_1) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_1,
+  FDEF,
+
+  PUSHB_2,
+    1,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_2) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_2,
+  FDEF,
+
+  PUSHB_2,
+    2,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_3) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_3,
+  FDEF,
+
+  PUSHB_2,
+    3,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_4) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_4,
+  FDEF,
+
+  PUSHB_2,
+    4,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_5) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_5,
+  FDEF,
+
+  PUSHB_2,
+    5,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_6) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_6,
+  FDEF,
+
+  PUSHB_2,
+    6,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_7) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_7,
+  FDEF,
+
+  PUSHB_2,
+    7,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_8) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_8,
+  FDEF,
+
+  PUSHB_2,
+    8,
+    bci_create_segments_composite,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_create_segments_composite_9) [] =
+{
+
+  PUSHB_1,
+    bci_create_segments_composite_9,
+  FDEF,
+
+  PUSHB_2,
+    9,
+    bci_create_segments_composite,
+  CALL,
 
   ENDF,
 
@@ -1104,6 +1546,10 @@ unsigned char FPGM(bci_scale_contour) [] =
  *   the maximum and mininum coordinates).
  *
  *   It expects that no point in the glyph is touched.
+ *
+ *   Note that the point numbers are sorted in ascending order;
+ *   `min_point_X' and `max_point_X' thus refer to the two extrema of a
+ *   contour without specifying which one is the minimum and maximum.
  *
  * in: num_contours (N)
  *       min_point_1
@@ -1732,16 +2178,16 @@ unsigned char FPGM(bci_action_ip_between) [] =
 
 
 /*
- * bci_action_adjust_common
+ * bci_adjust_common
  *
  *   Common code for bci_action_adjust routines.
  */
 
-unsigned char FPGM(bci_action_adjust_common) [] =
+unsigned char FPGM(bci_adjust_common) [] =
 {
 
   PUSHB_1,
-    bci_action_adjust_common,
+    bci_adjust_common,
   FDEF,
 
   PUSHB_1,
@@ -1776,7 +2222,7 @@ unsigned char FPGM(bci_action_adjust_common) [] =
 
 
 /*
- * bci_action_adjust_bound
+ * bci_adjust_bound
  *
  *   Handle the ADJUST_BOUND action to align an edge of a stem if the other
  *   edge of the stem has already been moved, then moving it again if
@@ -1789,18 +2235,18 @@ unsigned char FPGM(bci_action_adjust_common) [] =
  *     edge[-1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_adjust_common
+ * uses: bci_adjust_common
  */
 
-unsigned char FPGM(bci_action_adjust_bound) [] =
+unsigned char FPGM(bci_adjust_bound) [] =
 {
 
   PUSHB_1,
-    bci_action_adjust_bound,
+    bci_adjust_bound,
   FDEF,
 
   PUSHB_1,
-    bci_action_adjust_common,
+    bci_adjust_common,
   CALL,
 
   SWAP, /* s: edge edge[-1] */
@@ -1831,7 +2277,85 @@ unsigned char FPGM(bci_action_adjust_bound) [] =
 
 
 /*
- * bci_action_adjust
+ * bci_action_adjust_bound
+ * bci_action_adjust_bound_serif
+ * bci_action_adjust_bound_round
+ * bci_action_adjust_bound_round_serif
+ *
+ * Higher-level routines for calling `bci_adjust_bound'.
+ */
+
+unsigned char FPGM(bci_action_adjust_bound) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_bound,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    0,
+    bci_adjust_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_adjust_bound_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_bound_serif,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    1,
+    bci_adjust_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_adjust_bound_round) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_bound_round,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    0,
+    bci_adjust_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_adjust_bound_round_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_bound_round_serif,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    1,
+    bci_adjust_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_adjust
  *
  *   Handle the ADJUST action to align an edge of a stem if the other edge
  *   of the stem has already been moved.
@@ -1842,18 +2366,18 @@ unsigned char FPGM(bci_action_adjust_bound) [] =
  *     edge2_point (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_adjust_common
+ * uses: bci_adjust_common
  */
 
-unsigned char FPGM(bci_action_adjust) [] =
+unsigned char FPGM(bci_adjust) [] =
 {
 
   PUSHB_1,
-    bci_action_adjust,
+    bci_adjust,
   FDEF,
 
   PUSHB_1,
-    bci_action_adjust_common,
+    bci_adjust_common,
   CALL,
 
   MDAP_noround, /* set rp0 and rp1 to `edge' */
@@ -1870,7 +2394,85 @@ unsigned char FPGM(bci_action_adjust) [] =
 
 
 /*
- * bci_action_stem_common
+ * bci_action_adjust
+ * bci_action_adjust_serif
+ * bci_action_adjust_round
+ * bci_action_adjust_round_serif
+ *
+ * Higher-level routines for calling `bci_adjust'.
+ */
+
+unsigned char FPGM(bci_action_adjust) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    0,
+    bci_adjust,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_adjust_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_serif,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    1,
+    bci_adjust,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_adjust_round) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_round,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    0,
+    bci_adjust,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_adjust_round_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_adjust_round_serif,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    1,
+    bci_adjust,
+  CALL,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_stem_common
  *
  *   Common code for bci_action_stem routines.
  */
@@ -1884,11 +2486,11 @@ unsigned char FPGM(bci_action_adjust) [] =
 #undef sal_edge2
 #define sal_edge2 sal_temp3
 
-unsigned char FPGM(bci_action_stem_common) [] =
+unsigned char FPGM(bci_stem_common) [] =
 {
 
   PUSHB_1,
-    bci_action_stem_common,
+    bci_stem_common,
   FDEF,
 
   PUSHB_1,
@@ -2109,7 +2711,7 @@ unsigned char FPGM(bci_action_stem_common) [] =
 
 
 /*
- * bci_action_stem_bound
+ * bci_stem_bound
  *
  *   Handle the STEM action to align two edges of a stem, then moving one
  *   edge again if necessary to stay bound.
@@ -2167,18 +2769,18 @@ unsigned char FPGM(bci_action_stem_common) [] =
  *      sal_temp2
  *      sal_temp3
  *
- * uses: bci_action_stem_common
+ * uses: bci_stem_common
  */
 
-unsigned char FPGM(bci_action_stem_bound) [] =
+unsigned char FPGM(bci_stem_bound) [] =
 {
 
   PUSHB_1,
-    bci_action_stem_bound,
+    bci_stem_bound,
   FDEF,
 
   PUSHB_1,
-    bci_action_stem_common,
+    bci_stem_common,
   CALL,
 
   ROLL, /* s: edge[-1] cur_len edge edge2 */
@@ -2229,11 +2831,89 @@ unsigned char FPGM(bci_action_stem_bound) [] =
 
 
 /*
- * bci_action_stem
+ * bci_action_stem_bound
+ * bci_action_stem_bound_serif
+ * bci_action_stem_bound_round
+ * bci_action_stem_bound_round_serif
+ *
+ * Higher-level routines for calling `bci_stem_bound'.
+ */
+
+unsigned char FPGM(bci_action_stem_bound) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_bound,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    0,
+    bci_stem_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_stem_bound_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_bound_serif,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    1,
+    bci_stem_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_stem_bound_round) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_bound_round,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    0,
+    bci_stem_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_stem_bound_round_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_bound_round_serif,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    1,
+    bci_stem_bound,
+  CALL,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_stem
  *
  *   Handle the STEM action to align two edges of a stem.
  *
- *   See `bci_action_stem_bound' for more details.
+ *   See `bci_stem_bound' for more details.
  *
  * in: edge2_is_serif
  *     edge_is_round
@@ -2247,18 +2927,18 @@ unsigned char FPGM(bci_action_stem_bound) [] =
  *      sal_temp2
  *      sal_temp3
  *
- * uses: bci_action_stem_common
+ * uses: bci_stem_common
  */
 
-unsigned char FPGM(bci_action_stem) [] =
+unsigned char FPGM(bci_stem) [] =
 {
 
   PUSHB_1,
-    bci_action_stem,
+    bci_stem,
   FDEF,
 
   PUSHB_1,
-    bci_action_stem_common,
+    bci_stem_common,
   CALL,
 
   POP,
@@ -2293,7 +2973,85 @@ unsigned char FPGM(bci_action_stem) [] =
 
 
 /*
- * bci_action_link
+ * bci_action_stem
+ * bci_action_stem_serif
+ * bci_action_stem_round
+ * bci_action_stem_round_serif
+ *
+ * Higher-level routines for calling `bci_stem'.
+ */
+
+unsigned char FPGM(bci_action_stem) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    0,
+    bci_stem,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_stem_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_serif,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    1,
+    bci_stem,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_stem_round) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_round,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    0,
+    bci_stem,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_stem_round_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_stem_round_serif,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    1,
+    bci_stem,
+  CALL,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_link
  *
  *   Handle the LINK action to link an edge to another one.
  *
@@ -2304,11 +3062,11 @@ unsigned char FPGM(bci_action_stem) [] =
  *     ... stuff for bci_align_segments (base) ...
  */
 
-unsigned char FPGM(bci_action_link) [] =
+unsigned char FPGM(bci_link) [] =
 {
 
   PUSHB_1,
-    bci_action_link,
+    bci_link,
   FDEF,
 
   PUSHB_1,
@@ -2350,7 +3108,85 @@ unsigned char FPGM(bci_action_link) [] =
 
 
 /*
- * bci_action_anchor
+ * bci_action_link
+ * bci_action_link_serif
+ * bci_action_link_round
+ * bci_action_link_round_serif
+ *
+ * Higher-level routines for calling `bci_link'.
+ */
+
+unsigned char FPGM(bci_action_link) [] =
+{
+
+  PUSHB_1,
+    bci_action_link,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    0,
+    bci_link,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_link_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_link_serif,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    1,
+    bci_link,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_link_round) [] =
+{
+
+  PUSHB_1,
+    bci_action_link_round,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    0,
+    bci_link,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_link_round_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_link_round_serif,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    1,
+    bci_link,
+  CALL,
+
+  ENDF,
+
+};
+
+
+/*
+ * bci_anchor
  *
  *   Handle the ANCHOR action to align two edges
  *   and to set the edge anchor.
@@ -2401,11 +3237,11 @@ unsigned char FPGM(bci_action_link) [] =
 #undef sal_org_len
 #define sal_org_len sal_temp3
 
-unsigned char FPGM(bci_action_anchor) [] =
+unsigned char FPGM(bci_anchor) [] =
 {
 
   PUSHB_1,
-    bci_action_anchor,
+    bci_anchor,
   FDEF,
 
   /* store anchor point number in `sal_anchor' */
@@ -2566,6 +3402,84 @@ unsigned char FPGM(bci_action_anchor) [] =
 
 
 /*
+ * bci_action_anchor
+ * bci_action_anchor_serif
+ * bci_action_anchor_round
+ * bci_action_anchor_round_serif
+ *
+ * Higher-level routines for calling `bci_anchor'.
+ */
+
+unsigned char FPGM(bci_action_anchor) [] =
+{
+
+  PUSHB_1,
+    bci_action_anchor,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    0,
+    bci_anchor,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_anchor_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_anchor_serif,
+  FDEF,
+
+  PUSHB_3,
+    0,
+    1,
+    bci_anchor,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_anchor_round) [] =
+{
+
+  PUSHB_1,
+    bci_action_anchor_round,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    0,
+    bci_anchor,
+  CALL,
+
+  ENDF,
+
+};
+
+unsigned char FPGM(bci_action_anchor_round_serif) [] =
+{
+
+  PUSHB_1,
+    bci_action_anchor_round_serif,
+  FDEF,
+
+  PUSHB_3,
+    1,
+    1,
+    bci_anchor,
+  CALL,
+
+  ENDF,
+
+};
+
+
+/*
  * bci_action_blue_anchor
  *
  *   Handle the BLUE_ANCHOR action to align an edge with a blue zone
@@ -2650,16 +3564,16 @@ unsigned char FPGM(bci_action_blue) [] =
 
 
 /*
- * bci_action_serif_common
+ * bci_serif_common
  *
  *   Common code for bci_action_serif routines.
  */
 
-unsigned char FPGM(bci_action_serif_common) [] =
+unsigned char FPGM(bci_serif_common) [] =
 {
 
   PUSHB_1,
-    bci_action_serif_common,
+    bci_serif_common,
   FDEF,
 
   PUSHB_1,
@@ -2837,7 +3751,7 @@ unsigned char FPGM(bci_lower_upper_bound) [] =
  *     base_point (in twilight zone)
  *     ... stuff for bci_align_segments (serif) ...
  *
- * uses: bci_action_serif_common
+ * uses: bci_serif_common
  */
 
 unsigned char FPGM(bci_action_serif) [] =
@@ -2848,7 +3762,7 @@ unsigned char FPGM(bci_action_serif) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_common,
+    bci_serif_common,
   CALL,
 
   MDAP_noround, /* set rp0 and rp1 to `serif_point' */
@@ -2875,7 +3789,7 @@ unsigned char FPGM(bci_action_serif) [] =
  *     edge[-1] (in twilight zone)
  *     ... stuff for bci_align_segments (serif) ...
  *
- * uses: bci_action_serif_common
+ * uses: bci_serif_common
  *       bci_lower_bound
  */
 
@@ -2887,7 +3801,7 @@ unsigned char FPGM(bci_action_serif_lower_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_common,
+    bci_serif_common,
   CALL,
 
   PUSHB_1,
@@ -2910,7 +3824,7 @@ unsigned char FPGM(bci_action_serif_lower_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (serif) ...
  *
- * uses: bci_action_serif_common
+ * uses: bci_serif_common
  *       bci_upper_bound
  */
 
@@ -2922,7 +3836,7 @@ unsigned char FPGM(bci_action_serif_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_common,
+    bci_serif_common,
   CALL,
 
   PUSHB_1,
@@ -2946,7 +3860,7 @@ unsigned char FPGM(bci_action_serif_upper_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (serif) ...
  *
- * uses: bci_action_serif_common
+ * uses: bci_serif_common
  *       bci_lower_upper_bound
  */
 
@@ -2962,7 +3876,7 @@ unsigned char FPGM(bci_action_serif_lower_upper_bound) [] =
   SZPS, /* set zp0, zp1, and zp2 to twilight zone 0 */
 
   PUSHB_1,
-    bci_action_serif_common,
+    bci_serif_common,
   CALL,
 
   PUSHB_1,
@@ -2975,16 +3889,16 @@ unsigned char FPGM(bci_action_serif_lower_upper_bound) [] =
 
 
 /*
- * bci_action_serif_anchor_common
+ * bci_serif_anchor_common
  *
  *   Common code for bci_action_serif_anchor routines.
  */
 
-unsigned char FPGM(bci_action_serif_anchor_common) [] =
+unsigned char FPGM(bci_serif_anchor_common) [] =
 {
 
   PUSHB_1,
-    bci_action_serif_anchor_common,
+    bci_serif_anchor_common,
   FDEF,
 
   PUSHB_1,
@@ -3024,7 +3938,7 @@ unsigned char FPGM(bci_action_serif_anchor_common) [] =
  * in: edge_point (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_anchor_common
+ * uses: bci_serif_anchor_common
  */
 
 unsigned char FPGM(bci_action_serif_anchor) [] =
@@ -3035,7 +3949,7 @@ unsigned char FPGM(bci_action_serif_anchor) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_anchor_common,
+    bci_serif_anchor_common,
   CALL,
 
   MDAP_noround, /* set rp0 and rp1 to `edge' */
@@ -3062,7 +3976,7 @@ unsigned char FPGM(bci_action_serif_anchor) [] =
  *     edge[-1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_anchor_common
+ * uses: bci_serif_anchor_common
  *       bci_lower_bound
  */
 
@@ -3074,7 +3988,7 @@ unsigned char FPGM(bci_action_serif_anchor_lower_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_anchor_common,
+    bci_serif_anchor_common,
   CALL,
 
   PUSHB_1,
@@ -3097,7 +4011,7 @@ unsigned char FPGM(bci_action_serif_anchor_lower_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_anchor_common
+ * uses: bci_serif_anchor_common
  *       bci_upper_bound
  */
 
@@ -3109,7 +4023,7 @@ unsigned char FPGM(bci_action_serif_anchor_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_anchor_common,
+    bci_serif_anchor_common,
   CALL,
 
   PUSHB_1,
@@ -3133,7 +4047,7 @@ unsigned char FPGM(bci_action_serif_anchor_upper_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_anchor_common
+ * uses: bci_serif_anchor_common
  *       bci_lower_upper_bound
  */
 
@@ -3145,7 +4059,7 @@ unsigned char FPGM(bci_action_serif_anchor_lower_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_anchor_common,
+    bci_serif_anchor_common,
   CALL,
 
   PUSHB_1,
@@ -3158,16 +4072,16 @@ unsigned char FPGM(bci_action_serif_anchor_lower_upper_bound) [] =
 
 
 /*
- * bci_action_serif_link1_common
+ * bci_serif_link1_common
  *
  *   Common code for bci_action_serif_link1 routines.
  */
 
-unsigned char FPGM(bci_action_serif_link1_common) [] =
+unsigned char FPGM(bci_serif_link1_common) [] =
 {
 
   PUSHB_1,
-    bci_action_serif_link1_common,
+    bci_serif_link1_common,
   FDEF,
 
   PUSHB_1,
@@ -3269,7 +4183,7 @@ unsigned char FPGM(bci_action_serif_link1_common) [] =
  *     after_point (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link1_common
+ * uses: bci_serif_link1_common
  */
 
 unsigned char FPGM(bci_action_serif_link1) [] =
@@ -3280,7 +4194,7 @@ unsigned char FPGM(bci_action_serif_link1) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link1_common,
+    bci_serif_link1_common,
   CALL,
 
   MDAP_noround, /* set rp0 and rp1 to `edge' */
@@ -3309,7 +4223,7 @@ unsigned char FPGM(bci_action_serif_link1) [] =
  *     edge[-1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link1_common
+ * uses: bci_serif_link1_common
  *       bci_lower_bound
  */
 
@@ -3321,7 +4235,7 @@ unsigned char FPGM(bci_action_serif_link1_lower_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link1_common,
+    bci_serif_link1_common,
   CALL,
 
   PUSHB_1,
@@ -3346,7 +4260,7 @@ unsigned char FPGM(bci_action_serif_link1_lower_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link1_common
+ * uses: bci_serif_link1_common
  *       bci_upper_bound
  */
 
@@ -3358,7 +4272,7 @@ unsigned char FPGM(bci_action_serif_link1_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link1_common,
+    bci_serif_link1_common,
   CALL,
 
   PUSHB_1,
@@ -3384,7 +4298,7 @@ unsigned char FPGM(bci_action_serif_link1_upper_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link1_common
+ * uses: bci_serif_link1_common
  *       bci_lower_upper_bound
  */
 
@@ -3396,7 +4310,7 @@ unsigned char FPGM(bci_action_serif_link1_lower_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link1_common,
+    bci_serif_link1_common,
   CALL,
 
   PUSHB_1,
@@ -3409,16 +4323,16 @@ unsigned char FPGM(bci_action_serif_link1_lower_upper_bound) [] =
 
 
 /*
- * bci_action_serif_link2_common
+ * bci_serif_link2_common
  *
  *   Common code for bci_action_serif_link2 routines.
  */
 
-unsigned char FPGM(bci_action_serif_link2_common) [] =
+unsigned char FPGM(bci_serif_link2_common) [] =
 {
 
   PUSHB_1,
-    bci_action_serif_link2_common,
+    bci_serif_link2_common,
   FDEF,
 
   PUSHB_1,
@@ -3463,7 +4377,7 @@ unsigned char FPGM(bci_action_serif_link2_common) [] =
  * in: edge_point (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link2_common
+ * uses: bci_serif_link2_common
  */
 
 unsigned char FPGM(bci_action_serif_link2) [] =
@@ -3474,7 +4388,7 @@ unsigned char FPGM(bci_action_serif_link2) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link2_common,
+    bci_serif_link2_common,
   CALL,
 
   MDAP_noround, /* set rp0 and rp1 to `edge' */
@@ -3501,7 +4415,7 @@ unsigned char FPGM(bci_action_serif_link2) [] =
  *     edge[-1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link2_common
+ * uses: bci_serif_link2_common
  *       bci_lower_bound
  */
 
@@ -3513,7 +4427,7 @@ unsigned char FPGM(bci_action_serif_link2_lower_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link2_common,
+    bci_serif_link2_common,
   CALL,
 
   PUSHB_1,
@@ -3536,7 +4450,7 @@ unsigned char FPGM(bci_action_serif_link2_lower_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link2_common
+ * uses: bci_serif_link2_common
  *       bci_upper_bound
  */
 
@@ -3548,7 +4462,7 @@ unsigned char FPGM(bci_action_serif_link2_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link2_common,
+    bci_serif_link2_common,
   CALL,
 
   PUSHB_1,
@@ -3572,7 +4486,7 @@ unsigned char FPGM(bci_action_serif_link2_upper_bound) [] =
  *     edge[1] (in twilight zone)
  *     ... stuff for bci_align_segments (edge) ...
  *
- * uses: bci_action_serif_link2_common
+ * uses: bci_serif_link2_common
  *       bci_lower_upper_bound
  */
 
@@ -3584,7 +4498,7 @@ unsigned char FPGM(bci_action_serif_link2_lower_upper_bound) [] =
   FDEF,
 
   PUSHB_1,
-    bci_action_serif_link2_common,
+    bci_serif_link2_common,
   CALL,
 
   PUSHB_1,
@@ -3641,13 +4555,37 @@ unsigned char FPGM(bci_handle_action) [] =
  *       bci_action_ip_between
  *
  *       bci_action_adjust_bound
+ *       bci_action_adjust_bound_serif
+ *       bci_action_adjust_bound_round
+ *       bci_action_adjust_bound_round_serif
+ *
  *       bci_action_stem_bound
+ *       bci_action_stem_bound_serif
+ *       bci_action_stem_bound_round
+ *       bci_action_stem_bound_round_serif
  *
  *       bci_action_link
+ *       bci_action_link_serif
+ *       bci_action_link_round
+ *       bci_action_link_round_serif
+ *
  *       bci_action_anchor
+ *       bci_action_anchor_serif
+ *       bci_action_anchor_round
+ *       bci_action_anchor_round_serif
+ *
  *       bci_action_blue_anchor
+ *
  *       bci_action_adjust
+ *       bci_action_adjust_serif
+ *       bci_action_adjust_round
+ *       bci_action_adjust_round_serif
+ *
  *       bci_action_stem
+ *       bci_action_stem_serif
+ *       bci_action_stem_round
+ *       bci_action_stem_round_serif
+ *
  *       bci_action_blue
  *
  *       bci_action_serif
@@ -3734,10 +4672,31 @@ TA_table_build_fpgm(FT_Byte** fpgm,
             + sizeof (FPGM(bci_blue_round_b))
             + sizeof (FPGM(bci_decrement_component_counter))
             + sizeof (FPGM(bci_get_point_extrema))
+            + sizeof (FPGM(bci_nibbles))
 
             + sizeof (FPGM(bci_create_segment))
             + sizeof (FPGM(bci_create_segments))
+            + sizeof (FPGM(bci_create_segments_0))
+            + sizeof (FPGM(bci_create_segments_1))
+            + sizeof (FPGM(bci_create_segments_2))
+            + sizeof (FPGM(bci_create_segments_3))
+            + sizeof (FPGM(bci_create_segments_4))
+            + sizeof (FPGM(bci_create_segments_5))
+            + sizeof (FPGM(bci_create_segments_6))
+            + sizeof (FPGM(bci_create_segments_7))
+            + sizeof (FPGM(bci_create_segments_8))
+            + sizeof (FPGM(bci_create_segments_9))
             + sizeof (FPGM(bci_create_segments_composite))
+            + sizeof (FPGM(bci_create_segments_composite_0))
+            + sizeof (FPGM(bci_create_segments_composite_1))
+            + sizeof (FPGM(bci_create_segments_composite_2))
+            + sizeof (FPGM(bci_create_segments_composite_3))
+            + sizeof (FPGM(bci_create_segments_composite_4))
+            + sizeof (FPGM(bci_create_segments_composite_5))
+            + sizeof (FPGM(bci_create_segments_composite_6))
+            + sizeof (FPGM(bci_create_segments_composite_7))
+            + sizeof (FPGM(bci_create_segments_composite_8))
+            + sizeof (FPGM(bci_create_segments_composite_9))
             + sizeof (FPGM(bci_align_segment))
             + sizeof (FPGM(bci_align_segments))
 
@@ -3752,12 +4711,12 @@ TA_table_build_fpgm(FT_Byte** fpgm,
             + sizeof (FPGM(bci_ip_between_align_point))
             + sizeof (FPGM(bci_ip_between_align_points))
 
-            + sizeof (FPGM(bci_action_adjust_common))
-            + sizeof (FPGM(bci_action_stem_common))
-            + sizeof (FPGM(bci_action_serif_common))
-            + sizeof (FPGM(bci_action_serif_anchor_common))
-            + sizeof (FPGM(bci_action_serif_link1_common))
-            + sizeof (FPGM(bci_action_serif_link2_common))
+            + sizeof (FPGM(bci_adjust_common))
+            + sizeof (FPGM(bci_stem_common))
+            + sizeof (FPGM(bci_serif_common))
+            + sizeof (FPGM(bci_serif_anchor_common))
+            + sizeof (FPGM(bci_serif_link1_common))
+            + sizeof (FPGM(bci_serif_link2_common))
 
             + sizeof (FPGM(bci_lower_bound))
             + sizeof (FPGM(bci_upper_bound))
@@ -3768,13 +4727,37 @@ TA_table_build_fpgm(FT_Byte** fpgm,
             + sizeof (FPGM(bci_action_ip_on))
             + sizeof (FPGM(bci_action_ip_between))
 
+            + sizeof (FPGM(bci_adjust_bound))
             + sizeof (FPGM(bci_action_adjust_bound))
+            + sizeof (FPGM(bci_action_adjust_bound_serif))
+            + sizeof (FPGM(bci_action_adjust_bound_round))
+            + sizeof (FPGM(bci_action_adjust_bound_round_serif))
+            + sizeof (FPGM(bci_stem_bound))
             + sizeof (FPGM(bci_action_stem_bound))
+            + sizeof (FPGM(bci_action_stem_bound_serif))
+            + sizeof (FPGM(bci_action_stem_bound_round))
+            + sizeof (FPGM(bci_action_stem_bound_round_serif))
+            + sizeof (FPGM(bci_link))
             + sizeof (FPGM(bci_action_link))
+            + sizeof (FPGM(bci_action_link_serif))
+            + sizeof (FPGM(bci_action_link_round))
+            + sizeof (FPGM(bci_action_link_round_serif))
+            + sizeof (FPGM(bci_anchor))
             + sizeof (FPGM(bci_action_anchor))
+            + sizeof (FPGM(bci_action_anchor_serif))
+            + sizeof (FPGM(bci_action_anchor_round))
+            + sizeof (FPGM(bci_action_anchor_round_serif))
             + sizeof (FPGM(bci_action_blue_anchor))
+            + sizeof (FPGM(bci_adjust))
             + sizeof (FPGM(bci_action_adjust))
+            + sizeof (FPGM(bci_action_adjust_serif))
+            + sizeof (FPGM(bci_action_adjust_round))
+            + sizeof (FPGM(bci_action_adjust_round_serif))
+            + sizeof (FPGM(bci_stem))
             + sizeof (FPGM(bci_action_stem))
+            + sizeof (FPGM(bci_action_stem_serif))
+            + sizeof (FPGM(bci_action_stem_round))
+            + sizeof (FPGM(bci_action_stem_round_serif))
             + sizeof (FPGM(bci_action_blue))
             + sizeof (FPGM(bci_action_serif))
             + sizeof (FPGM(bci_action_serif_lower_bound))
@@ -3823,10 +4806,31 @@ TA_table_build_fpgm(FT_Byte** fpgm,
   COPY_FPGM(bci_blue_round_b);
   COPY_FPGM(bci_decrement_component_counter);
   COPY_FPGM(bci_get_point_extrema);
+  COPY_FPGM(bci_nibbles);
 
   COPY_FPGM(bci_create_segment);
   COPY_FPGM(bci_create_segments);
+  COPY_FPGM(bci_create_segments_0);
+  COPY_FPGM(bci_create_segments_1);
+  COPY_FPGM(bci_create_segments_2);
+  COPY_FPGM(bci_create_segments_3);
+  COPY_FPGM(bci_create_segments_4);
+  COPY_FPGM(bci_create_segments_5);
+  COPY_FPGM(bci_create_segments_6);
+  COPY_FPGM(bci_create_segments_7);
+  COPY_FPGM(bci_create_segments_8);
+  COPY_FPGM(bci_create_segments_9);
   COPY_FPGM(bci_create_segments_composite);
+  COPY_FPGM(bci_create_segments_composite_0);
+  COPY_FPGM(bci_create_segments_composite_1);
+  COPY_FPGM(bci_create_segments_composite_2);
+  COPY_FPGM(bci_create_segments_composite_3);
+  COPY_FPGM(bci_create_segments_composite_4);
+  COPY_FPGM(bci_create_segments_composite_5);
+  COPY_FPGM(bci_create_segments_composite_6);
+  COPY_FPGM(bci_create_segments_composite_7);
+  COPY_FPGM(bci_create_segments_composite_8);
+  COPY_FPGM(bci_create_segments_composite_9);
   COPY_FPGM(bci_align_segment);
   COPY_FPGM(bci_align_segments);
 
@@ -3841,12 +4845,12 @@ TA_table_build_fpgm(FT_Byte** fpgm,
   COPY_FPGM(bci_ip_between_align_point);
   COPY_FPGM(bci_ip_between_align_points);
 
-  COPY_FPGM(bci_action_adjust_common);
-  COPY_FPGM(bci_action_stem_common);
-  COPY_FPGM(bci_action_serif_common);
-  COPY_FPGM(bci_action_serif_anchor_common);
-  COPY_FPGM(bci_action_serif_link1_common);
-  COPY_FPGM(bci_action_serif_link2_common);
+  COPY_FPGM(bci_adjust_common);
+  COPY_FPGM(bci_stem_common);
+  COPY_FPGM(bci_serif_common);
+  COPY_FPGM(bci_serif_anchor_common);
+  COPY_FPGM(bci_serif_link1_common);
+  COPY_FPGM(bci_serif_link2_common);
 
   COPY_FPGM(bci_lower_bound);
   COPY_FPGM(bci_upper_bound);
@@ -3857,13 +4861,37 @@ TA_table_build_fpgm(FT_Byte** fpgm,
   COPY_FPGM(bci_action_ip_on);
   COPY_FPGM(bci_action_ip_between);
 
+  COPY_FPGM(bci_adjust_bound);
   COPY_FPGM(bci_action_adjust_bound);
+  COPY_FPGM(bci_action_adjust_bound_serif);
+  COPY_FPGM(bci_action_adjust_bound_round);
+  COPY_FPGM(bci_action_adjust_bound_round_serif);
+  COPY_FPGM(bci_stem_bound);
   COPY_FPGM(bci_action_stem_bound);
+  COPY_FPGM(bci_action_stem_bound_serif);
+  COPY_FPGM(bci_action_stem_bound_round);
+  COPY_FPGM(bci_action_stem_bound_round_serif);
+  COPY_FPGM(bci_link);
   COPY_FPGM(bci_action_link);
+  COPY_FPGM(bci_action_link_serif);
+  COPY_FPGM(bci_action_link_round);
+  COPY_FPGM(bci_action_link_round_serif);
+  COPY_FPGM(bci_anchor);
   COPY_FPGM(bci_action_anchor);
+  COPY_FPGM(bci_action_anchor_serif);
+  COPY_FPGM(bci_action_anchor_round);
+  COPY_FPGM(bci_action_anchor_round_serif);
   COPY_FPGM(bci_action_blue_anchor);
+  COPY_FPGM(bci_adjust);
   COPY_FPGM(bci_action_adjust);
+  COPY_FPGM(bci_action_adjust_serif);
+  COPY_FPGM(bci_action_adjust_round);
+  COPY_FPGM(bci_action_adjust_round_serif);
+  COPY_FPGM(bci_stem);
   COPY_FPGM(bci_action_stem);
+  COPY_FPGM(bci_action_stem_serif);
+  COPY_FPGM(bci_action_stem_round);
+  COPY_FPGM(bci_action_stem_round_serif);
   COPY_FPGM(bci_action_blue);
   COPY_FPGM(bci_action_serif);
   COPY_FPGM(bci_action_serif_lower_bound);

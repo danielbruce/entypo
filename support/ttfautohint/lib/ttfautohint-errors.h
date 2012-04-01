@@ -61,6 +61,8 @@ TA_ERRORDEF_(Missing_Unicode_CMap,     0xF2, \
              "missing Unicode character map")
 TA_ERRORDEF_(Canceled,                 0xF3, \
              "execution canceled")
+TA_ERRORDEF_(Already_Processed,        0xF4, \
+             "font already processed by ttfautohint")
 
 #ifdef TA_ERROR_END_LIST
   TA_ERROR_END_LIST

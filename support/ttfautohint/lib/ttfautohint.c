@@ -49,13 +49,18 @@ TTF_autohint(const char* options,
 
   FT_Long hinting_range_min = -1;
   FT_Long hinting_range_max = -1;
+  FT_Long hinting_limit = -1;
 
   TA_Progress_Func progress;
   void* progress_data;
+  TA_Info_Func info;
+  void* info_data;
 
   FT_Bool ignore_permissions = 0;
   FT_Bool pre_hinting = 0;
+  FT_Bool increase_x_height = 0;
   FT_UInt fallback_script = 0;
+  FT_Bool symbol = 0;
 
   const char* op;
 
@@ -100,6 +105,8 @@ TTF_autohint(const char* options,
       error_stringp = va_arg(ap, const unsigned char**);
     else if (COMPARE("fallback-script"))
       fallback_script = va_arg(ap, FT_UInt);
+    else if (COMPARE("hinting-limit"))
+      hinting_limit = (FT_Long)va_arg(ap, FT_UInt);
     else if (COMPARE("hinting-range-max"))
       hinting_range_max = (FT_Long)va_arg(ap, FT_UInt);
     else if (COMPARE("hinting-range-min"))
@@ -122,11 +129,17 @@ TTF_autohint(const char* options,
       in_buf = NULL;
       in_len = 0;
     }
+    else if (COMPARE("increase-x-height"))
+      increase_x_height = (FT_Bool)va_arg(ap, FT_Int);
     else if (COMPARE("out-buffer"))
     {
       out_file = NULL;
       out_bufp = va_arg(ap, char**);
     }
+    else if (COMPARE("info-callback"))
+      info = va_arg(ap, TA_Info_Func);
+    else if (COMPARE("info-callback-data"))
+      info_data = va_arg(ap, void*);
     else if (COMPARE("out-buffer-len"))
     {
       out_file = NULL;
@@ -144,6 +157,8 @@ TTF_autohint(const char* options,
       progress = va_arg(ap, TA_Progress_Func);
     else if (COMPARE("progress-callback-data"))
       progress_data = va_arg(ap, void*);
+    else if (COMPARE("symbol"))
+      symbol = (FT_Bool)va_arg(ap, FT_Int);
 
     /*
       x-height-snapping-exceptions
@@ -186,7 +201,7 @@ TTF_autohint(const char* options,
     goto Err1;
   }
   if (hinting_range_min < 0)
-    hinting_range_min = 8;
+    hinting_range_min = TA_HINTING_RANGE_MIN;
 
   if (hinting_range_max >= 0 && hinting_range_max < hinting_range_min)
   {
@@ -194,18 +209,32 @@ TTF_autohint(const char* options,
     goto Err1;
   }
   if (hinting_range_max < 0)
-    hinting_range_max = 1000;
+    hinting_range_max = TA_HINTING_RANGE_MAX;
+
+  /* value 0 is valid */
+  if (hinting_limit > 0 && hinting_limit < hinting_range_max)
+  {
+    error = FT_Err_Invalid_Argument;
+    goto Err1;
+  }
+  if (hinting_limit < 0)
+    hinting_limit = TA_HINTING_LIMIT;
 
   font->hinting_range_min = (FT_UInt)hinting_range_min;
   font->hinting_range_max = (FT_UInt)hinting_range_max;
+  font->hinting_limit = (FT_UInt)hinting_limit;
 
   font->progress = progress;
   font->progress_data = progress_data;
+  font->info = info;
+  font->info_data = info_data;
 
   font->ignore_permissions = ignore_permissions;
   font->pre_hinting = pre_hinting;
+  font->increase_x_height = increase_x_height;
   /* restrict value to two bits */
   font->fallback_script = fallback_script & 3;
+  font->symbol = symbol;
 
   /* now start with processing the data */
 
@@ -235,10 +264,20 @@ TTF_autohint(const char* options,
   for (i = 0; i < font->num_sfnts; i++)
   {
     SFNT* sfnt = &font->sfnts[i];
+    FT_UInt idx;
 
 
     error = FT_New_Memory_Face(font->lib, font->in_buf, font->in_len,
                                i, &sfnt->face);
+
+    /* assure that the font hasn't been already processed by ttfautohint */
+    idx = FT_Get_Name_Index(sfnt->face, TTFAUTOHINT_GLYPH);
+    if (idx)
+    {
+      error = TA_Err_Already_Processed;
+      goto Err;
+    }
+
     if (error)
       goto Err;
 
@@ -322,6 +361,14 @@ TTF_autohint(const char* options,
       if (error)
         goto Err;
       error = TA_sfnt_update_GPOS_table(sfnt, font);
+      if (error)
+        goto Err;
+    }
+
+    if (font->info)
+    {
+      /* add info about ttfautohint to the version string */
+      error = TA_sfnt_update_name_table(sfnt, font);
       if (error)
         goto Err;
     }

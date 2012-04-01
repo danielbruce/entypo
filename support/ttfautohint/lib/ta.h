@@ -30,6 +30,10 @@
 #include <ttfautohint.h>
 
 
+#define TTFAUTOHINT_GLYPH ".ttfautohint"
+#define TTFAUTOHINT_GLYPH_FIRST_BYTE "\x0C" /* first byte is string length */
+#define TTFAUTOHINT_GLYPH_LEN 13
+
 /* these macros convert 16bit and 32bit numbers into single bytes */
 /* using the byte order needed within SFNT files */
 
@@ -153,6 +157,7 @@ typedef struct SFNT_
   FT_ULong head_idx;
   FT_ULong hmtx_idx;
   FT_ULong maxp_idx;
+  FT_ULong name_idx;
   FT_ULong post_idx;
   FT_ULong OS2_idx;
   FT_ULong GPOS_idx;
@@ -191,13 +196,18 @@ typedef struct FONT_
   /* configuration options */
   TA_Progress_Func progress;
   void* progress_data;
+  TA_Info_Func info;
+  void* info_data;
   FT_UInt hinting_range_min;
   FT_UInt hinting_range_max;
+  FT_UInt hinting_limit;
   FT_Bool pre_hinting;
+  FT_Bool increase_x_height;
   FT_Bool no_x_height_snapping;
   FT_Byte* x_height_snapping_exceptions;
   FT_Bool ignore_permissions;
   FT_UInt fallback_script;
+  FT_Bool symbol;
 } FONT;
 
 
@@ -281,6 +291,10 @@ TA_sfnt_update_maxp_table(SFNT* sfnt,
 
 FT_Error
 TA_sfnt_update_post_table(SFNT* sfnt,
+                          FONT* font);
+
+FT_Error
+TA_sfnt_update_name_table(SFNT* sfnt,
                           FONT* font);
 
 FT_Error

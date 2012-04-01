@@ -544,9 +544,20 @@ ta_latin_metrics_scale_dim(TA_LatinMetrics metrics,
 
     if (blue)
     {
-      FT_Pos scaled = FT_MulFix(blue->shoot.org, scaler->y_scale);
-      FT_Pos fitted = (scaled + 40) & ~63;
+      FT_Pos scaled;
+      FT_Pos threshold;
+      FT_Pos fitted;
 
+
+      scaled = FT_MulFix(blue->shoot.org, scaler->y_scale);
+
+      threshold = 40;
+      if ((scaler->flags & TA_SCALER_FLAG_INCREASE_X_HEIGHT)
+          && metrics->root.scaler.face->size->metrics.x_ppem < 15
+          && metrics->root.scaler.face->size->metrics.x_ppem > 5)
+        threshold = 52;
+
+      fitted = (scaled + threshold) & ~63;
 
       if (scaled != fitted)
       {
@@ -668,6 +679,7 @@ ta_latin_metrics_scale(TA_LatinMetrics metrics,
 {
   metrics->root.scaler.render_mode = scaler->render_mode;
   metrics->root.scaler.face = scaler->face;
+  metrics->root.scaler.flags = scaler->flags;
 
   ta_latin_metrics_scale_dim(metrics, scaler, TA_DIMENSION_HORZ);
   ta_latin_metrics_scale_dim(metrics, scaler, TA_DIMENSION_VERT);
@@ -1419,7 +1431,7 @@ ta_latin_hints_compute_blue_edges(TA_GlyphHints hints,
 
 static FT_Error
 ta_latin_hints_init(TA_GlyphHints hints,
-                     TA_LatinMetrics metrics)
+                    TA_LatinMetrics metrics)
 {
   FT_Render_Mode mode;
   FT_UInt32 scaler_flags, other_flags;

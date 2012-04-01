@@ -43,6 +43,7 @@ TA_sfnt_split_into_SFNT_tables(SFNT* sfnt,
   sfnt->head_idx = MISSING;
   sfnt->hmtx_idx = MISSING;
   sfnt->maxp_idx = MISSING;
+  sfnt->name_idx = MISSING;
   sfnt->post_idx = MISSING;
   sfnt->OS2_idx = MISSING;
   sfnt->GPOS_idx = MISSING;
@@ -63,12 +64,15 @@ TA_sfnt_split_into_SFNT_tables(SFNT* sfnt,
     error = FT_Sfnt_Table_Info(sfnt->face, i, &tag, &len);
     if (error)
     {
-      /* this ignores both missing and zero-length tables */
       if (error == FT_Err_Table_Missing)
         continue;
       else
         return error;
     }
+
+    /* ignore zero-length tables */
+    else if (!len)
+      continue;
 
     /* ignore tables which we are going to create by ourselves, */
     /* or which would become invalid otherwise */
@@ -130,6 +134,8 @@ TA_sfnt_split_into_SFNT_tables(SFNT* sfnt,
       sfnt->max_components = buf[MAXP_MAX_COMPONENTS_OFFSET] << 8;
       sfnt->max_components += buf[MAXP_MAX_COMPONENTS_OFFSET + 1];
     }
+    else if (tag == TTAG_name)
+      sfnt->name_idx = j;
     else if (tag == TTAG_post)
       sfnt->post_idx = j;
     else if (tag == TTAG_OS2)

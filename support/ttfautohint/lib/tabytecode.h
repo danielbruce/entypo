@@ -305,11 +305,14 @@
 #define sal_anchor sal_func + 1
 #define sal_point_min sal_anchor + 1
 #define sal_point_max sal_point_min + 1
-#define sal_segment_offset sal_point_max + 1 /* must be last */
+#define sal_base sal_point_max + 1
+#define sal_num_packed_segments sal_base + 1
+#define sal_segment_offset sal_num_packed_segments + 1 /* must be last */
 
 
 /* bytecode function numbers */
 
+/* 0 */
 #define bci_round 0
 #define bci_compute_stem_width bci_round + 1
 #define bci_loop bci_compute_stem_width + 1
@@ -317,67 +320,148 @@
 #define bci_blue_round bci_cvt_rescale + 1
 #define bci_decrement_component_counter bci_blue_round + 1
 #define bci_get_point_extrema bci_decrement_component_counter + 1
+#define bci_nibbles bci_get_point_extrema + 1
 
-#define bci_create_segment bci_get_point_extrema + 1
+/* 8 */
+#define bci_create_segment bci_nibbles + 1
 #define bci_create_segments bci_create_segment + 1
-#define bci_create_segments_composite bci_create_segments + 1
-#define bci_align_segment bci_create_segments_composite + 1
+
+/* 10 */
+/* the next ten entries must stay in this order */
+#define bci_create_segments_0 bci_create_segments + 1
+#define bci_create_segments_1 bci_create_segments_0 + 1
+#define bci_create_segments_2 bci_create_segments_1 + 1
+#define bci_create_segments_3 bci_create_segments_2 + 1
+#define bci_create_segments_4 bci_create_segments_3 + 1
+#define bci_create_segments_5 bci_create_segments_4 + 1
+#define bci_create_segments_6 bci_create_segments_5 + 1
+#define bci_create_segments_7 bci_create_segments_6 + 1
+#define bci_create_segments_8 bci_create_segments_7 + 1
+#define bci_create_segments_9 bci_create_segments_8 + 1
+
+#define bci_create_segments_composite bci_create_segments_9 + 1
+
+/* 21 */
+/* the next ten entries must stay in this order */
+#define bci_create_segments_composite_0 bci_create_segments_composite + 1
+#define bci_create_segments_composite_1 bci_create_segments_composite_0 + 1
+#define bci_create_segments_composite_2 bci_create_segments_composite_1 + 1
+#define bci_create_segments_composite_3 bci_create_segments_composite_2 + 1
+#define bci_create_segments_composite_4 bci_create_segments_composite_3 + 1
+#define bci_create_segments_composite_5 bci_create_segments_composite_4 + 1
+#define bci_create_segments_composite_6 bci_create_segments_composite_5 + 1
+#define bci_create_segments_composite_7 bci_create_segments_composite_6 + 1
+#define bci_create_segments_composite_8 bci_create_segments_composite_7 + 1
+#define bci_create_segments_composite_9 bci_create_segments_composite_8 + 1
+
+/* 31 */
+#define bci_align_segment bci_create_segments_composite_9 + 1
 #define bci_align_segments bci_align_segment + 1
 
+/* 33 */
 #define bci_scale_contour bci_align_segments + 1
 #define bci_scale_glyph bci_scale_contour + 1
 #define bci_scale_composite_glyph bci_scale_glyph + 1
 #define bci_shift_contour bci_scale_composite_glyph + 1
 #define bci_shift_subglyph bci_shift_contour + 1
 
+/* 38 */
 #define bci_ip_outer_align_point bci_shift_subglyph + 1
 #define bci_ip_on_align_points bci_ip_outer_align_point + 1
 #define bci_ip_between_align_point bci_ip_on_align_points + 1
 #define bci_ip_between_align_points bci_ip_between_align_point + 1
 
-#define bci_action_adjust_common bci_ip_between_align_points + 1
-#define bci_action_stem_common bci_action_adjust_common + 1
-#define bci_action_serif_common bci_action_stem_common + 1
-#define bci_action_serif_anchor_common bci_action_serif_common + 1
-#define bci_action_serif_link1_common bci_action_serif_anchor_common + 1
-#define bci_action_serif_link2_common bci_action_serif_link1_common + 1
+/* 42 */
+#define bci_adjust_common bci_ip_between_align_points + 1
+#define bci_stem_common bci_adjust_common + 1
+#define bci_serif_common bci_stem_common + 1
+#define bci_serif_anchor_common bci_serif_common + 1
+#define bci_serif_link1_common bci_serif_anchor_common + 1
+#define bci_serif_link2_common bci_serif_link1_common + 1
 
-#define bci_lower_bound bci_action_serif_link2_common + 1
+/* 48 */
+#define bci_lower_bound bci_serif_link2_common + 1
 #define bci_upper_bound bci_lower_bound + 1
 #define bci_lower_upper_bound bci_upper_bound + 1
 
+/* 51 */
+#define bci_adjust_bound bci_lower_upper_bound + 1
+#define bci_stem_bound bci_adjust_bound + 1
+#define bci_link bci_stem_bound + 1
+#define bci_anchor bci_link + 1
+#define bci_adjust bci_anchor + 1
+#define bci_stem bci_adjust + 1
+
 /* the order of the `bci_action_*' entries must correspond */
-/* to the order of the TA_Action enumeration entries */
-#define bci_action_ip_before bci_lower_upper_bound + 1
+/* to the order of the TA_Action enumeration entries (in `tahints.h') */
+
+/* 57 */
+#define bci_action_ip_before bci_stem + 1
 #define bci_action_ip_after bci_action_ip_before + 1
 #define bci_action_ip_on bci_action_ip_after + 1
 #define bci_action_ip_between bci_action_ip_on + 1
 
+/* 61 */
 #define bci_action_blue bci_action_ip_between + 1
 #define bci_action_blue_anchor bci_action_blue + 1
+
+/* 63 */
 #define bci_action_anchor bci_action_blue_anchor + 1
-#define bci_action_adjust bci_action_anchor + 1
-#define bci_action_adjust_bound bci_action_adjust + 1
-#define bci_action_link bci_action_adjust_bound + 1
-#define bci_action_stem bci_action_link + 1
-#define bci_action_stem_bound bci_action_stem + 1
-#define bci_action_serif bci_action_stem_bound + 1
+#define bci_action_anchor_serif bci_action_anchor + 1
+#define bci_action_anchor_round bci_action_anchor_serif + 1
+#define bci_action_anchor_round_serif bci_action_anchor_round + 1
+
+/* 67 */
+#define bci_action_adjust bci_action_anchor_round_serif + 1
+#define bci_action_adjust_serif bci_action_adjust + 1
+#define bci_action_adjust_round bci_action_adjust_serif + 1
+#define bci_action_adjust_round_serif bci_action_adjust_round + 1
+#define bci_action_adjust_bound bci_action_adjust_round_serif + 1
+#define bci_action_adjust_bound_serif bci_action_adjust_bound + 1
+#define bci_action_adjust_bound_round bci_action_adjust_bound_serif + 1
+#define bci_action_adjust_bound_round_serif bci_action_adjust_bound_round + 1
+
+/* 75 */
+#define bci_action_link bci_action_adjust_bound_round_serif + 1
+#define bci_action_link_serif bci_action_link + 1
+#define bci_action_link_round bci_action_link_serif + 1
+#define bci_action_link_round_serif bci_action_link_round + 1
+
+/* 79 */
+#define bci_action_stem bci_action_link_round_serif + 1
+#define bci_action_stem_serif bci_action_stem + 1
+#define bci_action_stem_round bci_action_stem_serif + 1
+#define bci_action_stem_round_serif bci_action_stem_round + 1
+#define bci_action_stem_bound bci_action_stem_round_serif + 1
+#define bci_action_stem_bound_serif bci_action_stem_bound + 1
+#define bci_action_stem_bound_round bci_action_stem_bound_serif + 1
+#define bci_action_stem_bound_round_serif bci_action_stem_bound_round + 1
+
+/* 87 */
+#define bci_action_serif bci_action_stem_bound_round_serif + 1
 #define bci_action_serif_lower_bound bci_action_serif + 1
 #define bci_action_serif_upper_bound bci_action_serif_lower_bound + 1
 #define bci_action_serif_lower_upper_bound bci_action_serif_upper_bound + 1
+
+/* 91 */
 #define bci_action_serif_anchor bci_action_serif_lower_upper_bound + 1
 #define bci_action_serif_anchor_lower_bound bci_action_serif_anchor + 1
 #define bci_action_serif_anchor_upper_bound bci_action_serif_anchor_lower_bound + 1
 #define bci_action_serif_anchor_lower_upper_bound bci_action_serif_anchor_upper_bound + 1
+
+/* 95 */
 #define bci_action_serif_link1 bci_action_serif_anchor_lower_upper_bound + 1
 #define bci_action_serif_link1_lower_bound bci_action_serif_link1 + 1
 #define bci_action_serif_link1_upper_bound bci_action_serif_link1_lower_bound + 1
 #define bci_action_serif_link1_lower_upper_bound bci_action_serif_link1_upper_bound + 1
+
+/* 99 */
 #define bci_action_serif_link2 bci_action_serif_link1_lower_upper_bound + 1
 #define bci_action_serif_link2_lower_bound bci_action_serif_link2 + 1
 #define bci_action_serif_link2_upper_bound bci_action_serif_link2_lower_bound + 1
 #define bci_action_serif_link2_lower_upper_bound bci_action_serif_link2_upper_bound + 1
 
+/* 103 */
 #define bci_handle_action bci_action_serif_link2_lower_upper_bound + 1
 #define bci_hint_glyph bci_handle_action + 1
 
@@ -410,17 +494,23 @@
 #define CVT_HORZ_WIDTHS_OFFSET(font) \
           CVT_VERT_STANDARD_WIDTH_OFFSET(font) + 1
 #define CVT_HORZ_WIDTHS_SIZE(font) \
-          ((TA_LatinMetrics)font->loader->hints.metrics)->axis[0].width_count
+          ((font->loader->hints.metrics->clazz->script == TA_SCRIPT_NONE) \
+           ? 0 \
+           : ((TA_LatinMetrics)font->loader->hints.metrics)->axis[0].width_count)
 
 /* the vertical stem widths */
 #define CVT_VERT_WIDTHS_OFFSET(font) \
           CVT_HORZ_WIDTHS_OFFSET(font) + CVT_HORZ_WIDTHS_SIZE(font)
 #define CVT_VERT_WIDTHS_SIZE(font) \
-          ((TA_LatinMetrics)font->loader->hints.metrics)->axis[1].width_count
+          ((font->loader->hints.metrics->clazz->script == TA_SCRIPT_NONE) \
+           ? 0 \
+           : ((TA_LatinMetrics)font->loader->hints.metrics)->axis[1].width_count)
 
 /* the number of blue zones */
 #define CVT_BLUES_SIZE(font) \
-          ((TA_LatinMetrics)font->loader->hints.metrics)->axis[1].blue_count
+          ((font->loader->hints.metrics->clazz->script == TA_SCRIPT_NONE) \
+           ? 0 \
+           : ((TA_LatinMetrics)font->loader->hints.metrics)->axis[1].blue_count)
 
 /* the blue zone values for flat and round edges */
 #define CVT_BLUE_REFS_OFFSET(font) \

@@ -22,6 +22,25 @@ any of your projects or products.
  - The GNU General Public License version 2, found in `GPLv2.TXT' (any later
    version can be used also), for programs which already use the GPL.
 
+In addition, as a special exception to both the FreeType (FTL) and GNU
+General Public License (GPL), the copyright holder of ttfautohint gives you
+unlimited permission to copy, distribute and modify the bytecode that gets
+embedded in the fonts processed by ttfautohint.  You need not follow the
+terms of the FTL or GPL when using or distributing such bytecode, even
+though portions of the text of ttfautohint appear in them.  The FTL or GPL
+(depending on your choice) does govern all other use of the material that
+constitutes ttfautohint.
+
+This special exception to the FTL and GPL applies to versions of ttfautohint
+released by the copyright holder of ttfautohint.  Note that people who make
+modified versions of ttfautohint are not obligated to grant this special
+exception for their modified versions; it is their choice whether to do so. 
+Both the FTL and the GPL give permission to release a modified version
+without this exception; this exception also makes it possible to release a
+modified version which carries forward this exception.
+
+-----------------------------------------------------------------------------
+
 The following files are distributed with the source bundle of the
 ttfautohint library to configure and build the library with GNU tools, but
 which aren't part of it due to a different license (GPL only).

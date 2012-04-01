@@ -437,9 +437,10 @@ Hint_Metrics:
     /* for mono-width fonts (like Andale, Courier, etc.) we need */
     /* to keep the original rounded advance width; ditto for */
     /* digits if all have the same advance width */
-    if (FT_IS_FIXED_WIDTH(slot->face)
-        || (ta_face_globals_is_digit(loader->globals, glyph_index)
-            && metrics->digits_have_same_width))
+    if (scaler->render_mode != FT_RENDER_MODE_LIGHT
+        && (FT_IS_FIXED_WIDTH(slot->face)
+            || (ta_face_globals_is_digit(loader->globals, glyph_index)
+                && metrics->digits_have_same_width)))
     {
       slot->metrics.horiAdvance = FT_MulFix(slot->metrics.horiAdvance,
                                             metrics->scaler.x_scale);
@@ -469,14 +470,16 @@ Hint_Metrics:
     if (error)
       goto Exit;
 
-    slot->outline = internal->loader->base.outline;
+    /* reassign all outline fields except flags to protect them */
+    slot->outline.n_contours = internal->loader->base.outline.n_contours;
+    slot->outline.n_points   = internal->loader->base.outline.n_points;
+    slot->outline.points     = internal->loader->base.outline.points;
+    slot->outline.tags       = internal->loader->base.outline.tags;
+    slot->outline.contours   = internal->loader->base.outline.contours;
+
     slot->format = FT_GLYPH_FORMAT_OUTLINE;
 #endif
   }
-
-#ifdef DEBUG_HINTER
-  ta_debug_hinter = hinter;
-#endif
 
 Exit:
   return error;
@@ -489,7 +492,7 @@ FT_Error
 ta_loader_load_glyph(TA_Loader loader,
                      FT_Face face,
                      FT_UInt gindex,
-                     FT_UInt32 load_flags)
+                     FT_Int32 load_flags)
 {
   FT_Error error;
   FT_Size size = face->size;
@@ -512,8 +515,14 @@ ta_loader_load_glyph(TA_Loader loader,
   scaler.flags = 0; /* XXX: fix this */
 
   /* XXX this is an ugly hack of ttfautohint: */
-  /* bit 30 and 31 of `load_flags' specify the fallback script */
+  /* bits 30 and 31 of `load_flags' specify the fallback script, */
+  /* bit 29 holds the `ignore_x_height' value, */
+  /* and bit 28 triggers vertical hinting only */
   fallback_script = load_flags >> 30;
+  if (load_flags & (1 << 29))
+    scaler.flags |= TA_SCALER_FLAG_INCREASE_X_HEIGHT;
+  if (load_flags & (1 << 28))
+    scaler.flags |= TA_SCALER_FLAG_NO_HORIZONTAL;
 
   /* note that the fallback script can't be changed anymore */
   /* after the first call of `ta_loader_load_glyph' */

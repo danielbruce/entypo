@@ -26,17 +26,35 @@
 #include FT_OUTLINE_H
 
 
+/* enable one of the following three definitions for debugging */
 /* #define TA_DEBUG */
+/* #define TA_DEBUG_HORZ */
+/* #define TA_DEBUG_VERT */
+
+#if defined TA_DEBUG_HORZ
+#  define TA_DEBUG_STARTDIM TA_DIMENSION_HORZ
+#  define TA_DEBUG_ENDDIM TA_DIMENSION_HORZ
+#  define TA_DEBUG
+#elif defined TA_DEBUG_VERT
+#  define TA_DEBUG_STARTDIM TA_DIMENSION_VERT
+#  define TA_DEBUG_ENDDIM TA_DIMENSION_VERT
+#  define TA_DEBUG
+#elif defined TA_DEBUG
+#  define TA_DEBUG_STARTDIM TA_DIMENSION_VERT
+#  define TA_DEBUG_ENDDIM TA_DIMENSION_HORZ
+#endif
 
 #ifdef TA_DEBUG
-
-#include <stdlib.h>
 
 #define TA_LOG(x) \
   do { \
     if (_ta_debug) \
-      printf x; \
+      _ta_message x; \
   } while (0)
+
+void
+_ta_message(const char *format,
+            ...);
 
 extern int _ta_debug;
 extern int _ta_debug_disable_horz_hints;
@@ -103,9 +121,15 @@ typedef struct TA_GlyphHintsRec_* TA_GlyphHints;
 
 /* a scaler models the target pixel device that will receive */
 /* the auto-hinted glyph image */
-#define TA_SCALER_FLAG_NO_HORIZONTAL 1 /* disable horizontal hinting */
-#define TA_SCALER_FLAG_NO_VERTICAL 2 /* disable vertical hinting */
-#define TA_SCALER_FLAG_NO_ADVANCE 4 /* disable advance hinting */
+#define TA_SCALER_FLAG_NO_HORIZONTAL 0x01 /* disable horizontal hinting */
+#define TA_SCALER_FLAG_NO_VERTICAL 0x02 /* disable vertical hinting */
+#define TA_SCALER_FLAG_NO_ADVANCE 0x04 /* disable advance hinting */
+
+/* for ttfautohint, we add more scaler flags; */
+/* note that FreeType uses a different mechanism */
+/* to pass control arguments to the auto-hinter */
+/* (this isn't implemented yet in version 2.4.8) */
+#define TA_SCALER_FLAG_INCREASE_X_HEIGHT 0x08
 
 typedef struct TA_ScalerRec_
 {

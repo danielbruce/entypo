@@ -1,0 +1,8 @@
+/.deps/
+/Makefile
+/Makefile.in
+/ttfautohint
+/ttfautohint.1
+/ttfautohintGUI
+*.moc.cpp
+*.o

@@ -316,32 +316,60 @@ typedef struct TA_AxisHintsRec_
 typedef enum TA_Action_
 {
   /* point actions */
+
   ta_ip_before,
   ta_ip_after,
   ta_ip_on,
   ta_ip_between,
 
   /* edge actions */
+
   ta_blue,
   ta_blue_anchor,
+
   ta_anchor,
+  ta_anchor_serif,
+  ta_anchor_round,
+  ta_anchor_round_serif,
+
   ta_adjust,
+  ta_adjust_serif,
+  ta_adjust_round,
+  ta_adjust_round_serif,
   ta_adjust_bound,
+  ta_adjust_bound_serif,
+  ta_adjust_bound_round,
+  ta_adjust_bound_round_serif,
+
   ta_link,
+  ta_link_serif,
+  ta_link_round,
+  ta_link_round_serif,
+
   ta_stem,
+  ta_stem_serif,
+  ta_stem_round,
+  ta_stem_round_serif,
   ta_stem_bound,
+  ta_stem_bound_serif,
+  ta_stem_bound_round,
+  ta_stem_bound_round_serif,
+
   ta_serif,
   ta_serif_lower_bound,
   ta_serif_upper_bound,
   ta_serif_lower_upper_bound,
+
   ta_serif_anchor,
   ta_serif_anchor_lower_bound,
   ta_serif_anchor_upper_bound,
   ta_serif_anchor_lower_upper_bound,
+
   ta_serif_link1,
   ta_serif_link1_lower_bound,
   ta_serif_link1_upper_bound,
   ta_serif_link1_lower_upper_bound,
+
   ta_serif_link2,
   ta_serif_link2_lower_bound,
   ta_serif_link2_upper_bound,
@@ -444,6 +472,17 @@ ta_axis_hints_new_edge(TA_AxisHints axis,
                        FT_Int fpos,
                        TA_Direction dir,
                        TA_Edge* edge);
+
+#ifdef TA_DEBUG
+void
+ta_glyph_hints_dump_points(TA_GlyphHints hints);
+
+void
+ta_glyph_hints_dump_segments(TA_GlyphHints hints);
+
+void
+ta_glyph_hints_dump_edges(TA_GlyphHints hints);
+#endif
 
 void
 ta_glyph_hints_init(TA_GlyphHints hints);

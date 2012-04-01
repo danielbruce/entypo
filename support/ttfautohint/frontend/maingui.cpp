@@ -19,6 +19,7 @@
 
 #include <QtGui>
 
+#include "info.h"
 #include "maingui.h"
 
 #include <ttfautohint.h>
@@ -38,14 +39,22 @@
 
 Main_GUI::Main_GUI(int range_min,
                    int range_max,
+                   int limit,
                    bool ignore,
                    bool pre,
-                   int fallback)
+                   bool increase,
+                   bool no,
+                   int fallback,
+                   bool symb)
 : hinting_range_min(range_min),
   hinting_range_max(range_max),
+  hinting_limit(limit),
   ignore_permissions(ignore),
   pre_hinting(pre),
-  latin_fallback(fallback)
+  increase_x_height(increase),
+  no_info(no),
+  latin_fallback(fallback),
+  symbol(symb)
 {
   create_layout();
   create_connections();
@@ -131,8 +140,11 @@ Main_GUI::check_min()
 {
   int min = min_box->value();
   int max = max_box->value();
+  int limit = limit_box->value();
   if (min > max)
     max_box->setValue(min);
+  if (min > limit)
+    limit_box->setValue(min);
 }
 
 
@@ -141,8 +153,40 @@ Main_GUI::check_max()
 {
   int min = min_box->value();
   int max = max_box->value();
+  int limit = limit_box->value();
   if (max < min)
     min_box->setValue(max);
+  if (max > limit)
+    limit_box->setValue(max);
+}
+
+
+void
+Main_GUI::check_limit()
+{
+  int min = min_box->value();
+  int max = max_box->value();
+  int limit = limit_box->value();
+  if (limit < max)
+    max_box->setValue(limit);
+  if (limit < min)
+    min_box->setValue(limit);
+}
+
+
+void
+Main_GUI::check_no_limit()
+{
+  if (no_limit_box->isChecked())
+  {
+    limit_label->setEnabled(false);
+    limit_box->setEnabled(false);
+  }
+  else
+  {
+    limit_label->setEnabled(true);
+    limit_box->setEnabled(true);
+  }
 }
 
 
@@ -356,6 +400,13 @@ Main_GUI::handle_error(TA_Error error,
          "Are you perhaps using a wrong FreeType DLL?"),
       QMessageBox::Ok,
       QMessageBox::Ok);
+  else if (error == TA_Err_Already_Processed)
+    QMessageBox::warning(
+      this,
+      "TTFautohint",
+      tr("This font has already been processed by ttfautohint."),
+      QMessageBox::Ok,
+      QMessageBox::Ok);
   else if (error == TA_Err_Missing_Legal_Permission)
   {
     int yesno = QMessageBox::warning(
@@ -387,9 +438,12 @@ Main_GUI::handle_error(TA_Error error,
       this,
       "TTFautohint",
       tr("No glyph for the key character"
-         " to derive standard width and height.\n"
-         "For the latin script, this key character is %1 (U+006F).")
-         .arg(QUOTE_STRING_LITERAL("o")),
+         " to derive standard stem width and height.\n"
+         "For the latin script, this key character is %1 (U+006F).\n"
+         "\n"
+         "Set the %2 checkbox if you want to circumvent this test.")
+         .arg(QUOTE_STRING_LITERAL("o"))
+         .arg(QUOTE_STRING_LITERAL("symbol")),
       QMessageBox::Ok,
       QMessageBox::Ok);
   else
@@ -440,27 +494,56 @@ again:
   if (!open_files(input_name, &input, output_name, &output))
     return;
 
+  unsigned char version_data[128];
+  unsigned char version_data_wide[256];
+
   QProgressDialog dialog;
   dialog.setCancelButtonText(tr("Cancel"));
   dialog.setMinimumDuration(1000);
   dialog.setWindowModality(Qt::WindowModal);
 
-  GUI_Progress_Data gui_progress_data = {-1, true, &dialog};
   const unsigned char* error_string;
+  TA_Info_Func info_func = info;
+  GUI_Progress_Data gui_progress_data = {-1, true, &dialog};
+  Info_Data info_data;
+
+  info_data.data = version_data;
+  info_data.data_wide = version_data_wide;
+
+  info_data.hinting_range_min = min_box->value();
+  info_data.hinting_range_max = max_box->value();
+  info_data.hinting_limit = no_limit_box->isChecked() ? 0
+                                                      : limit_box->value();
+
+  info_data.pre_hinting = pre_box->isChecked();
+  info_data.increase_x_height = increase_box->isChecked();
+  info_data.latin_fallback = fallback_box->currentIndex();
+  info_data.symbol = symbol_box->isChecked();
+
+  if (info_box->isChecked())
+    build_version_string(&info_data);
+  else
+    info_func = NULL;
 
   TA_Error error =
     TTF_autohint("in-file, out-file,"
                  "hinting-range-min, hinting-range-max,"
+                 "hinting-limit,"
                  "error-string,"
                  "progress-callback, progress-callback-data,"
-                 "ignore-permissions, pre-hinting,"
-                 "fallback-script",
+                 "info-callback, info-callback-data,"
+                 "ignore-permissions,"
+                 "pre-hinting, increase-x-height,"
+                 "fallback-script, symbol",
                  input, output,
-                 min_box->value(), max_box->value(),
+                 info_data.hinting_range_min, info_data.hinting_range_max,
+                 info_data.hinting_limit,
                  &error_string,
                  gui_progress, &gui_progress_data,
-                 ignore_permissions, pre_box->isChecked(),
-                 fallback_box->currentIndex());
+                 info_func, &info_data,
+                 ignore_permissions,
+                 info_data.pre_hinting, info_data.increase_x_height,
+                 info_data.latin_fallback, info_data.symbol);
 
   fclose(input);
   fclose(output);
@@ -526,9 +609,6 @@ Main_GUI::create_layout()
   max_box->setRange(2, 10000);
   max_box->setValue(hinting_range_max);
 
-  check_min();
-  check_max();
-
   QGridLayout* minmax_layout = new QGridLayout;
   minmax_layout->addWidget(min_label, 0, 0);
   minmax_layout->addWidget(min_box, 0, 1);
@@ -537,13 +617,13 @@ Main_GUI::create_layout()
 
   // hinting and fallback controls
   QLabel* hinting_label = new QLabel(tr("Hint Set Range") + " ");
-  QLabel* fallback_label = new QLabel(tr("F&allback Script:"));
+  QLabel* fallback_label = new QLabel(tr("Fallback &Script:"));
   hinting_label->setToolTip(
     tr("The PPEM range for which <b>TTFautohint</b> computes"
        " <i>hint sets</i>."
        " A hint set for a given PPEM value hints this size optimally."
        " The larger the range, the more hint sets are considered,"
-       " usually increasing the size of the bytecode.\n"
+       " usually increasing the size of the bytecode.<br>"
        "Note that changing this range doesn't influence"
        " the <i>gasp</i> table:"
        " Hinting is enabled for all sizes."));
@@ -554,6 +634,7 @@ Main_GUI::create_layout()
        " which <b>TTFautohint</b> can't map to a script automatically."));
   fallback_box->insertItem(0, tr("None"));
   fallback_box->insertItem(1, tr("Latin"));
+  fallback_box->setCurrentIndex(latin_fallback);
 
   QHBoxLayout* hint_fallback_layout = new QHBoxLayout;
   hint_fallback_layout->addWidget(hinting_label);
@@ -563,16 +644,88 @@ Main_GUI::create_layout()
   hint_fallback_layout->addWidget(fallback_box);
   hint_fallback_layout->addStretch(2);
 
+  // hinting limit
+  limit_label = new QLabel(tr("Hinting &Limit:"));
+  limit_box = new QSpinBox;
+  limit_label->setBuddy(limit_box);
+  limit_label->setToolTip(
+    tr("Make <b>TTFautohint</b> add bytecode to the output font so that"
+       " sizes larger than this PPEM value are not hinted"
+       " (regardless of the values in the <i>gasp</i> table)."));
+  limit_box->setKeyboardTracking(false);
+  limit_box->setRange(2, 10000);
+  limit_box->setValue(hinting_limit ? hinting_limit : hinting_range_max);
+
+  no_limit_box = new QCheckBox(tr("No Hinting Limi&t"), this);
+  no_limit_box->setToolTip(
+    tr("If switched on, <b>TTFautohint</b> adds no hinting limit"
+       " to the bytecode."));
+
+  QHBoxLayout* limit_layout = new QHBoxLayout;
+  limit_layout->addWidget(limit_label);
+  limit_layout->addWidget(limit_box);
+  limit_layout->addStretch(1);
+  limit_layout->addWidget(no_limit_box);
+  limit_layout->addStretch(2);
+
+  // handle command line option `--hinting-limit=0'
+  if (!hinting_limit)
+  {
+    hinting_limit = max_box->value();
+    no_limit_box->setChecked(true);
+  }
+
+  check_min();
+  check_max();
+  check_limit();
+  check_no_limit();
+
   // flags
   pre_box = new QCheckBox(tr("Pr&e-hinting"), this);
   pre_box->setToolTip(
     tr("If switched on, the original bytecode of the input font"
        " gets applied before <b>TTFautohint</b> starts processing"
        " the outlines of the glyphs."));
+  if (pre_hinting)
+    pre_box->setChecked(true);
+  increase_box = new QCheckBox(tr("In&crease x-height"), this);
+  increase_box->setToolTip(
+    tr("For PPEM values in the range 5&nbsp;&lt; PPEM &lt;&nbsp;15,"
+       " round up the font's x&nbsp;height much more often than normally"
+       " if switched on.<br>"
+       "Use this if holes in letters like <i>e</i> get filled,"
+       " for example."));
+  if (increase_x_height)
+    increase_box->setChecked(true);
+  symbol_box = new QCheckBox(tr("S&ymbol Font"), this);
+  symbol_box->setToolTip(
+    tr("If switched on, <b>ttfautohint</b> uses default values"
+       " for standard stem width and height"
+       " instead of deriving these values from the input font.<br>"
+       "Use this for fonts which don't contain glyphs"
+       " of a (supported) script."));
+  if (symbol)
+    symbol_box->setChecked(true);
 
   QHBoxLayout* flags_layout = new QHBoxLayout;
   flags_layout->addWidget(pre_box);
   flags_layout->addStretch(1);
+  flags_layout->addWidget(increase_box);
+  flags_layout->addStretch(1);
+  flags_layout->addWidget(symbol_box);
+  flags_layout->addStretch(1);
+
+  // info
+  info_box = new QCheckBox(tr("add ttf&autohint info"), this);
+  info_box->setToolTip(
+    tr("If switched on, information about <b>ttfautohint</b>"
+       " and its calling parameters are added to the version string(s)"
+       " (name ID&nbsp;5) in the <i>name</i> table."));
+  if (!no_info)
+    info_box->setChecked(true);
+
+  QHBoxLayout* info_layout = new QHBoxLayout;
+  info_layout->addWidget(info_box);
 
   // running
   run_button = new QPushButton(tr("&Run"));
@@ -590,7 +743,11 @@ Main_GUI::create_layout()
   gui_layout->addSpacing(20); // XXX urgh, pixels...
   gui_layout->addLayout(hint_fallback_layout);
   gui_layout->addSpacing(20); // XXX urgh, pixels...
+  gui_layout->addLayout(limit_layout);
+  gui_layout->addSpacing(20); // XXX urgh, pixels...
   gui_layout->addLayout(flags_layout);
+  gui_layout->addSpacing(20); // XXX urgh, pixels...
+  gui_layout->addLayout(info_layout);
   gui_layout->addSpacing(20); // XXX urgh, pixels...
   gui_layout->addLayout(running_layout);
   gui_layout->addSpacing(10); // XXX urgh, pixels...
@@ -625,6 +782,11 @@ Main_GUI::create_connections()
           SLOT(check_min()));
   connect(max_box, SIGNAL(valueChanged(int)), this,
           SLOT(check_max()));
+
+  connect(limit_box, SIGNAL(valueChanged(int)), this,
+          SLOT(check_limit()));
+  connect(no_limit_box, SIGNAL(clicked()), this,
+          SLOT(check_no_limit()));
 
   connect(run_button, SIGNAL(clicked()), this,
           SLOT(run()));

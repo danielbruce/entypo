@@ -36,6 +36,8 @@
 #if BUILD_GUI
 #  include <QApplication>
 #  include "maingui.h"
+#else
+#  include "info.h"
 #endif
 
 #include <ttfautohint.h>
@@ -44,6 +46,8 @@ using namespace std;
 
 
 #ifndef BUILD_GUI
+extern "C" {
+
 typedef struct Progress_Data_
 {
   long last_sfnt;
@@ -90,24 +94,33 @@ progress(long curr_idx,
 
   return 0;
 }
-#endif /* !BUILD_GUI */
+
+} // extern "C"
+#endif // !BUILD_GUI
 
 
 #ifdef CONSOLE_OUTPUT
 static void
-show_help(bool all,
+show_help(bool
+#ifdef BUILD_GUI
+               all
+#endif
+                  ,
           bool is_error)
 {
   FILE* handle = is_error ? stderr : stdout;
 
   fprintf(handle,
+#ifdef BUILD_GUI
+"Usage: ttfautohintGUI [OPTION]...\n"
+"A GUI application to replace hints in a TrueType font.\n"
+#else
 "Usage: ttfautohint [OPTION]... IN-FILE OUT-FILE\n"
-"  or:  ttfautohintGUI [OPTION]...\n"
 "Replace hints in TrueType font IN-FILE and write output to OUT-FILE.\n"
+#endif
 "The new hints are based on FreeType's autohinter.\n"
 "\n"
-"These programs (for console and GUI, respectively)\n"
-"are simple front-ends to the `ttfautohint' library.\n"
+"This program is a simple front-end to the `ttfautohint' library.\n"
 "\n");
 
   fprintf(handle,
@@ -115,25 +128,44 @@ show_help(bool all,
 "and with and without equal sign between option and argument.\n"
 "This means that the following forms are acceptable:\n"
 "`-foo=bar', `--foo=bar', `-foo bar', `--foo bar'.\n"
-"\n");
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+#ifdef BUILD_GUI
+"Options not related to Qt or X11 set default values.\n"
+#endif
+"\n"
+);
 
   fprintf(handle,
 "Options:\n"
 "  -f, --latin-fallback       set fallback script to latin\n"
+"  -G, --hinting-limit=N      switch off hinting above this PPEM value\n"
+"                             (default: %d); value 0 means no limit\n"
 "  -h, --help                 display this help and exit\n"
+#ifdef BUILD_GUI
 "      --help-all             show Qt and X11 specific options also\n"
+#endif
 "  -i, --ignore-permissions   override font license restrictions\n"
-"  -l, --hinting-range-min=N  the minimum ppem value for hint sets\n"
-"  -p, --pre-hinting          apply original hints in advance\n");
+"  -l, --hinting-range-min=N  the minimum PPEM value for hint sets\n"
+"                             (default: %d)\n"
+"  -n  --no-info              don't add ttfautohint info\n"
+"                             to the version string(s) in the `name' table\n"
+"  -p, --pre-hinting          apply original hints in advance\n",
+          TA_HINTING_LIMIT, TA_HINTING_RANGE_MIN);
   fprintf(handle,
-"  -r, --hinting-range-max=N  the maximum ppem value for hint sets\n"
+"  -r, --hinting-range-max=N  the maximum PPEM value for hint sets\n"
+"                             (default: %d)\n"
+"  -s, --symbol               input is symbol font\n"
 "  -v, --verbose              show progress information\n"
 "  -V, --version              print version information and exit\n"
-"  -x, --x-height-snapping-exceptions=STRING\n"
+"  -x, --increase-x-height    increase x height for small sizes\n"
+"  -X, --x-height-snapping-exceptions=STRING\n"
 "                             specify a comma-separated list of\n"
 "                             x-height snapping exceptions\n"
-"\n");
+"\n",
+          TA_HINTING_RANGE_MAX);
 
+#ifdef BUILD_GUI
   if (all)
   {
     fprintf(handle,
@@ -183,28 +215,32 @@ show_help(bool all,
 "                             (only possible value: TrueColor)\n"
 "\n");
   }
+#endif // BUILD_GUI
 
   fprintf(handle,
-"The programs accept both TTF and TTC files as input.\n"
+"The program accepts both TTF and TTC files as input.\n"
 "Use option -i only if you have a legal permission to modify the font.\n"
 "If option -f is not set, glyphs not in the latin range stay unhinted.\n"
-"The used ppem value for option -p is FUnits per em, normally 2048.\n"
+"The used PPEM value for option -p is FUnits per em, normally 2048.\n"
+"With option -s, use default values for standard stem width and height,\n"
+"otherwise they are derived from latin character `o'.\n"
 "\n");
   fprintf(handle,
 "A hint set contains the optimal hinting for a certain PPEM value;\n"
 "the larger the hint set range, the more hint sets get computed,\n"
 "usually increasing the output font size.  Note, however,\n"
 "that the `gasp' table of the output file enables grayscale hinting\n"
-"for all sizes.\n"
+"for all sizes (limited by option -G which is handled in the bytecode).\n"
 "\n");
   fprintf(handle,
-"If run in GUI mode, options not related to Qt or X11 set default values.\n"
-"Additionally, there is no output to the console.\n"
-"\n"
-"GUI support might be disabled at compile time.\n"
+#ifdef BUILD_GUI
+"A command-line version of this program is called `ttfautohint'.\n"
+#else
+"A GUI version of this program is called `ttfautohintGUI'.\n"
+#endif
 "\n"
 "Report bugs to: freetype-devel@nongnu.org\n"
-"FreeType home page: <http://www.freetype.org>\n");
+"ttfautohint home page: <http://www.freetype.org/ttfautohint>\n");
 
   if (is_error)
     exit(EXIT_FAILURE);
@@ -217,7 +253,11 @@ static void
 show_version()
 {
   fprintf(stdout,
+#ifdef BUILD_GUI
+"ttfautohintGUI " VERSION "\n"
+#else
 "ttfautohint " VERSION "\n"
+#endif
 "Copyright (C) 2011-2012 Werner Lemberg <wl@gnu.org>.\n"
 "License: FreeType License (FTL) or GNU GPLv2.\n"
 "This is free software: you are free to change and redistribute it.\n"
@@ -225,7 +265,7 @@ show_version()
 
   exit(EXIT_SUCCESS);
 }
-#endif /* CONSOLE_OUTPUT */
+#endif // CONSOLE_OUTPUT
 
 
 int
@@ -234,15 +274,21 @@ main(int argc,
 {
   int hinting_range_min = 0;
   int hinting_range_max = 0;
+  int hinting_limit = 0;
   bool have_hinting_range_min = false;
   bool have_hinting_range_max = false;
+  bool have_hinting_limit = false;
 
   bool ignore_permissions = false;
   bool pre_hinting = false;
+  bool increase_x_height = false;
+  bool no_info = false;
   int latin_fallback = 0; // leave it as int; this probably gets extended
+  bool symbol = false;
 
 #ifndef BUILD_GUI
   TA_Progress_Func progress_func = NULL;
+  TA_Info_Func info_func = info;
 #endif
 
   // make GNU, Qt, and X11 command line options look the same;
@@ -265,17 +311,23 @@ main(int argc,
     static struct option long_options[] =
     {
       {"help", no_argument, NULL, 'h'},
+#ifdef BUILD_GUI
       {"help-all", no_argument, NULL, HELP_ALL_OPTION},
+#endif
 
       // ttfautohint options
+      {"hinting-limit", required_argument, NULL, 'G'},
       {"hinting-range-max", required_argument, NULL, 'r'},
       {"hinting-range-min", required_argument, NULL, 'l'},
       {"ignore-permissions", no_argument, NULL, 'i'},
+      {"increase-x-height", no_argument, NULL, 'x'},
       {"latin-fallback", no_argument, NULL, 'f'},
+      {"no-info", no_argument, NULL, 'n'},
       {"pre-hinting", no_argument, NULL, 'p'},
+      {"symbol", no_argument, NULL, 's'},
       {"verbose", no_argument, NULL, 'v'},
       {"version", no_argument, NULL, 'V'},
-      {"x-height-snapping-exceptions", required_argument, NULL, 'x'},
+      {"x-height-snapping-exceptions", required_argument, NULL, 'X'},
 
       // Qt options
       {"graphicssystem", required_argument, NULL, PASS_THROUGH},
@@ -307,7 +359,7 @@ main(int argc,
     };
 
     int option_index;
-    int c = getopt_long_only(argc, argv, "fhil:r:ptVvx:",
+    int c = getopt_long_only(argc, argv, "fG:hil:npr:stVvxX:",
                              long_options, &option_index);
     if (c == -1)
       break;
@@ -316,6 +368,11 @@ main(int argc,
     {
     case 'f':
       latin_fallback = 1;
+      break;
+
+    case 'G':
+      hinting_limit = atoi(optarg);
+      have_hinting_limit = true;
       break;
 
     case 'h':
@@ -333,13 +390,21 @@ main(int argc,
       have_hinting_range_min = true;
       break;
 
+    case 'n':
+      no_info = true;
+      break;
+
+    case 'p':
+      pre_hinting = true;
+      break;
+
     case 'r':
       hinting_range_max = atoi(optarg);
       have_hinting_range_max = true;
       break;
 
-    case 'p':
-      pre_hinting = true;
+    case 's':
+      symbol = true;
       break;
 
     case 'v':
@@ -355,6 +420,10 @@ main(int argc,
       break;
 
     case 'x':
+      increase_x_height = true;
+      break;
+
+    case 'X':
 #ifdef CONSOLE_OUTPUT
       fprintf(stderr, "Option `-x' not implemented yet\n");
 #endif
@@ -385,9 +454,11 @@ main(int argc,
   }
 
   if (!have_hinting_range_min)
-    hinting_range_min = 8;
+    hinting_range_min = TA_HINTING_RANGE_MIN;
   if (!have_hinting_range_max)
-    hinting_range_max = 1000;
+    hinting_range_max = TA_HINTING_RANGE_MAX;
+  if (!have_hinting_limit)
+    hinting_limit = TA_HINTING_LIMIT;
 
 #ifndef BUILD_GUI
 
@@ -403,6 +474,14 @@ main(int argc,
                     hinting_range_min);
     exit(EXIT_FAILURE);
   }
+  if (hinting_limit != 0 && hinting_limit < hinting_range_max)
+  {
+    fprintf(stderr, "A non-zero hinting limit must not be smaller"
+                    " than the hinting range maximum (%d)\n",
+                    hinting_range_max);
+    exit(EXIT_FAILURE);
+  }
+
   // on the console we need in and out file arguments
   if (argc - optind != 2)
     show_help(false, true);
@@ -427,20 +506,47 @@ main(int argc,
     exit(EXIT_FAILURE);
   }
 
+  unsigned char version_data[128];
+  unsigned char version_data_wide[256];
+
   const unsigned char* error_string;
   Progress_Data progress_data = {-1, 1, 0};
+  Info_Data info_data;
+
+  if (no_info)
+    info_func = NULL;
+  else
+  {
+    info_data.data = version_data;
+    info_data.data_wide = version_data_wide;
+
+    info_data.hinting_range_min = hinting_range_min;
+    info_data.hinting_range_max = hinting_range_max;
+    info_data.hinting_limit = hinting_limit;
+
+    info_data.pre_hinting = pre_hinting;
+    info_data.increase_x_height = increase_x_height;
+    info_data.latin_fallback = latin_fallback;
+    info_data.symbol = symbol;
+
+    build_version_string(&info_data);
+  }
 
   TA_Error error =
     TTF_autohint("in-file, out-file,"
-                 "hinting-range-min, hinting-range-max,"
+                 "hinting-range-min, hinting-range-max, hinting-limit,"
                  "error-string,"
                  "progress-callback, progress-callback-data,"
-                 "ignore-permissions, pre-hinting, fallback-script",
+                 "info-callback, info-callback-data,"
+                 "ignore-permissions, pre-hinting, increase-x-height,"
+                 "fallback-script, symbol",
                  in, out,
-                 hinting_range_min, hinting_range_max,
+                 hinting_range_min, hinting_range_max, hinting_limit,
                  &error_string,
                  progress_func, &progress_data,
-                 ignore_permissions, pre_hinting, latin_fallback);
+                 info_func, &info_data,
+                 ignore_permissions, pre_hinting, increase_x_height,
+                 latin_fallback, symbol);
 
   if (error)
   {
@@ -448,6 +554,9 @@ main(int argc,
       fprintf(stderr,
               "FreeType version 2.4.5 or higher is needed.\n"
               "Perhaps using a wrong FreeType DLL?\n");
+    else if (error == TA_Err_Already_Processed)
+      fprintf(stderr,
+              "This font has already been processed with ttfautohint.\n");
     else if (error == TA_Err_Missing_Legal_Permission)
       fprintf(stderr,
               "Bit 1 in the `fsType' field of the `OS/2' table is set:\n"
@@ -477,7 +586,7 @@ main(int argc,
 
   return 0; // never reached
 
-#else /* BUILD_GUI */
+#else // BUILD_GUI
 
   int new_argc = new_arg_string.size();
   char** new_argv = new char*[new_argc];
@@ -492,13 +601,14 @@ main(int argc,
   app.setOrganizationName("FreeType");
   app.setOrganizationDomain("freetype.org");
 
-  Main_GUI gui(hinting_range_min, hinting_range_max,
-               ignore_permissions, pre_hinting, latin_fallback);
+  Main_GUI gui(hinting_range_min, hinting_range_max, hinting_limit,
+               ignore_permissions, pre_hinting, increase_x_height,
+               no_info, latin_fallback, symbol);
   gui.show();
 
   return app.exec();
 
-#endif /* BUILD_GUI */
+#endif // BUILD_GUI
 }
 
 // end of main.cpp

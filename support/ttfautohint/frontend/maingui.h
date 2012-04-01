@@ -14,6 +14,8 @@
 #ifndef __MAINGUI_H__
 #define __MAINGUI_H__
 
+#include <config.h>
+
 #include <QMainWindow>
 
 #include <stdio.h>
@@ -36,7 +38,7 @@ class Main_GUI
   Q_OBJECT
 
 public:
-  Main_GUI(int, int, bool, bool, int);
+  Main_GUI(int, int, int, bool, bool, bool, bool, int, bool);
 
 protected:
   void closeEvent(QCloseEvent*);
@@ -47,6 +49,8 @@ private slots:
   void browse_output();
   void check_min();
   void check_max();
+  void check_limit();
+  void check_no_limit();
   void absolute_input();
   void absolute_output();
   void check_run();
@@ -55,9 +59,13 @@ private slots:
 private:
   int hinting_range_min;
   int hinting_range_max;
+  int hinting_limit;
   int ignore_permissions;
   int pre_hinting;
+  int increase_x_height;
+  int no_info;
   int latin_fallback;
+  int symbol;
 
   void create_layout();
   void create_connections();
@@ -85,7 +93,16 @@ private:
 
   QComboBox* fallback_box;
 
+  QLabel* limit_label;
+  QSpinBox* limit_box;
+
+  QCheckBox* no_limit_box;
+
   QCheckBox* pre_box;
+  QCheckBox* increase_box;
+  QCheckBox* symbol_box;
+
+  QCheckBox* info_box;
 
   QPushButton* run_button;
 
@@ -96,6 +113,6 @@ private:
   QLocale* locale;
 };
 
-#endif /* __MAINGUI_H__ */
+#endif // __MAINGUI_H__
 
 // end of maingui.h

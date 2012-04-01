@@ -33,12 +33,17 @@ TA_sfnt_compute_global_hints(SFNT* sfnt,
   if (error)
     return TA_Err_Missing_Unicode_CMap;
 
-  /* load glyph `o' to trigger all initializations; */
-  /* XXX make this configurable for non-latin scripts */
-  /* XXX make this configurable to use a different letter */
-  idx = FT_Get_Char_Index(face, 'o');
-  if (!idx)
-    return TA_Err_Missing_Glyph;
+  if (font->symbol)
+    idx = 0;
+  else
+  {
+    /* load glyph `o' to trigger all initializations */
+    /* XXX make this configurable for non-latin scripts */
+    /* XXX make this configurable to use a different letter */
+    idx = FT_Get_Char_Index(face, 'o');
+    if (!idx)
+      return TA_Err_Missing_Glyph;
+  }
 
   error = ta_loader_load_glyph(font->loader, face, idx,
                                font->fallback_script << 30);
@@ -56,6 +61,10 @@ TA_table_build_cvt(FT_Byte** cvt,
   TA_LatinAxis haxis;
   TA_LatinAxis vaxis;
 
+  FT_UInt hwidth_count;
+  FT_UInt vwidth_count;
+  FT_UInt blue_count;
+
   FT_UInt i;
   FT_UInt buf_len;
   FT_UInt len;
@@ -69,14 +78,30 @@ TA_table_build_cvt(FT_Byte** cvt,
   if (error)
     return error;
 
-  haxis = &((TA_LatinMetrics)font->loader->hints.metrics)->axis[0];
-  vaxis = &((TA_LatinMetrics)font->loader->hints.metrics)->axis[1];
+  if (font->loader->hints.metrics->clazz->script == TA_SCRIPT_NONE)
+  {
+    haxis = NULL;
+    vaxis = NULL;
+
+    hwidth_count = 0;
+    vwidth_count = 0;
+    blue_count = 0;
+  }
+  else
+  {
+    haxis = &((TA_LatinMetrics)font->loader->hints.metrics)->axis[0];
+    vaxis = &((TA_LatinMetrics)font->loader->hints.metrics)->axis[1];
+
+    hwidth_count = haxis->width_count;
+    vwidth_count = vaxis->width_count;
+    blue_count = vaxis->blue_count;
+  }
 
   buf_len = 2 * (cvtl_max_runtime /* runtime values */
                  + 2 /* vertical and horizontal standard width */
-                 + haxis->width_count
-                 + vaxis->width_count
-                 + 2 * vaxis->blue_count);
+                 + hwidth_count
+                 + vwidth_count
+                 + 2 * blue_count);
 
   /* buffer length must be a multiple of four */
   len = (buf_len + 3) & ~3;
@@ -99,7 +124,7 @@ TA_table_build_cvt(FT_Byte** cvt,
     *(buf_p++) = 0;
   }
 
-  if (haxis->width_count > 0)
+  if (hwidth_count > 0)
   {
     *(buf_p++) = HIGH(haxis->widths[0].org);
     *(buf_p++) = LOW(haxis->widths[0].org);
@@ -109,7 +134,7 @@ TA_table_build_cvt(FT_Byte** cvt,
     *(buf_p++) = 0;
     *(buf_p++) = 50;
   }
-  if (vaxis->width_count > 0)
+  if (vwidth_count > 0)
   {
     *(buf_p++) = HIGH(vaxis->widths[0].org);
     *(buf_p++) = LOW(vaxis->widths[0].org);
@@ -120,7 +145,7 @@ TA_table_build_cvt(FT_Byte** cvt,
     *(buf_p++) = 50;
   }
 
-  for (i = 0; i < haxis->width_count; i++)
+  for (i = 0; i < hwidth_count; i++)
   {
     if (haxis->widths[i].org > 0xFFFF)
       goto Err;
@@ -128,7 +153,7 @@ TA_table_build_cvt(FT_Byte** cvt,
     *(buf_p++) = LOW(haxis->widths[i].org);
   }
 
-  for (i = 0; i < vaxis->width_count; i++)
+  for (i = 0; i < vwidth_count; i++)
   {
     if (vaxis->widths[i].org > 0xFFFF)
       goto Err;
@@ -136,7 +161,7 @@ TA_table_build_cvt(FT_Byte** cvt,
     *(buf_p++) = LOW(vaxis->widths[i].org);
   }
 
-  for (i = 0; i < vaxis->blue_count; i++)
+  for (i = 0; i < blue_count; i++)
   {
     if (vaxis->blues[i].ref.org > 0xFFFF)
       goto Err;
@@ -144,21 +169,13 @@ TA_table_build_cvt(FT_Byte** cvt,
     *(buf_p++) = LOW(vaxis->blues[i].ref.org);
   }
 
-  for (i = 0; i < vaxis->blue_count; i++)
+  for (i = 0; i < blue_count; i++)
   {
     if (vaxis->blues[i].shoot.org > 0xFFFF)
       goto Err;
     *(buf_p++) = HIGH(vaxis->blues[i].shoot.org);
     *(buf_p++) = LOW(vaxis->blues[i].shoot.org);
   }
-
-#if 0
-  TA_LOG(("--------------------------------------------------\n"));
-  TA_LOG(("glyph %d:\n", idx));
-  ta_glyph_hints_dump_edges(_ta_debug_hints);
-  ta_glyph_hints_dump_segments(_ta_debug_hints);
-  ta_glyph_hints_dump_points(_ta_debug_hints);
-#endif
 
   *cvt = buf;
   *cvt_len = buf_len;
