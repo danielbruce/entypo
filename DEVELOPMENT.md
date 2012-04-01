@@ -8,6 +8,9 @@ Installation
 
 ### Ubuntu
 
+**(!)** Use Ubuntu **12.04**. Or you will have to manually install fresh
+freetype library, to build ttfautohint.
+
 Install dependencies (fontforge & python modules):
 
     sudo make dev-deps
@@ -38,6 +41,8 @@ Making font
 4. Run `make`
 
 Generated data will be placed in `./font`
+
+You can rebuild css/html only with `make html`
 
 ### SVG image requirements
 
