@@ -76,10 +76,10 @@ dev-deps:
 		fi
 	apt-get -qq install \
 		fontforge python python-fontforge \
-		python-argparse python-yaml python-pip \
+		python-yaml python-pip \
 		build-essential \
 		autoconf automake libtool
-	pip -q install pystache
+	pip -q install pystache argparse
 
 
 clean:
