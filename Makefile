@@ -1,8 +1,7 @@
 # TODO: try to find ttf2eot and ttfautohint globally installed first
 
-# Project (font) name.
-# Default: name of the process working directory.
-PROJECT     ?= $(notdir ${PWD})
+PROJECT     := $(notdir ${PWD})
+FONT_NAME   := entypo
 
 
 ################################################################################
@@ -33,11 +32,11 @@ font:
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
-	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(PROJECT).ttf
-	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/$(PROJECT).ttf ./font/$(PROJECT)-hinted.ttf
-	mv ./font/$(PROJECT)-hinted.ttf ./font/$(PROJECT).ttf
-	./bin/fontconvert.py -i ./font/$(PROJECT).ttf -o ./font
-	$(TTF2EOT_BIN) < ./font/$(PROJECT).ttf >./font/$(PROJECT).eot
+	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(FONT_NAME).ttf
+	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/$(FONT_NAME).ttf ./font/$(FONT_NAME)-hinted.ttf
+	mv ./font/$(FONT_NAME)-hinted.ttf ./font/$(FONT_NAME).ttf
+	./bin/fontconvert.py -i ./font/$(FONT_NAME).ttf -o ./font
+	$(TTF2EOT_BIN) < ./font/$(FONT_NAME).ttf >./font/$(FONT_NAME).eot
 
 
 support: $(TTF2EOT_BIN) $(TTFAUTOHINT_BIN)
