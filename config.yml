@@ -65,7 +65,6 @@ glyphs:
       search: [add, list]
 
   - alert:
-      # 0x1f514
       code: 0x1f514
       css: bell
       search: [alert, bell, jingle]
@@ -86,7 +85,6 @@ glyphs:
       search: [back]
 
   - block:
-      # 0x1f6ab
       code: 0x1f6ab
       css: block
       search: [block, deny]
@@ -97,20 +95,17 @@ glyphs:
       search: [broadcast, wifi]
 
   - calendar:
-      # 0x1f4c5
       code: 0x1f4c5
       css: calendar
       search: [calendar]
 
   - camera:
-      # 0x1f4f7
-      code: 0xf4f7
+      code: 0x1f4f7
       css: camera
       search: [camera, photo]
 
   - center-crosshair:
-      # 0x1f3af
-      code: 0xf3af
+      code: 0x1f3af
       css: target
       search: [target]
 
@@ -150,14 +145,12 @@ glyphs:
       search: [contact, card, vcard]
 
   - contact-user:
-      # 0x1f464
-      code: 0xf464
+      code: 0x1f464
       css: user
       search: [profile, contact, user]
 
   - contacts-users:
-      # 0x1f465
-      code: 0xf465
+      code: 0x1f465
       css: users
       search: [users, contacts, friends]
 
@@ -238,8 +231,7 @@ glyphs:
       search: [info]
 
   - leaf:
-      # 0x1f342
-      code: 0xf342
+      code: 0x1f342
       css: leaf
       search: [leaf]
 
@@ -254,14 +246,12 @@ glyphs:
       search: [lifebuoy]
 
   - like-thumbs-up:
-      # 0x1f4dd
-      code: 0xf4dd
+      code: 0x1f4dd
       css: thumbs-up
       search: [thumbs, up, like, vote]
 
   - link:
-      # 0x1f517
-      code: 0xf517
+      code: 0x1f517
       css: link
       search: [link, url]
 
@@ -276,8 +266,7 @@ glyphs:
       search: [location, marker]
 
   - lock:
-      # 0x1f512
-      code: 0xf512
+      code: 0x1f512
       css: lock
       search: [lock]
 
@@ -287,8 +276,7 @@ glyphs:
       search: [down]
 
   - mic:
-      # 0x1f3a4
-      code: 0xf3a4
+      code: 0x1f3a4
       css: mic
       search: [mic]
 
@@ -303,8 +291,7 @@ glyphs:
       search: [minus]
 
   - mobile:
-      # 0x1f4f1
-      code: 0xf4f1
+      code: 0x1f4f1
       css: mobile
       search: [mobile, iphone]
 
@@ -314,14 +301,12 @@ glyphs:
       search: [mouse, website]
 
   - movie:
-      # 0x1f3ac
-      code: 0xf3ac
+      code: 0x1f3ac
       css: film
       search: [movie, video]
 
   - music:
-      # 0x1f3b5
-      code: 0xf3b5
+      code: 0x1f3b5
       css: music
       search: [music, note]
 
@@ -331,14 +316,12 @@ glyphs:
       search: [tag, price, offer]
 
   - palette:
-      # 0x1f3a8
-      code: 0xf3a8
+      code: 0x1f3a8
       css: palette
       search: [palette]
 
   - phone:
-      # 0x1f4de
-      code: 0xf4de
+      code: 0x1f4de
       css: phone
       search: [phone, telephone]
 
@@ -394,13 +377,11 @@ glyphs:
 
 
   - classic-search:
-      # 0x1f50d
-      code: 0xf50d
+      code: 0x1f50d
       css: search
       search: [search, find]
   - search:
-      # 0x1f50e
-      code: 0xf50e
+      code: 0x1f50e
       css: search-alt
       search: [search, find]
 
@@ -421,8 +402,7 @@ glyphs:
       search: [basket, shopping, cart]
 
   - shuffle:
-      # 0x1f500
-      code: 0xf500
+      code: 0x1f500
       css: shuffle
       search: [shuffle]
 
@@ -443,8 +423,7 @@ glyphs:
 
 
   - time-clock:
-      # 0x1f554
-      code: 0xf554
+      code: 0x1f554
       css: clock
       search: [clock, time]
 
@@ -454,14 +433,12 @@ glyphs:
       search: [clock, hourglass, busy, wait]
 
   - top-list:
-      # 0x1f3c9
-      code: 0xf3c9
+      code: 0x1f3c9
       css: top-list
       search: [top, trophy]
 
   - unlocked:
-      # 0x1f513
-      code: 0xf513
+      code: 0x1f513
       css: lock-open
       search: [lock, unlock]
 
@@ -656,20 +633,17 @@ glyphs:
 
 
   - book:
-      # 0x1f4d6
-      code: 0xf4d6
+      code: 0x1f4d6
       css: book-open
       search: [book]
 
   - bookmark:
-      # 0x1f516
-      code: 0xf516
+      code: 0x1f516
       css: bookmark
       search: [bookmark]
 
   - battery:
-      # 0x1f50b
-      code: 0xf50b
+      code: 0x1f50b
       css: battery
       search: [battery]
 
@@ -697,19 +671,16 @@ glyphs:
       search: [dot]
 
   - light-bulb:
-      # 0x1f4a1
-      code: 0xf4a1
+      code: 0x1f4a1
       css: lamp
       search: [idea, lamp, light]
 
   - light-down:
-      # 0x1f505
-      code: 0xf505
+      code: 0x1f505
       css: light-down
       search: [light, dim, bright]
   - light-up:
-      # 0x1f506
-      code: 0xf506
+      code: 0x1f506
       css: light-up
       search: [light, dim, bright]
 
@@ -731,21 +702,18 @@ glyphs:
       css: docs-landscape
       search: [doc, article]
   - text-document:
-      # 0x1f4c4
-      code: 0xf4c4
+      code: 0x1f4c4
       css: doc-text
       search: [doc, text, article]
 
 
   # Sound
   - mute:
-      # 0x1f507
-      code: 0xf507
+      code: 0x1f507
       css: volume-off
       search: [volume, sound, mute]
   - sound:
-      # 0x1f50a
-      code: 0xf50a
+      code: 0x1f50a
       css: volume-up
       search: [volume, sound]
   - volume:
@@ -765,8 +733,7 @@ glyphs:
       search: [keyboard]
 
   - folder:
-      # 0x1f4c1
-      code: 0xf4c1
+      code: 0x1f4c1
       css: folder
       search: [folder]
 
@@ -819,20 +786,17 @@ glyphs:
       search: [globe]
 
   - vinyl-record:
-      # 0x1f4bf
-      code: 0xf4bf
+      code: 0x1f4bf
       css: cd
       search: [cd, vinyl]
 
   - tv-screen:
-      # 0x1f4bb
-      code: 0xf4bb
+      code: 0x1f4bb
       css: monitor
       search: [tv, screen, monitor]
 
   - image:
-      # 0x1f304
-      code: 0xf304
+      code: 0x1f304
       css: image
       search: [image]
 
