@@ -33,9 +33,13 @@ demo-columns: 4
 font:
   version: "1.0"
 
-  fontname: Entypo
+  # use !!!small!!! letters a-z, or Opera will fail under OS X
+  # fontname will be also used as file name.
+  fontname: entypo
+
   fullname: Entypo
   familyname: Entypo
+
   copyright: Copyright (C) 2012 by Daniel Bruce
 
   ascent: 1638
