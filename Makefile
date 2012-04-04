@@ -1,8 +1,16 @@
 # TODO: try to find ttf2eot and ttfautohint globally installed first
 
-PROJECT     :=  $(notdir ${PWD})
-TMP_PATH    := /tmp/${PROJECT}-$(shell date +%s)
+# Project (font) name.
+# Default: name of the process working directory.
+PROJECT     ?= $(notdir ${PWD})
 
+
+################################################################################
+## ! DO NOT EDIT BELOW THIS LINE, UNLESS YOU REALLY KNOW WHAT ARE YOU DOING ! ##
+################################################################################
+
+
+TMP_PATH    := /tmp/${PROJECT}-$(shell date +%s)
 REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
@@ -20,16 +28,16 @@ font:
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
-#	@if test ! -f $(TTFAUTOHINT_BIN) ; then \
-#		echo "ttfautohint not found. run:" >&2 ; \
-#		echo "  make support" >&2 ; \
-#		exit 128 ; \
-#		fi
-	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/entypo.ttf
-	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/entypo.ttf ./font/entypo-hinted.ttf \
-		&& mv ./font/entypo-hinted.ttf ./font/entypo.ttf
-	./bin/fontconvert.py -i ./font/entypo.ttf -o ./font
-	$(TTF2EOT_BIN) < ./font/entypo.ttf >./font/entypo.eot
+	@if test ! -f $(TTFAUTOHINT_BIN) ; then \
+		echo "ttfautohint not found. run:" >&2 ; \
+		echo "  make support" >&2 ; \
+		exit 128 ; \
+		fi
+	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(PROJECT).ttf
+	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/$(PROJECT).ttf ./font/$(PROJECT)-hinted.ttf
+	mv ./font/$(PROJECT)-hinted.ttf ./font/$(PROJECT).ttf
+	./bin/fontconvert.py -i ./font/$(PROJECT).ttf -o ./font
+	$(TTF2EOT_BIN) < ./font/$(PROJECT).ttf >./font/$(PROJECT).eot
 
 
 support: $(TTF2EOT_BIN) $(TTFAUTOHINT_BIN)
