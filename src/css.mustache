@@ -10,22 +10,16 @@
   font-weight: normal; font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  font-family: EntypoUni;
+.the-icons li:before {
+  font-family: 'EntypoUni';
   font-style: normal;
 /*  font-size: 14px; */
-  
   display: inline-block;
   width: 1.1em;
-  margin-right: .1em;
+  margin-right: .5em;
   text-align: center;
 }
 
-.the-icons li {
-  font-size: 14px;
-  line-height: 24px;
-  height: 24px;
-}
 
 {{#glyphs}}
 .{{css-prefix}}{{css}}:before { content: "{{char}}"; }     /* '\{{code}}' */

@@ -2,3 +2,8 @@
     list-style: none outside none;
     margin-left: 0;
 }
+
+.the-icons li {
+    font-size: 14px;
+    line-height: 24px;
+}
