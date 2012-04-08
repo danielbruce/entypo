@@ -15,15 +15,15 @@ body
     .page-header
       h1: | Entypo font icons demo
     .row
-      - var col_class = "span" + Math.ceil(12 / locals['demo-columns'])
-      - var chunk_size = Math.ceil(glyphs.length / locals['demo-columns'])
-      - for (var i = 0; i < locals['demo-columns']; i++)
+      - var col_class = "span" + Math.ceil(12 / demo.columns)
+      - var chunk_size = Math.ceil(glyphs.length / demo.columns)
+      - for (var i = 0; i < demo.columns; i++)
         div(class=col_class)
           ul.the-icons
             - var offset = i * chunk_size
             - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
               each opts, file in glyphs[offset + c]
-                - var css_class = locals['css-prefix'] + (opts.css || file)
+                - var css_class = demo.css_prefix + (opts.css || file)
                 li
                   i(class=css_class)
                   = css_class

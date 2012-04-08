@@ -3,8 +3,9 @@
 # Format is descriped below.
 #
 #
-# css-prefix: "icon-"             # prefix for css-generated classes
-# demo-columns: 4                 # used for html demo page generation
+# demo:
+#   css_prefix: "icon-"           # prefix for css-generated classes
+#   columns: 4                    # used for html demo page generation
 #
 # font:                           # all vars from here will be used as font
 #                                 # params in fontforge
@@ -26,8 +27,9 @@
 #
 
 
-css-prefix: "icon-"
-demo-columns: 4
+demo:
+  css_prefix: "icon-"
+  columns: 4
 
 
 font:
