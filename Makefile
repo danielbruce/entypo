@@ -24,6 +24,11 @@ dist: font html
 
 
 font:
+	@if test ! -d support/font-builder/bin ; then \
+		echo "font-builder binaries not found. run:" >&2 ; \
+		echo "  make support" >&2 ; \
+		exit 128 ; \
+		fi
 	@if test ! `which ttf2eot` ; then \
 		echo "ttf2eot not found. run:" >&2 ; \
 		echo "  make support" >&2 ; \
@@ -44,7 +49,7 @@ font:
 support:
 	git submodule init support/font-builder
 	git submodule update support/font-builder
-	cd support/font-builder && $(MAKE)
+	which ttf2eot ttfautohint > /dev/null || (cd support/font-builder && $(MAKE))
 
 
 html:
