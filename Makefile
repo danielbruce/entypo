@@ -16,7 +16,6 @@ REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 PATH := $(PATH):./support/font-builder/support/ttf2eot
 PATH := $(PATH):./support/font-builder/support/ttfautohint/frontend
 PATH := $(PATH):./support/font-builder/bin
-PATH := $(PATH):./node_modules/.bin
 
 
 dist: font html
@@ -53,16 +52,15 @@ npm-deps:
 		echo "  - Install Node.JS and NPM" >&2 ; \
 		echo "  - Run this task once again" >&2 ; \
 		else \
-		npm install jade js-yaml.bin ; \
+		npm install -g jade js-yaml.bin ; \
 		fi
 
 
-
 support:
-	test -d node_modules/js-yaml.bin -a -d node_modules/jade || $(MAKE) npm-deps
 	git submodule init support/font-builder
 	git submodule update support/font-builder
 	which ttf2eot ttfautohint > /dev/null || (cd support/font-builder && $(MAKE))
+	which js-yaml jade > /dev/null || $(MAKE) npm-deps
 
 
 html:
