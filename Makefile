@@ -1,5 +1,3 @@
-# TODO: try to find ttf2eot and ttfautohint globally installed first
-
 PROJECT     := $(notdir ${PWD})
 FONT_NAME   := entypo
 
@@ -60,7 +58,7 @@ npm-deps:
 
 
 support:
-	test -d node_modules/js-yaml -a -d node_modules/jade || $(MAKE) npm-deps
+	test -d node_modules/js-yaml.bin -a -d node_modules/jade || $(MAKE) npm-deps
 	git submodule init support/font-builder
 	git submodule update support/font-builder
 	which ttf2eot ttfautohint > /dev/null || (cd support/font-builder && $(MAKE))
