@@ -22,8 +22,8 @@ body
           ul.the-icons
             - var offset = i * chunk_size
             - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
-              each opts, file in glyphs[offset + c]
-                - var css_class = demo.css_prefix + (opts.css || file)
+              - var g = glyphs[offset + c]
+              - var css_class = demo.css_prefix + (g.css || g.file)
                 li
                   i(class=css_class)
                   = css_class

@@ -51,812 +51,812 @@ font:
 
 glyphs:
 
-  - add-contact-add-user:
-      code: 0xe001
-      css: user-add
-      search: [profile, contact, user, add]
-
-  - address:
-      code: 0xe002
-      css: address
-      search: [address]
-
-  - add-to-list:
-      code: 0xe003
-      css: list-add
-      search: [add, list]
-
-  - alert:
-      code: 0x1f514
-      css: bell
-      search: [alert, bell, jingle]
-
-  - attach:
-      code: 0xe004
-      css: attach
-      search: [attach, clip]
-
-  - back:
-      code: 0xe005
-      css: back
-      search: [back]
-
-  - back-alt:
-      code: 0xe035
-      css: back-alt
-      search: [back]
-
-  - block:
-      code: 0x1f6ab
-      css: block
-      search: [block, deny]
-
-  - broadcast:
-      code: 0xe006
-      css: wifi
-      search: [broadcast, wifi]
-
-  - calendar:
-      code: 0x1f4c5
-      css: calendar
-      search: [calendar]
-
-  - camera:
-      code: 0x1f4f7
-      css: camera
-      search: [camera, photo]
-
-  - center-crosshair:
-      code: 0x1f3af
-      css: target
-      search: [target]
-
-  - chat:
-      code: 0xe007
-      css: chat
-      search: [chat, talk]
-
-  - check-not-ok:
-      code: 0x2715
-      css: close
-      search: [close, cancel]
-
-  - check-ok:
-      code: 0x2713
-      css: check
-      search: [check, mark]
-
-  - close-circle:
-      code: 0x2716
-      css: cancel
-      search: [cancel, close]
-
-  - comment:
-      code: 0xe008
-      css: comment
-      search: [comment, reply]
-
-  - compass:
-      code: 0xe009
-      css: compass
-      search: [compass]
-
-  - contact-card:
-      code: 0xe00a
-      css: vcard
-      search: [contact, card, vcard]
-
-  - contact-user:
-      code: 0x1f464
-      css: user
-      search: [profile, contact, user]
-
-  - contacts-users:
-      code: 0x1f465
-      css: users
-      search: [users, contacts, friends]
-
-  - direction:
-      code: 0xe00b
-      css: direction
-      search: [direction]
-
-  - email:
-      code: 0x2709
-      css: mail
-      search: [mail, email]
-
-  - export:
-      code: 0xe00c
-      css: export
-      search: [export]
-
-  - flag:
-      code: 0x2691
-      css: flag
-      search: [flag]
-
-  - flash:
-      code: 0x26a1
-      css: flash
-      search: [flash, bolt]
-
-  - flight:
-      code: 0x2708
-      css: flight
-      search: [flight, plane, airplane]
-
-  - forward:
-      code: 0x27a6
-      css: forward
-      search: [forward]
-
-  - google-circles:
-      code: 0xe00d
-      css: google-circles
-      search: [google, circles]
-
-
-  - heart:
-      code: 0x2665
-      css: heart
-      search: [heart]
-  - heart-outlined:
-      code: 0x2661
-      css: heart-empty
-      search: [heart]
-
-
-  - help:
-      code: 0x2753
-      css: help
-      search: [help]
-
-  - help-circle:
-      code: 0xe00e
-      css: help-circle
-      search: [help]
-
-  - image-list:
-      code: 0x268f
-      css: image-list
-      search: [image, list]
-
-  - info:
-      code: 0x2139
-      css: info
-      search: [info]
-
-  - info-circle:
-      code: 0xe00f
-      css: info-circle
-      search: [info]
-
-  - leaf:
-      code: 0x1f342
-      css: leaf
-      search: [leaf]
-
-  - level-down:
-      code: 0x21b3
-      css: level-down
-      search: [down]
-
-  - lifebuoy:
-      code: 0xe010
-      css: lifebuoy
-      search: [lifebuoy]
-
-  - like-thumbs-up:
-      code: 0x1f4dd
-      css: thumbs-up
-      search: [thumbs, up, like, vote]
-
-  - link:
-      code: 0x1f517
-      css: link
-      search: [link, url]
-
-  - list:
-      code: 0x2630
-      css: list
-      search: [list]
-
-  - location:
-      code: 0xe011
-      css: location
-      search: [location, marker]
-
-  - lock:
-      code: 0x1f512
-      css: lock
-      search: [lock]
-
-  - map:
-      code: 0xe012
-      css: map
-      search: [down]
-
-  - mic:
-      code: 0x1f3a4
-      css: mic
-      search: [mic]
-
-  - minus:
-      code: 0x2796
-      css: minus
-      search: [minus]
-
-  - minus-circle:
-      code: 0xe013
-      css: minus-circle
-      search: [minus]
-
-  - mobile:
-      code: 0x1f4f1
-      css: mobile
-      search: [mobile, iphone]
-
-  - mouse-website:
-      code: 0xe014
-      css: mouse
-      search: [mouse, website]
-
-  - movie:
-      code: 0x1f3ac
-      css: film
-      search: [movie, video]
-
-  - music:
-      code: 0x1f3b5
-      css: music
-      search: [music, note]
-
-  - offer-price-tag:
-      code: 0xe015
-      css: tag
-      search: [tag, price, offer]
-
-  - palette:
-      code: 0x1f3a8
-      css: palette
-      search: [palette]
-
-  - phone:
-      code: 0x1f4de
-      css: phone
-      search: [phone, telephone]
-
-  - plus:
-      code: 0x2795
-      css: plus
-      search: [plus]
-
-  - plus-circle:
-      code: 0xe016
-      css: plus-circle
-      search: [plus]
-
-  - print:
-      code: 0xe017
-      css: print
-      search: [print]
-
-  - quote:
-      code: 0x275e
-      css: quote-right
-      search: [quote]
-
-  - reload-CCW:
-      code: 0x27f2
-      css: reload-ccw
-      search: [reload]
-
-  - reload-CW:
-      code: 0x27f3
-      css: reload-cw
-      search: [reload]
-
-  - reply:
-      code: 0xe018
-      css: reply
-      search: [reply]
-
-  - reply-to-all:
-      code: 0xe019
-      css: reply-all
-      search: [reply]
-
-  - retweet:
-      code: 0xe01a
-      css: retweet
-      search: [retweet]
-
-  - rss:
-      code: 0xe01b
-      css: rss
-      search: [rss]
-
-
-  - classic-search:
-      code: 0x1f50d
-      css: search
-      search: [search, find]
-  - search:
-      code: 0x1f50e
-      css: search-alt
-      search: [search, find]
-
-
-  - settings:
-      code: 0x2699
-      css: settings
-      search: [settings, cog]
-
-  - share:
-      code: 0xe01c
-      css: share
-      search: [share]
-
-  - shopping-bag:
-      code: 0xe000
-      css: shopping-cart
-      search: [basket, shopping, cart]
-
-  - shuffle:
-      code: 0x1f500
-      css: shuffle
-      search: [shuffle]
-
-  - sleep:
-      code: 0x263d
-      css: moon
-      search: [moon, sleep]
-
-
-  - star:
-      code: 0x2605
-      css: star
-      search: [star]
-  - star-outlined:
-      code: 0x2606
-      css: star-empty
-      search: [star]
-
-
-  - time-clock:
-      code: 0x1f554
-      css: clock
-      search: [clock, time]
-
-  - time-glass:
-      code: 0x23f3
-      css: hourglass
-      search: [clock, hourglass, busy, wait]
-
-  - top-list:
-      code: 0x1f3c9
-      css: top-list
-      search: [top, trophy]
-
-  - unlocked:
-      code: 0x1f513
-      css: lock-open
-      search: [lock, unlock]
-
-  - view-eye:
-      code: 0xe01d
-      css: eye
-      search: [eye, subscribe]
-
-  - warning:
-      code: 0x26a0
-      css: warning
-      search: [warning]
-
-  - write-new:
-      code: 0x2703
-      css: pencil
-      search: [pencil, write]
-
-
-  - archive:
-      code: 0xe01e
-      css: archive
-      search: [archive]
-
-
-  # Arrows
-  - down-circle-arrow:
-      code: 0xe020
-      css: arrow-down-circle2
-      search: [arrow, down]
-  - left-circle-arrow:
-      code: 0xe021
-      css: arrow-left-circle2
-      search: [arrow, left]
-  - right-circle-arrow:
-      code: 0xe022
-      css: arrow-right-circle2
-      search: [arrow, right]
-  - up-circle-arrow:
-      code: 0xe023
-      css: arrow-up-circle2
-      search: [arrow, up]
-
-
-  # Arrows
-  - open-arrow-down:
-      code: 0xe024
-      css: arrow-down-open
-      search: [arrow, down]
-  - open-arrow-left:
-      code: 0xe025
-      css: arrow-left-open
-      search: [arrow, left]
-  - open-arrow-right:
-      code: 0xe026
-      css: arrow-right-open
-      search: [arrow, right]
-  - open-arrow-up:
-      code: 0xe027
-      css: arrow-up-open
-      search: [arrow, up]
-
-
-  # Arrows
-  - thin-arrow-down:
-      code: 0x2b07
-      css: arrow-down-thin
-      search: [arrow, down]
-  - thin-arrow-left:
-      code: 0x2b05
-      css: arrow-left-thin
-      search: [arrow, left]
-  - thin-arrow-right:
-      code: 0x27a1
-      css: arrow-right-thin
-      search: [arrow, right]
-  - thin-arrow-up:
-      code: 0x2b06
-      css: arrow-up-thin
-      search: [arrow, up]
-
-
-  # Arrows
-  - direction-arrow-down:
-      code: 0x25be
-      css: arrow-down-dir
-      search: [arrow, down]
-  - direction-arrow-left:
-      code: 0x25c2
-      css: arrow-left-dir
-      search: [arrow, left]
-  - direction-arrow-right:
-      code: 0x25b8
-      css: arrow-right-dir
-      search: [arrow, right]
-  - direction-arrow-up:
-      code: 0x25b4
-      css: arrow-up-dir
-      search: [arrow, up]
-
-
-  # Arrows
-  - bold-down-arrow:
-      code: 0xe4b0
-      css: arrow-down-bold
-      search: [arrow, down]
-  - bold-left-arrow:
-      code: 0xe4ad
-      css: arrow-left-bold
-      search: [arrow, left]
-  - bold-right-arrow:
-      code: 0xe4ae
-      css: arrow-right-bold
-      search: [arrow, right]
-  - bold-up-arrow:
-      code: 0xe4af
-      css: arrow-up-bold
-      search: [arrow, up]
-
-
-  # Arrows
-  - down-arrow:
-      code: 0x2193
-      css: arrow-down
-      search: [arrow, down]
-  - left-arrow:
-      code: 0x2190
-      css: arrow-left
-      search: [arrow, left]
-  - right-arrow:
-      code: 0x2192
-      css: arrow-right
-      search: [arrow, right]
-  - up-arrow:
-      code: 0x2191
-      css: arrow-up
-      search: [arrow, up]
-
-
-  # Progress
-  - charge-empty:
-      code: 0xe030
-      css: progress-0
-      search: [progress, charge]
-  - charge-one-third:
-      code: 0xe031
-      css: progress-1
-      search: [progress, charge]
-  - charge-two-thirds:
-      code: 0xe032
-      css: progress-2
-      search: [progress, charge]
-  - charge-full:
-      code: 0xe033
-      css: progress-3
-      search: [progress, charge]
-
-
-  # Player
-  - play:
-      code: 0x25b6
-      css: play
-      search: [play, player]
-  - stop:
-      code: 0x25aa
-      css: stop
-      search: [stop, player]
-  - paus:
-      code: 0x2389
-      css: pause
-      search: [pause, player]
-  - record:
-      code: 0x26ab
-      css: record
-      search: [record, player]
-  - jump-to-end:
-      code: 0x23ed
-      css: right-end
-      search: [right, player]
-  - jump-to-start:
-      code: 0x23ee
-      css: left-start
-      search: [left, player]
-  - fast-forward:
-      code: 0x23e9
-      css: right-ff
-      search: [right, player]
-  - fast-backward:
-      code: 0x23ea
-      css: left-fb
-      search: [left, player]
-
-
-  - book:
-      code: 0x1f4d6
-      css: book-open
-      search: [book]
-
-  - bookmark:
-      code: 0x1f516
-      css: bookmark
-      search: [bookmark]
-
-  - battery:
-      code: 0x1f50b
-      css: battery
-      search: [battery]
-
-  - back-in-time:
-      code: 0xe040
-      css: back-in-time
-      search: [back, time]
-
-  - home:
-      code: 0x2302
-      css: home
-      search: [home]
-
-  - dot:
-      code: 0xe050
-      css: dot
-      search: [dot]
-  - dots-two:
-      code: 0xe051
-      css: dot-2
-      search: [dot]
-  - dots-three:
-      code: 0xe052
-      css: dot-3
-      search: [dot]
-
-  - light-bulb:
-      code: 0x1f4a1
-      css: lamp
-      search: [idea, lamp, light]
-
-  - light-down:
-      code: 0x1f505
-      css: light-down
-      search: [light, dim, bright]
-  - light-up:
-      code: 0x1f506
-      css: light-up
-      search: [light, dim, bright]
-
-  - trash:
-      code: 0xe0da
-      css: trash
-      search: [trash]
-
-  - document:
-      code: 0xe048
-      css: doc
-      search: [doc, article]
-  - documents:
-      code: 0xe049
-      css: docs
-      search: [doc, article]
-  - landscape-documents:
-      code: 0xe04a
-      css: docs-landscape
-      search: [doc, article]
-  - text-document:
-      code: 0x1f4c4
-      css: doc-text
-      search: [doc, text, article]
-
-
-  # Sound
-  - mute:
-      code: 0x1f507
-      css: volume-off
-      search: [volume, sound, mute]
-  - sound:
-      code: 0x1f50a
-      css: volume-up
-      search: [volume, sound]
-  - volume:
-      code: 0xe057
-      css: volume
-      search: [volume, sound]
-
-
-  - cloud:
-      code: 0x2601
-      css: cloud
-      search: [cloud]
-
-  - keyboard:
-      code: 0x2328
-      css: keyboard
-      search: [keyboard]
-
-  - folder:
-      code: 0x1f4c1
-      css: folder
-      search: [folder]
-
-  - download:
-      code: 0xe042
-      css: download
-      search: [download]
-  - upload:
-      code: 0xe043
-      css: upload
-      search: []
-  - upload-to-cloud:
-      code: 0xe045
-      css: upload-cloud
-      search: [upload, cloud]
-
-  # Editor markup
-  - code:
-      code: 0xe05f
-      css: code
-      search: [code]
-
-  - popup:
-      code: 0xe060
-      css: popup
-      search: [popup]
-
-  - publish:
-      code: 0xe061
-      css: publish
-      search: [publish]
-
-  - feather:
-      code: 0xe062
-      css: feather
-      search: [pen, feather]
-
-  - full-screen:
-      code: 0xe063
-      css: resize-full
-      search: [resize, fullscreen]
-  - small-screen:
-      code: 0xe064
-      css: resize-small
-      search: [resize]
-
-  - globe:
-      code: 0xe065
-      css: globe 
-      search: [globe]
-
-  - vinyl-record:
-      code: 0x1f4bf
-      css: cd
-      search: [cd, vinyl]
-
-  - tv-screen:
-      code: 0x1f4bb
-      css: monitor
-      search: [tv, screen, monitor]
-
-  - image:
-      code: 0x1f304
-      css: image
-      search: [image]
-
-  - select-box-arrow:
-      code: 0xe058
-      css: arrow-combo
-      search: [arrow]
-
-  - browser:
-      code: 0xe059
-      css: window
-      search: [window]
-
-  - song:
-      code: 0xe05a
-      css: song
-      search: [song, music, sound]
-
-  - inbox:
-      code: 0xe05b
-      css: inbox
-      search: [inbox]
-
-  - install:
-      code: 0xe05c
-      css: install
-      search: [install]
-
-  - suitecase:
-      code: 0xe05d
-      css: bag
-      search: [bag]
-
-  - suitcase-alt:
-      code: 0xe06d
-      css: bag-alt
-      search: [bag]
-
-  - network:
-      code: 0xe05e
-      css: net
-      search: [net]
-
-  - creative-commons:
-      code: 0xe183
-      css: cc
-      search: [creative, commons]
-
-  - entypo-square:
-      code: 0xe180
-      css: logo-entypo
-      search: []
-  - sweden:
-      code: 0xe181
-      css: flag-sw
-      search: []
-  - db-signature:
-      code: 0xe182
-      css: logo-db
-      search: []
+  - file: add-contact-add-user
+    code: 0xe001
+    css: user-add
+    search: [profile, contact, user, add]
+
+  - file: address
+    code: 0xe002
+    css: address
+    search: [address]
+
+  - file: add-to-list
+    code: 0xe003
+    css: list-add
+    search: [add, list]
+
+  - file: alert
+    code: 0x1f514
+    css: bell
+    search: [alert, bell, jingle]
+
+  - file: attach
+    code: 0xe004
+    css: attach
+    search: [attach, clip]
+
+  - file: back
+    code: 0xe005
+    css: back
+    search: [back]
+
+  - file: back-alt
+    code: 0xe035
+    css: back-alt
+    search: [back]
+
+  - file: block
+    code: 0x1f6ab
+    css: block
+    search: [block, deny]
+
+  - file: broadcast
+    code: 0xe006
+    css: wifi
+    search: [broadcast, wifi]
+
+  - file: calendar
+    code: 0x1f4c5
+    css: calendar
+    search: [calendar]
+
+  - file: camera
+    code: 0x1f4f7
+    css: camera
+    search: [camera, photo]
+
+  - file: center-crosshair
+    code: 0x1f3af
+    css: target
+    search: [target]
+
+  - file: chat
+    code: 0xe007
+    css: chat
+    search: [chat, talk]
+
+  - file: check-not-ok
+    code: 0x2715
+    css: close
+    search: [close, cancel]
+
+  - file: check-ok
+    code: 0x2713
+    css: check
+    search: [check, mark]
+
+  - file: close-circle
+    code: 0x2716
+    css: cancel
+    search: [cancel, close]
+
+  - file: comment
+    code: 0xe008
+    css: comment
+    search: [comment, reply]
+
+  - file: compass
+    code: 0xe009
+    css: compass
+    search: [compass]
+
+  - file: contact-card
+    code: 0xe00a
+    css: vcard
+    search: [contact, card, vcard]
+
+  - file: contact-user
+    code: 0x1f464
+    css: user
+    search: [profile, contact, user]
+
+  - file: contacts-users
+    code: 0x1f465
+    css: users
+    search: [users, contacts, friends]
+
+  - file: direction
+    code: 0xe00b
+    css: direction
+    search: [direction]
+
+  - file: email
+    code: 0x2709
+    css: mail
+    search: [mail, email]
+
+  - file: export
+    code: 0xe00c
+    css: export
+    search: [export]
+
+  - file: flag
+    code: 0x2691
+    css: flag
+    search: [flag]
+
+  - file: flash
+    code: 0x26a1
+    css: flash
+    search: [flash, bolt]
+
+  - file: flight
+    code: 0x2708
+    css: flight
+    search: [flight, plane, airplane]
+
+  - file: forward
+    code: 0x27a6
+    css: forward
+    search: [forward]
+
+  - file: google-circles
+    code: 0xe00d
+    css: google-circles
+    search: [google, circles]
+
+
+  - file: heart
+    code: 0x2665
+    css: heart
+    search: [heart]
+
+  - file:  art-outlined
+    code: 0x2661
+    css: heart-empty
+    search: [heart]
+
+
+  - file: help
+    code: 0x2753
+    css: help
+    search: [help]
+
+  - file: help-circle
+    code: 0xe00e
+    css: help-circle
+    search: [help]
+
+  - file: image-list
+    code: 0x268f
+    css: image-list
+    search: [image, list]
+
+  - file: info
+    code: 0x2139
+    css: info
+    search: [info]
+
+  - file: info-circle
+    code: 0xe00f
+    css: info-circle
+    search: [info]
+
+  - file: leaf
+    code: 0x1f342
+    css: leaf
+    search: [leaf]
+
+  - file: level-down
+    code: 0x21b3
+    css: level-down
+    search: [down]
+
+  - file: lifebuoy
+    code: 0xe010
+    css: lifebuoy
+    search: [lifebuoy]
+
+  - file: like-thumbs-up
+    code: 0x1f4dd
+    css: thumbs-up
+    search: [thumbs, up, like, vote]
+
+  - file: link
+    code: 0x1f517
+    css: link
+    search: [link, url]
+
+  - file: list
+    code: 0x2630
+    css: list
+    search: [list]
+
+  - file: location
+    code: 0xe011
+    css: location
+    search: [location, marker]
+
+  - file: lock
+    code: 0x1f512
+    css: lock
+    search: [lock]
+
+  - file: map
+    code: 0xe012
+    css: map
+    search: [down]
+
+  - file: mic
+    code: 0x1f3a4
+    css: mic
+    search: [mic]
+
+  - file: minus
+    code: 0x2796
+    css: minus
+    search: [minus]
+
+  - file: minus-circle
+    code: 0xe013
+    css: minus-circle
+    search: [minus]
+
+  - file: mobile
+    code: 0x1f4f1
+    css: mobile
+    search: [mobile, iphone]
+
+  - file: mouse-website
+    code: 0xe014
+    css: mouse
+    search: [mouse, website]
+
+  - file: movie
+    code: 0x1f3ac
+    css: film
+    search: [movie, video]
+
+  - file: music
+    code: 0x1f3b5
+    css: music
+    search: [music, note]
+
+  - file: offer-price-tag
+    code: 0xe015
+    css: tag
+    search: [tag, price, offer]
+
+  - file: palette
+    code: 0x1f3a8
+    css: palette
+    search: [palette]
+
+  - file: phone
+    code: 0x1f4de
+    css: phone
+    search: [phone, telephone]
+
+  - file: plus
+    code: 0x2795
+    css: plus
+    search: [plus]
+
+  - file: plus-circle
+    code: 0xe016
+    css: plus-circle
+    search: [plus]
+
+  - file: print
+    code: 0xe017
+    css: print
+    search: [print]
+
+  - file: quote
+    code: 0x275e
+    css: quote-right
+    search: [quote]
+
+  - file: reload-CCW
+    code: 0x27f2
+    css: reload-ccw
+    search: [reload]
+
+  - file: reload-CW
+    code: 0x27f3
+    css: reload-cw
+    search: [reload]
+
+  - file: reply
+    code: 0xe018
+    css: reply
+    search: [reply]
+
+  - file: reply-to-all
+    code: 0xe019
+    css: reply-all
+    search: [reply]
+
+  - file: retweet
+    code: 0xe01a
+    css: retweet
+    search: [retweet]
+
+  - file: rss
+    code: 0xe01b
+    css: rss
+    search: [rss]
+
+  - file: classic-search
+    code: 0x1f50d
+    css: search
+    search: [search, find]
+
+  - file: search
+    code: 0x1f50e
+    css: search-alt
+    search: [search, find]
+
+  - file: settings
+    code: 0x2699
+    css: settings
+    search: [settings, cog]
+
+  - file: share
+    code: 0xe01c
+    css: share
+    search: [share]
+
+  - file: shopping-bag
+    code: 0xe000
+    css: shopping-cart
+    search: [basket, shopping, cart]
+
+  - file: shuffle
+    code: 0x1f500
+    css: shuffle
+    search: [shuffle]
+
+  - file: sleep
+    code: 0x263d
+    css: moon
+    search: [moon, sleep]
+
+
+  - file: star
+    code: 0x2605
+    css: star
+    search: [star]
+
+  - file: star-outlined
+    code: 0x2606
+    css: star-empty
+    search: [star]
+
+  - file: time-clock
+    code: 0x1f554
+    css: clock
+    search: [clock, time]
+
+  - file: time-glass
+    code: 0x23f3
+    css: hourglass
+    search: [clock, hourglass, busy, wait]
+
+  - file: top-list
+    code: 0x1f3c9
+    css: top-list
+    search: [top, trophy]
+
+  - file: unlocked
+    code: 0x1f513
+    css: lock-open
+    search: [lock, unlock]
+
+  - file: view-eye
+    code: 0xe01d
+    css: eye
+    search: [eye, subscribe]
+
+  - file: warning
+    code: 0x26a0
+    css: warning
+    search: [warning]
+
+  - file: write-new
+    code: 0x2703
+    css: pencil
+    search: [pencil, write]
+
+  - file: archive
+    code: 0xe01e
+    css: archive
+    search: [archive]
+
+    # Arrows
+  - file: down-circle-arrow
+    code: 0xe020
+    css: arrow-down-circle2
+    search: [arrow, down]
+  - file: left-circle-arrow
+    code: 0xe021
+    css: arrow-left-circle2
+    search: [arrow, left]
+  - file: right-circle-arrow
+    code: 0xe022
+    css: arrow-right-circle2
+    search: [arrow, right]
+  - file: up-circle-arrow
+    code: 0xe023
+    css: arrow-up-circle2
+    search: [arrow, up]
+
+
+    # Arrows
+  - file: open-arrow-down
+    code: 0xe024
+    css: arrow-down-open
+    search: [arrow, down]
+  - file: open-arrow-left
+    code: 0xe025
+    css: arrow-left-open
+    search: [arrow, left]
+  - file: open-arrow-right
+    code: 0xe026
+    css: arrow-right-open
+    search: [arrow, right]
+  - file: open-arrow-up
+    code: 0xe027
+    css: arrow-up-open
+    search: [arrow, up]
+
+
+    # Arrows
+  - file: thin-arrow-down
+    code: 0x2b07
+    css: arrow-down-thin
+    search: [arrow, down]
+  - file: thin-arrow-left
+    code: 0x2b05
+    css: arrow-left-thin
+    search: [arrow, left]
+  - file: thin-arrow-right
+    code: 0x27a1
+    css: arrow-right-thin
+    search: [arrow, right]
+  - file: thin-arrow-up
+    code: 0x2b06
+    css: arrow-up-thin
+    search: [arrow, up]
+
+
+    # Arrows
+  - file: direction-arrow-down
+    code: 0x25be
+    css: arrow-down-dir
+    search: [arrow, down]
+  - file: direction-arrow-left
+    code: 0x25c2
+    css: arrow-left-dir
+    search: [arrow, left]
+  - file: direction-arrow-right
+    code: 0x25b8
+    css: arrow-right-dir
+    search: [arrow, right]
+  - file: direction-arrow-up
+    code: 0x25b4
+    css: arrow-up-dir
+    search: [arrow, up]
+
+
+    # Arrows
+  - file: bold-down-arrow
+    code: 0xe4b0
+    css: arrow-down-bold
+    search: [arrow, down]
+  - file: bold-left-arrow
+    code: 0xe4ad
+    css: arrow-left-bold
+    search: [arrow, left]
+  - file: bold-right-arrow
+    code: 0xe4ae
+    css: arrow-right-bold
+    search: [arrow, right]
+  - file: bold-up-arrow
+    code: 0xe4af
+    css: arrow-up-bold
+    search: [arrow, up]
+
+
+    # Arrows
+  - file: down-arrow
+    code: 0x2193
+    css: arrow-down
+    search: [arrow, down]
+  - file: left-arrow
+    code: 0x2190
+    css: arrow-left
+    search: [arrow, left]
+  - file: right-arrow
+    code: 0x2192
+    css: arrow-right
+    search: [arrow, right]
+  - file: up-arrow
+    code: 0x2191
+    css: arrow-up
+    search: [arrow, up]
+
+
+    # Progress
+  - file: charge-empty
+    code: 0xe030
+    css: progress-0
+    search: [progress, charge]
+  - file: charge-one-third
+    code: 0xe031
+    css: progress-1
+    search: [progress, charge]
+  - file: charge-two-thirds
+    code: 0xe032
+    css: progress-2
+    search: [progress, charge]
+  - file: charge-full
+    code: 0xe033
+    css: progress-3
+    search: [progress, charge]
+
+
+    # Player
+  - file: play
+    code: 0x25b6
+    css: play
+    search: [play, player]
+  - file: stop
+    code: 0x25aa
+    css: stop
+    search: [stop, player]
+  - file: paus
+    code: 0x2389
+    css: pause
+    search: [pause, player]
+  - file: record
+    code: 0x26ab
+    css: record
+    search: [record, player]
+  - file: jump-to-end
+    code: 0x23ed
+    css: right-end
+    search: [right, player]
+  - file: jump-to-start
+    code: 0x23ee
+    css: left-start
+    search: [left, player]
+  - file: fast-forward
+    code: 0x23e9
+    css: right-ff
+    search: [right, player]
+  - file: fast-backward
+    code: 0x23ea
+    css: left-fb
+    search: [left, player]
+
+
+  - file: book
+    code: 0x1f4d6
+    css: book-open
+    search: [book]
+
+  - file: bookmark
+    code: 0x1f516
+    css: bookmark
+    search: [bookmark]
+
+  - file: battery
+    code: 0x1f50b
+    css: battery
+    search: [battery]
+
+  - file: back-in-time
+    code: 0xe040
+    css: back-in-time
+    search: [back, time]
+
+  - file: home
+    code: 0x2302
+    css: home
+    search: [home]
+
+  - file: dot
+    code: 0xe050
+    css: dot
+    search: [dot]
+  - file: dots-two
+    code: 0xe051
+    css: dot-2
+    search: [dot]
+  - file: dots-three
+    code: 0xe052
+    css: dot-3
+    search: [dot]
+
+  - file: light-bulb
+    code: 0x1f4a1
+    css: lamp
+    search: [idea, lamp, light]
+
+  - file: light-down
+    code: 0x1f505
+    css: light-down
+    search: [light, dim, bright]
+  - file: light-up
+    code: 0x1f506
+    css: light-up
+    search: [light, dim, bright]
+
+  - file: trash
+    code: 0xe0da
+    css: trash
+    search: [trash]
+
+  - file: document
+    code: 0xe048
+    css: doc
+    search: [doc, article]
+  - file: documents
+    code: 0xe049
+    css: docs
+    search: [doc, article]
+  - file: landscape-documents
+    code: 0xe04a
+    css: docs-landscape
+    search: [doc, article]
+  - file: text-document
+    code: 0x1f4c4
+    css: doc-text
+    search: [doc, text, article]
+
+
+    # Sound
+  - file: mute
+    code: 0x1f507
+    css: volume-off
+    search: [volume, sound, mute]
+  - file: sound
+    code: 0x1f50a
+    css: volume-up
+    search: [volume, sound]
+  - file: volume
+    code: 0xe057
+    css: volume
+    search: [volume, sound]
+
+
+  - file: cloud
+    code: 0x2601
+    css: cloud
+    search: [cloud]
+
+  - file: keyboard
+    code: 0x2328
+    css: keyboard
+    search: [keyboard]
+
+  - file: folder
+    code: 0x1f4c1
+    css: folder
+    search: [folder]
+
+  - file: download
+    code: 0xe042
+    css: download
+    search: [download]
+  - file: upload
+    code: 0xe043
+    css: upload
+    search: []
+  - file: upload-to-cloud
+    code: 0xe045
+    css: upload-cloud
+    search: [upload, cloud]
+
+    # Editor markup
+  - file: code
+    code: 0xe05f
+    css: code
+    search: [code]
+
+  - file: popup
+    code: 0xe060
+    css: popup
+    search: [popup]
+
+  - file: publish
+    code: 0xe061
+    css: publish
+    search: [publish]
+
+  - file: feather
+    code: 0xe062
+    css: feather
+    search: [pen, feather]
+
+  - file: full-screen
+    code: 0xe063
+    css: resize-full
+    search: [resize, fullscreen]
+  - file: small-screen
+    code: 0xe064
+    css: resize-small
+    search: [resize]
+
+  - file: globe
+    code: 0xe065
+    css: globe 
+    search: [globe]
+
+  - file: vinyl-record
+    code: 0x1f4bf
+    css: cd
+    search: [cd, vinyl]
+
+  - file: tv-screen
+    code: 0x1f4bb
+    css: monitor
+    search: [tv, screen, monitor]
+
+  - file: image
+    code: 0x1f304
+    css: image
+    search: [image]
+
+  - file: select-box-arrow
+    code: 0xe058
+    css: arrow-combo
+    search: [arrow]
+
+  - file: browser
+    code: 0xe059
+    css: window
+    search: [window]
+
+  - file: song
+    code: 0xe05a
+    css: song
+    search: [song, music, sound]
+
+  - file: inbox
+    code: 0xe05b
+    css: inbox
+    search: [inbox]
+
+  - file: install
+    code: 0xe05c
+    css: install
+    search: [install]
+
+  - file: suitecase
+    code: 0xe05d
+    css: bag
+    search: [bag]
+
+  - file: suitcase-alt
+    code: 0xe06d
+    css: bag-alt
+    search: [bag]
+
+  - file: network
+    code: 0xe05e
+    css: net
+    search: [net]
+
+  - file: creative-commons
+    code: 0xe183
+    css: cc
+    search: [creative, commons]
+
+  - file: entypo-square
+    code: 0xe180
+    css: logo-entypo
+    search: []
+
+  - file: sweden
+    code: 0xe181
+    css: flag-sw
+    search: []
+
+  - file: db-signature
+    code: 0xe182
+    css: logo-db
+    search: []
 
