@@ -46,7 +46,21 @@ font:
 	ttf2eot < ./font/$(FONT_NAME).ttf >./font/$(FONT_NAME).eot
 
 
+npm-deps:
+	@if test ! `which npm` ; then \
+		echo "Node.JS and NPM are required for html demo generation." >&2 ; \
+		echo "This is non-fatal error and you'll still be able to build font," >&2 ; \
+		echo "however, to build demo with >> make html << you need:" >&2 ; \
+		echo "  - Install Node.JS and NPM" >&2 ; \
+		echo "  - Run this task once again" >&2 ; \
+		else \
+		npm install jade js-yaml.bin ; \
+		fi
+
+
+
 support:
+	test -d node_modules/js-yaml -a -d node_modules/jade || $(MAKE) npm-deps
 	git submodule init support/font-builder
 	git submodule update support/font-builder
 	which ttf2eot ttfautohint > /dev/null || (cd support/font-builder && $(MAKE))
@@ -74,5 +88,4 @@ gh-pages:
 	rm -rf ${TMP_PATH}
 
 
-.SILENT: dev-deps
-.PHONY: font support
+.PHONY: font npm-deps support
