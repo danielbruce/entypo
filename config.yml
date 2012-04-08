@@ -202,7 +202,7 @@ glyphs:
     css: heart
     search: [heart]
 
-  - file:  art-outlined
+  - file:  heart-outlined
     code: 0x2661
     css: heart-empty
     search: [heart]
