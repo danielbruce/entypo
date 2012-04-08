@@ -14,8 +14,11 @@ REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
 
-TTF2EOT_BIN     = ./support/ttf2eot/ttf2eot
-TTFAUTOHINT_BIN = ./support/ttfautohint/frontend/ttfautohint
+FONTBUILD_BIN   = ./support/font-builder/bin/fontbuild.py
+FONTCONVERT_BIN = ./support/font-builder/bin/fontconvert.py
+PARSE_TPL_BIN   = ./support/font-builder/bin/parse_template.py
+TTF2EOT_BIN     = ./support/font-builder/support/ttf2eot/ttf2eot
+TTFAUTOHINT_BIN = ./support/font-builder/support/ttfautohint/frontend/ttfautohint
 
 
 dist: font html
@@ -32,31 +35,22 @@ font:
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
-	./bin/fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(FONT_NAME).ttf
+	$(FONTBUILD_BIN) -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(FONT_NAME).ttf
 	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/$(FONT_NAME).ttf ./font/$(FONT_NAME)-hinted.ttf
 	mv ./font/$(FONT_NAME)-hinted.ttf ./font/$(FONT_NAME).ttf
-	./bin/fontconvert.py -i ./font/$(FONT_NAME).ttf -o ./font
+	$(FONTCONVERT_BIN) -i ./font/$(FONT_NAME).ttf -o ./font
 	$(TTF2EOT_BIN) < ./font/$(FONT_NAME).ttf >./font/$(FONT_NAME).eot
 
 
-support: $(TTF2EOT_BIN) $(TTFAUTOHINT_BIN)
-
-
-$(TTF2EOT_BIN):
-	cd ./support/ttf2eot \
-		&& $(MAKE) ttf2eot
-
-
-$(TTFAUTOHINT_BIN):
-	cd ./support/ttfautohint \
-		&& ./configure --without-qt \
-		&& make
-	git clean -f -d ./support/ttfautohint
+support:
+	git submodule init support/font-builder
+	git submodule update support/font-builder
+	cd support/font-builder && $(MAKE)
 
 
 html:
-	./bin/parse_template.py -c ./config.yml ./src/css.mustache ./font/entypo.css
-	./bin/parse_template.py -c ./config.yml ./src/demo.mustache ./font/demo.html
+	$(PARSE_TPL_BIN) -c ./config.yml ./src/css.mustache ./font/entypo.css
+	$(PARSE_TPL_BIN) -c ./config.yml ./src/demo.mustache ./font/demo.html
 
 
 gh-pages:
@@ -74,23 +68,6 @@ gh-pages:
 		git remote add remote ${REMOTE_REPO} && \
 		git push --force remote +master:gh-pages 
 	rm -rf ${TMP_PATH}
-
-
-dev-deps:
-	@if test 0 -ne `id -u` ; then \
-		echo "root priveledges are required" >&2 ; \
-		exit 128 ; \
-		fi
-	apt-get -qq install \
-		fontforge python python-fontforge libfreetype6-dev \
-		python-yaml python-pip \
-		build-essential \
-		autoconf automake libtool
-	pip -q install pystache argparse
-
-
-clean:
-	git clean -f -x
 
 
 .SILENT: dev-deps
