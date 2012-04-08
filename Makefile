@@ -67,8 +67,8 @@ support:
 
 html:
 	parse_template.py -c ./config.yml ./src/css.mustache ./font/entypo.css
-	parse_template.py -c ./config.yml ./src/demo.mustache ./font/demo.html
-	#jade --pretty --out ./font ./src/demo.jade
+	CONFIG=$$(js-yaml --to-json ./config.yml) && \
+		jade --pretty --obj "$$CONFIG" --out ./font ./src/demo.jade
 
 
 gh-pages:

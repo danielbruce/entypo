@@ -1,20 +1,29 @@
 !!! 5
-//if lt IE 7: html(class="ie ie6", lang="en")
-//if IE 7: html(class="ie ie7", lang="en")
-//if IE 8: html(class="ie ie8", lang="en")
-//if (gte IE 9) | !(IE): html(lang="en")
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 head
-  //if lt IE 9: script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   link(rel="stylesheet", href="demo/bootstrap/css/bootstrap.css")
   link(rel="stylesheet", href="demo/demo.css")
   link(rel="stylesheet", href="entypo.css")
 body
   .container
     .page-header
-      h1: Entypo font icons demo
+      h1: | Entypo font icons demo
     .row
-      each col in [1,2,3,4]
-        .span3
+      - var col_class = "span" + Math.ceil(12 / locals['demo-columns'])
+      - var chunk_size = Math.ceil(glyphs.length / locals['demo-columns'])
+      - for (var i = 0; i < locals['demo-columns']; i++)
+        div(class=col_class)
           ul.the-icons
-            each glyph in [1,2,3]
-              li: i(class="{{css-prefix}}{{css}}") {{css-prefix}}{{css}}
+            - var offset = i * chunk_size
+            - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
+              each opts, file in glyphs[offset + c]
+                - var css_class = locals['css-prefix'] + (opts.css || file)
+                li
+                  i(class=css_class)
+                  = css_class
