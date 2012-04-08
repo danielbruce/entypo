@@ -1,0 +1,20 @@
+!!! 5
+//if lt IE 7: html(class="ie ie6", lang="en")
+//if IE 7: html(class="ie ie7", lang="en")
+//if IE 8: html(class="ie ie8", lang="en")
+//if (gte IE 9) | !(IE): html(lang="en")
+head
+  //if lt IE 9: script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+  link(rel="stylesheet", href="demo/bootstrap/css/bootstrap.css")
+  link(rel="stylesheet", href="demo/demo.css")
+  link(rel="stylesheet", href="entypo.css")
+body
+  .container
+    .page-header
+      h1: Entypo font icons demo
+    .row
+      each col in [1,2,3,4]
+        .span3
+          ul.the-icons
+            each glyph in [1,2,3]
+              li: i(class="{{css-prefix}}{{css}}") {{css-prefix}}{{css}}

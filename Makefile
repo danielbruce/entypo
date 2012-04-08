@@ -16,6 +16,7 @@ REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 PATH := $(PATH):./support/font-builder/support/ttf2eot
 PATH := $(PATH):./support/font-builder/support/ttfautohint/frontend
 PATH := $(PATH):./support/font-builder/bin
+PATH := $(PATH):./node_modules/.bin
 
 
 dist: font html
@@ -67,6 +68,7 @@ support:
 html:
 	parse_template.py -c ./config.yml ./src/css.mustache ./font/entypo.css
 	parse_template.py -c ./config.yml ./src/demo.mustache ./font/demo.html
+	#jade --pretty --out ./font ./src/demo.jade
 
 
 gh-pages:
