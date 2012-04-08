@@ -14,32 +14,31 @@ REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
 
-FONTBUILD_BIN   = ./support/font-builder/bin/fontbuild.py
-FONTCONVERT_BIN = ./support/font-builder/bin/fontconvert.py
-PARSE_TPL_BIN   = ./support/font-builder/bin/parse_template.py
-TTF2EOT_BIN     = ./support/font-builder/support/ttf2eot/ttf2eot
-TTFAUTOHINT_BIN = ./support/font-builder/support/ttfautohint/frontend/ttfautohint
+# Add local versions of ttf2eot nd ttfautohint to the PATH
+PATH := $(PATH):./support/font-builder/support/ttf2eot
+PATH := $(PATH):./support/font-builder/support/ttfautohint/frontend
+PATH := $(PATH):./support/font-builder/bin
 
 
 dist: font html
 
 
 font:
-	@if test ! -f $(TTF2EOT_BIN) ; then \
+	@if test ! `which ttf2eot` ; then \
 		echo "ttf2eot not found. run:" >&2 ; \
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
-	@if test ! -f $(TTFAUTOHINT_BIN) ; then \
+	@if test ! `which ttfautohint` ; then \
 		echo "ttfautohint not found. run:" >&2 ; \
 		echo "  make support" >&2 ; \
 		exit 128 ; \
 		fi
-	$(FONTBUILD_BIN) -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(FONT_NAME).ttf
-	$(TTFAUTOHINT_BIN) --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/$(FONT_NAME).ttf ./font/$(FONT_NAME)-hinted.ttf
+	fontbuild.py -c ./config.yml -t ./src/font_template.sfd -i ./src/svg -o ./font/$(FONT_NAME).ttf
+	ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol ./font/$(FONT_NAME).ttf ./font/$(FONT_NAME)-hinted.ttf
 	mv ./font/$(FONT_NAME)-hinted.ttf ./font/$(FONT_NAME).ttf
-	$(FONTCONVERT_BIN) -i ./font/$(FONT_NAME).ttf -o ./font
-	$(TTF2EOT_BIN) < ./font/$(FONT_NAME).ttf >./font/$(FONT_NAME).eot
+	fontconvert.py -i ./font/$(FONT_NAME).ttf -o ./font
+	ttf2eot < ./font/$(FONT_NAME).ttf >./font/$(FONT_NAME).eot
 
 
 support:
@@ -49,8 +48,8 @@ support:
 
 
 html:
-	$(PARSE_TPL_BIN) -c ./config.yml ./src/css.mustache ./font/entypo.css
-	$(PARSE_TPL_BIN) -c ./config.yml ./src/demo.mustache ./font/demo.html
+	parse_template.py -c ./config.yml ./src/css.mustache ./font/entypo.css
+	parse_template.py -c ./config.yml ./src/demo.mustache ./font/demo.html
 
 
 gh-pages:
