@@ -23,7 +23,7 @@ Install system dependencies (fontforge & python modules):
 If you are working on multiple font you would like to have only one instance of
 heavy dependencies like _ttfautohint_ installed. Run this:
 
-    cd support/font-builder && make support-install PREFIX=/usr/local
+    cd support/font-builder && sudo make support-install
 
 
 Note that you don't need to install system dependencies more than once.
