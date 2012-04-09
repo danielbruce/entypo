@@ -24,6 +24,4 @@ body
             - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
               - var g = glyphs[offset + c]
               - var css_class = demo.css_prefix + (g.css || g.file)
-                li
-                  i(class=css_class)
-                  = css_class
+              | <li><i class="#{css_class}"></i> #{css_class}</li>
