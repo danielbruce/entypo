@@ -65,9 +65,8 @@ support:
 
 html:
 	CONFIG=$$(js-yaml --to-json ./config.yml) && \
-		jade --pretty --obj "$$CONFIG" --out ./font ./src/demo.jade && \
-		jade --pretty --obj "$$CONFIG" --out ./font ./src/css.jade && \
-		mv ./font/css.html ./font/$(FONT_NAME).css
+		jade --pretty --obj "$$CONFIG" --out ./font ./src/demo.jade
+	fontdemo.py -c ./config.yml ./src/css.mustache ./font/$(FONT_NAME).css
 
 
 gh-pages:
