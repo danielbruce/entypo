@@ -830,11 +830,6 @@ glyphs:
     css: bag
     search: [bag]
 
-  - file: suitcase-alt
-    code: 0xe06d
-    css: bag-alt
-    search: [bag]
-
   - file: network
     code: 0xe05e
     css: net
