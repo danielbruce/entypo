@@ -15,13 +15,13 @@ body
     .page-header
       h1: | #{font.fullname} font icons demo
     .row
-      - var col_class = "span" + Math.ceil(12 / demo.columns)
-      - var chunk_size = Math.ceil(glyphs.length / demo.columns)
-      - for (var i = 0; i < demo.columns; i++)
+      - var col_class = "span" + Math.ceil(12 / meta.columns)
+      - var chunk_size = Math.ceil(glyphs.length / meta.columns)
+      - for (var i = 0; i < meta.columns; i++)
         div(class=col_class)
           ul.the-icons
             - var offset = i * chunk_size
             - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
               - var g = glyphs[offset + c]
-              - var css_class = demo.css_prefix + (g.css || g.file)
+              - var css_class = meta.css_prefix + (g.css || g.file)
               | <li><i class="#{css_class}"></i> #{css_class}</li>
