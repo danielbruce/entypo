@@ -48,19 +48,27 @@
 #   offset: -0.1                  # shift up/down
 #
 # glyphs:
-#   - glyph1_file:                # file name, without extention
-#       from: 0xNNN               # Source code for remapper
-#       code: 0xNNN               # Symbol code 0x - hex
-#       css: icon-gpyph1-name     # For generated CSS
-#       search: [word1, word2]    # Search aliases (array). CSS name will be
+#   - file: glyph1_file           # file name, without extention
+#     from: 0xNNN                 # Source code for remapper or merge tool
+#     code: 0xNNN                 # Symbol code 0x - hex
+#     css: icon-gpyph1-name       # For generated CSS
+#     search: [word1, word2]      # Search aliases (array). CSS name will be
 #                                 # included automatically
+#     src: first_font_alias       # alias to font for merge tool
+#                                 # list of aliases in src_fonts section
 #
-#       #
-#       # local transformations, only for this glyph (optional)
-#       #
-#       transform:                # personal glyph transformation.
-#         rescale_rel             # *_rel - applyed after global.
-#         offset: 0.2             # without *_rel - override global
+#     #
+#     # local transformations, only for this glyph (optional)
+#     #
+#     transform:                  # personal glyph transformation.
+#       rescale_rel               # *_rel - applyed after global.
+#       offset: 0.2               # without *_rel - override global
+#
+# #
+# # Fonts aliases used only in font merge tool
+# #
+# src_fonts:
+#   first_font_alias: "/absolute/path/to/first/font.ttf"
 #
 ################################################################################
 #
