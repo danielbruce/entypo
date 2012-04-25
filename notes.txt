@@ -1,0 +1,45 @@
+Missing:
+
+- icon-star-half (half of star, half filled star)
+- icon-th-large (thumbnails large)
+- icon-ok-circle
+- icon-tagS (multiple)
+- icon-email (not filled)
+- icon-vynil == CD ?
+- icon-videocam - for video chats/records
+- icon-filter
+- icon-pin
+- icon-thumb-down
+
+
+Notes:
+
+- icon-back-alt - arrow too small
+- icon-doc - unclear (screen/tablet?)
+- icon-battery - electro hotdog
+- icon-lamp - may be, should be complemented with unfilled one
+- icon-progress-* - miss [progress-1, progress-2], flipped horisontally
+- icon-comment - tail too small, bad looking on small sizes
+- icon-list-add - what for ? is just "+" not enougth ?
+- icon-google-circles - missplaced, should be with other logos
+- icon-inbox - unclear
+
+Could be useful:
+
+  <editor buttons>
+
+- font
+- bold
+- italic
+- underline
+- stroke
+- allign left/right/middle/justify
+- bullet list
+- numbered list
+- indent left/right
+
+  <logos>
+
+ - separate font ?
+
+  <smiles>
