@@ -10,7 +10,7 @@ Missing:
 - icon-filter
 - icon-pin
 - icon-thumb-down
-
+- icon-image - there are multiple images (album), but no single one
 
 Notes:
 
