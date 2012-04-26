@@ -6,11 +6,17 @@ Missing:
 - icon-tagS (multiple)
 - icon-email (not filled)
 - icon-vynil == CD ?
-- icon-videocam - for video chats/records
+- icon-videocam - for video chats/records (facetime)
 - icon-filter
 - icon-pin
 - icon-thumb-down
-- icon-image - there are multiple images (album), but no single one
+- icon-picture - there are multiple images (album), but no single one
+- icon-shopping-cart - too similar to icon-trash & icon-archive,
+    may be good to have more "classic" alternative
+- icon-zoom-in, icon-zoom-out
+- icon-headphones
+- icon-login
+- icon-logout
 
 Notes:
 
