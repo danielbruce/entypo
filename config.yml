@@ -175,12 +175,12 @@ glyphs:
   - file: movie
     code: 0x1f3ac
     css: video
-    search: [movie, video]
+    search: [movie, video, film]
 
   - file: image
     code: 0x1f304
-    css: image
-    search: [image]
+    css: picture
+    search: [image, picture, photo]
 
   - file: camera
     code: 0x1f4f7
@@ -202,17 +202,17 @@ glyphs:
   - file: check-ok
     code: 0x2713
     css: ok
-    search: [ok, check, mark]
+    search: [ok, yes, check, mark]
 
   - file: check-not-ok
     code: 0x2715
     css: cancel
-    search: [close, cancel]
+    search: [close, cancel, reject]
 
   - file: close-circle
     code: 0x2716
     css: cancel-circle
-    search: [cancel, close]
+    search: [close, cancel, reject]
 
   - file: plus
     code: 0x2795
@@ -237,12 +237,12 @@ glyphs:
   - file: help
     code: 0x2753
     css: help
-    search: [help]
+    search: [help, question]
 
   - file: help-circle
     code: 0xe00e
     css: help-circle
-    search: [help]
+    search: [help, question]
 
   - file: info
     code: 0x2139
@@ -313,7 +313,7 @@ glyphs:
     search: [flag]
 
   - file: like-thumbs-up
-    code: 0x1f4dd
+    code: 0x1f44d
     css: thumbs-up
     search: [thumbs, up, like, vote]
 
@@ -323,9 +323,9 @@ glyphs:
     css: download
     search: [download]
   - file: upload
-    code: 0xe043
+    code: 0x1f4e4
     css: upload
-    search: []
+    search: [upload]
   - file: upload-to-cloud
     code: 0xe045
     css: upload-cloud
@@ -364,12 +364,12 @@ glyphs:
   - file: export
     code: 0xe00c
     css: export
-    search: [export]
+    search: [export, share]
 
   - file: write-new
     code: 0x2703
     css: pencil
-    search: [pencil, write]
+    search: [pencil, write, reply, edit]
 
   - file: feather
     code: 0xe062
@@ -384,7 +384,7 @@ glyphs:
   - file: retweet
     code: 0xe01a
     css: retweet
-    search: [retweet]
+    search: [retweet, twitter]
 
   - file: keyboard
     code: 0x2328
@@ -395,7 +395,7 @@ glyphs:
   - file: comment
     code: 0xe008
     css: comment
-    search: [comment, reply]
+    search: [comment, reply, write]
 
   - file: chat
     code: 0xe007
@@ -410,8 +410,8 @@ glyphs:
 
   - file: warning
     code: 0x26a0
-    css: warning
-    search: [warning]
+    css: attention
+    search: [attention, warning]
 
 
 
@@ -428,7 +428,7 @@ glyphs:
   - file: location
     code: 0xe011
     css: location
-    search: [location, marker]
+    search: [location, mark, marker]
 
   - file: map
     code: 0xe012
@@ -450,7 +450,7 @@ glyphs:
   - file: trash
     code: 0xe0da
     css: trash
-    search: [trash]
+    search: [trash, delete]
 
   - file: document
     code: 0xe048
@@ -498,7 +498,7 @@ glyphs:
   - file: settings
     code: 0x2699
     css: settings
-    search: [settings, cog]
+    search: [settings, cog, gear]
 
   - file: share
     code: 0xe01c
@@ -507,13 +507,13 @@ glyphs:
 
   - file: shopping-bag
     code: 0xe000
-    css: shopping-cart
+    css: basket
     search: [basket, shopping, cart]
 
   - file: calendar
     code: 0x1f4c5
     css: calendar
-    search: [calendar]
+    search: [calendar, date]
 
 
     # Sound
@@ -607,7 +607,7 @@ glyphs:
   - file: down-circle-arrow
     code: 0xe020
     css: arrow-down-circle2
-    search: [arrow, down]
+    search: [arrow, down, download]
   - file: left-circle-arrow
     code: 0xe021
     css: arrow-left-circle2
@@ -619,7 +619,7 @@ glyphs:
   - file: up-circle-arrow
     code: 0xe023
     css: arrow-up-circle2
-    search: [arrow, up]
+    search: [arrow, up, upload]
 
 
     # Arrows
@@ -813,11 +813,6 @@ glyphs:
 
 
 
-
-
-
-
-
   - file: add-to-list
     code: 0xe003
     css: list-add
@@ -825,8 +820,8 @@ glyphs:
 
   - file: broadcast
     code: 0xe006
-    css: wifi
-    search: [broadcast, wifi]
+    css: signal
+    search: [broadcast, wifi, signal]
 
 
 
@@ -922,7 +917,7 @@ glyphs:
   - file: dots-two
     code: 0xe051
     css: dot-2
-    search: [dot]
+    search: [dot, flickr]
   - file: dots-three
     code: 0xe052
     css: dot-3
@@ -943,15 +938,15 @@ glyphs:
   - file: entypo-square
     code: 0xe180
     css: logo-entypo
-    search: []
+    search: [entypo]
 
   - file: sweden
     code: 0xe181
     css: flag-sw
-    search: []
+    search: [sweden]
 
   - file: db-signature
     code: 0xe182
     css: logo-db
-    search: []
+    search: [daniel, bruce]
 
