@@ -138,7 +138,6 @@ glyphs:
     code: 0x2665
     css: heart
     search: [heart]
-
   - file:  heart-outlined
     code: 0x2661
     css: heart-empty
@@ -258,12 +257,12 @@ glyphs:
   - file: back
     code: 0xe005
     css: back
-    search: [back]
+    search: [back, return]
 
   - file: back-alt
     code: 0xe035
     css: back-alt
-    search: [back]
+    search: [back, return]
 
 
 
@@ -330,10 +329,6 @@ glyphs:
     code: 0xe045
     css: upload-cloud
     search: [upload, cloud]
-  - file: cloud
-    code: 0x2601
-    css: cloud
-    search: [cloud]
 
 
   - file: reply
@@ -374,7 +369,7 @@ glyphs:
   - file: feather
     code: 0xe062
     css: feather
-    search: [pen, feather]
+    search: [pen, write, reply, edit, feather]
 
   - file: print
     code: 0xe017
@@ -471,7 +466,7 @@ glyphs:
   - file: book
     code: 0x1f4d6
     css: book-open
-    search: [book]
+    search: [book, doc]
 
   - file: folder
     code: 0x1f4c1
@@ -497,7 +492,7 @@ glyphs:
 
   - file: settings
     code: 0x2699
-    css: settings
+    css: cog
     search: [settings, cog, gear]
 
   - file: share
@@ -581,7 +576,7 @@ glyphs:
   - file: popup
     code: 0xe060
     css: popup
-    search: [popup]
+    search: [popup, window]
 
   - file: publish
     code: 0xe061
@@ -597,135 +592,133 @@ glyphs:
   - file: select-box-arrow
     code: 0xe058
     css: arrow-combo
-    search: [arrow]
-
-
+    search: [arrow, dropdown, combobox]
 
 
 
     # Arrows
   - file: down-circle-arrow
     code: 0xe020
-    css: arrow-down-circle2
+    css: down-circle2
     search: [arrow, down, download]
   - file: left-circle-arrow
     code: 0xe021
-    css: arrow-left-circle2
+    css: left-circle2
     search: [arrow, left]
   - file: right-circle-arrow
     code: 0xe022
-    css: arrow-right-circle2
+    css: right-circle2
     search: [arrow, right]
   - file: up-circle-arrow
     code: 0xe023
-    css: arrow-up-circle2
+    css: up-circle2
     search: [arrow, up, upload]
 
 
     # Arrows
   - file: open-arrow-down
     code: 0xe024
-    css: arrow-down-open
+    css: down-open
     search: [arrow, down]
   - file: open-arrow-left
     code: 0xe025
-    css: arrow-left-open
+    css: left-open
     search: [arrow, left]
   - file: open-arrow-right
     code: 0xe026
-    css: arrow-right-open
+    css: right-open
     search: [arrow, right]
   - file: open-arrow-up
     code: 0xe027
-    css: arrow-up-open
+    css: up-open
     search: [arrow, up]
 
 
     # Arrows
   - file: thin-arrow-down
     code: 0x2b07
-    css: arrow-down-thin
+    css: down-thin
     search: [arrow, down]
   - file: thin-arrow-left
     code: 0x2b05
-    css: arrow-left-thin
+    css: left-thin
     search: [arrow, left]
   - file: thin-arrow-right
     code: 0x27a1
-    css: arrow-right-thin
+    css: right-thin
     search: [arrow, right]
   - file: thin-arrow-up
     code: 0x2b06
-    css: arrow-up-thin
+    css: up-thin
     search: [arrow, up]
 
 
     # Arrows
   - file: direction-arrow-down
     code: 0x25be
-    css: arrow-down-dir
+    css: down-dir
     search: [arrow, down]
   - file: direction-arrow-left
     code: 0x25c2
-    css: arrow-left-dir
+    css: left-dir
     search: [arrow, left]
   - file: direction-arrow-right
     code: 0x25b8
-    css: arrow-right-dir
+    css: right-dir
     search: [arrow, right]
   - file: direction-arrow-up
     code: 0x25b4
-    css: arrow-up-dir
+    css: up-dir
     search: [arrow, up]
 
 
     # Arrows
   - file: bold-down-arrow
     code: 0xe4b0
-    css: arrow-down-bold
+    css: down-bold
     search: [arrow, down]
   - file: bold-left-arrow
     code: 0xe4ad
-    css: arrow-left-bold
+    css: left-bold
     search: [arrow, left]
   - file: bold-right-arrow
     code: 0xe4ae
-    css: arrow-right-bold
+    css: right-bold
     search: [arrow, right]
   - file: bold-up-arrow
     code: 0xe4af
-    css: arrow-up-bold
+    css: up-bold
     search: [arrow, up]
 
 
     # Arrows
   - file: down-arrow
     code: 0x2193
-    css: arrow-down
+    css: down
     search: [arrow, down]
   - file: left-arrow
     code: 0x2190
-    css: arrow-left
+    css: left
     search: [arrow, left]
   - file: right-arrow
     code: 0x2192
-    css: arrow-right
+    css: right
     search: [arrow, right]
   - file: up-arrow
     code: 0x2191
-    css: arrow-up
+    css: up
     search: [arrow, up]
 
 
 
   - file: reload-CCW
     code: 0x27f2
-    css: arrow-ccw
+    css: ccw
     search: [reload, undo]
 
   - file: reload-CW
     code: 0x27f3
-    css: arrow-cw
+    css: cw
     search: [reload, redo, repeat]
 
   - file: level-down
@@ -733,6 +726,10 @@ glyphs:
     css: level-down
     search: [down]
 
+  - file: shuffle
+    code: 0x1f500
+    css: shuffle
+    search: [shuffle, random]
 
 
 
@@ -755,19 +752,19 @@ glyphs:
     search: [record, player]
   - file: jump-to-end
     code: 0x23ed
-    css: right-end
+    css: to-end
     search: [right, player]
   - file: jump-to-start
     code: 0x23ee
-    css: left-start
+    css: to-start
     search: [left, player]
   - file: fast-forward
     code: 0x23e9
-    css: right-ff
+    css: fast-fw
     search: [right, player]
   - file: fast-backward
     code: 0x23ea
-    css: left-fb
+    css: fast-bw
     search: [left, player]
 
 
@@ -801,16 +798,6 @@ glyphs:
     css: palette
     search: [palette]
 
-  - file: shuffle
-    code: 0x1f500
-    css: shuffle
-    search: [shuffle]
-
-  - file: sleep
-    code: 0x263d
-    css: moon
-    search: [moon, sleep]
-
 
 
   - file: add-to-list
@@ -826,7 +813,7 @@ glyphs:
 
 
   - file: top-list
-    code: 0x1f3c9
+    code: 0x1f3c6
     css: top-list
     search: [top, trophy]
 
@@ -879,10 +866,20 @@ glyphs:
     css: globe 
     search: [globe]
 
+  - file: cloud
+    code: 0x2601
+    css: cloud
+    search: [cloud]
+
   - file: flash
     code: 0x26a1
     css: flash
     search: [flash, bolt]
+
+  - file: sleep
+    code: 0x263d
+    css: moon
+    search: [moon, sleep]
 
   - file: flight
     code: 0x2708

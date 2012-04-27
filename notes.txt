@@ -10,22 +10,30 @@ Missing:
 - icon-filter
 - icon-pin
 - icon-thumb-down
-- icon-picture - there are multiple images (album), but no single one
+- icon-picture - there are multiple images (good for album), but no single one
 - icon-shopping-cart - too similar to icon-trash & icon-archive,
     may be good to have more "classic" alternative
 - icon-zoom-in, icon-zoom-out
 - icon-headphones
 - icon-login
 - icon-logout
+- icon-eject
+- icon-chart-bar, icon-chart-pie
+- more "classic" archive (similar to box, for zip/rar/... archives)
+- icon-refresh (round with 2 arrows, similar to retweet)
+- icons for progress animation via CSS3 effects (rotation and other)
 
 Notes:
 
 - icon-back-alt - arrow too small
+- icon-back - arrow seems small, very weak pressure on movement direction
 - icon-doc - unclear (screen/tablet?)
 - icon-battery - electro hotdog
 - icon-lamp - may be, should be complemented with unfilled one
 - icon-progress-* - miss [progress-1, progress-2], flipped horisontally
-- icon-comment - tail too small, bad looking on small sizes
+- icon-comment
+  - tail too small, bad looking on small sizes
+  - more "light" alternative needed (unfilled siluette), and the same for chat
 - icon-list-add - what for ? is just "+" not enougth ?
 - icon-google-circles - missplaced, should be with other logos
 - icon-inbox - unclear
