@@ -107,12 +107,12 @@ font:
 glyphs:
 
   - file: music
-    code: 0x1f3b5
+    code: 0x266a
     css: music
     search: [music, note, song]
 
   - file: song
-    code: 0xe05a
+    code: 0x1f3b5
     css: music-alt
     search: [song, music, sound]
 
@@ -166,7 +166,7 @@ glyphs:
     search: [users, contacts, friends]
 
   - file: add-contact-add-user
-    code: 0xe001
+    code: 0xe700
     css: user-add
     search: [profile, contact, user, add]
 
@@ -214,22 +214,22 @@ glyphs:
     search: [close, cancel, reject]
 
   - file: plus
-    code: 0x2795
+    code: 0x2b
     css: plus
     search: [plus]
 
   - file: plus-circle
-    code: 0xe016
+    code: 0x2795
     css: plus-circle
     search: [plus]
 
   - file: minus
-    code: 0x2796
+    code: 0x2d
     css: minus
     search: [minus]
 
   - file: minus-circle
-    code: 0xe013
+    code: 0x2796
     css: minus-circle
     search: [minus]
 
@@ -239,7 +239,7 @@ glyphs:
     search: [help, question]
 
   - file: help-circle
-    code: 0xe00e
+    code: 0xe704
     css: help-circle
     search: [help, question]
 
@@ -249,18 +249,18 @@ glyphs:
     search: [info]
 
   - file: info-circle
-    code: 0xe00f
+    code: 0xe705
     css: info-circle
     search: [info]
 
 
   - file: back
-    code: 0xe005
+    code: 0xe706
     css: back
     search: [back, return]
 
   - file: back-alt
-    code: 0xe035
+    code: 0xe707
     css: back-alt
     search: [back, return]
 
@@ -277,7 +277,7 @@ glyphs:
     search: [link, url]
 
   - file: attach
-    code: 0xe004
+    code: 0x1f4ce
     css: attach
     search: [attach, clip]
 
@@ -292,12 +292,12 @@ glyphs:
     search: [lock, unlock]
 
   - file: view-eye
-    code: 0xe01d
+    code: 0xe70a
     css: eye
     search: [eye, subscribe]
 
   - file: offer-price-tag
-    code: 0xe015
+    code: 0xe70c
     css: tag
     search: [tag, price, offer]
 
@@ -318,7 +318,7 @@ glyphs:
 
 
   - file: download
-    code: 0xe042
+    code: 0x1f4e5
     css: download
     search: [download]
   - file: upload
@@ -326,18 +326,18 @@ glyphs:
     css: upload
     search: [upload]
   - file: upload-to-cloud
-    code: 0xe045
+    code: 0xe711
     css: upload-cloud
     search: [upload, cloud]
 
 
   - file: reply
-    code: 0xe018
+    code: 0xe712
     css: reply
     search: [reply]
 
   - file: reply-to-all
-    code: 0xe019
+    code: 0xe713
     css: reply-all
     search: [reply]
 
@@ -352,32 +352,32 @@ glyphs:
     search: [quote]
 
   - file: code
-    code: 0xe05f
+    code: 0xe714
     css: code
     search: [code]
 
   - file: export
-    code: 0xe00c
+    code: 0xe715
     css: export
     search: [export, share]
 
   - file: write-new
-    code: 0x2703
+    code: 0x270e
     css: pencil
     search: [pencil, write, reply, edit]
 
   - file: feather
-    code: 0xe062
+    code: 0x2712
     css: feather
     search: [pen, write, reply, edit, feather]
 
   - file: print
-    code: 0xe017
+    code: 0xe716
     css: print
     search: [print]
 
   - file: retweet
-    code: 0xe01a
+    code: 0xe717
     css: retweet
     search: [retweet, twitter]
 
@@ -388,12 +388,12 @@ glyphs:
 
 
   - file: comment
-    code: 0xe008
+    code: 0xe718
     css: comment
     search: [comment, reply, write]
 
   - file: chat
-    code: 0xe007
+    code: 0xe720
     css: chat
     search: [chat, talk]
 
@@ -406,59 +406,60 @@ glyphs:
   - file: warning
     code: 0x26a0
     css: attention
-    search: [attention, warning]
+    search: [attention, warning, alert]
 
 
 
   - file: contact-card
-    code: 0xe00a
+    code: 0xe722
     css: vcard
     search: [contact, card, vcard]
 
   - file: address
-    code: 0xe002
+    code: 0xe723
     css: address
     search: [address]
 
   - file: location
-    code: 0xe011
+    code: 0xe724
     css: location
     search: [location, mark, marker]
 
   - file: map
-    code: 0xe012
+    code: 0xe727
     css: map
     search: [down]
 
   - file: direction
-    code: 0xe00b
+    code: 0x27a2
     css: direction
     search: [direction]
 
   - file: compass
-    code: 0xe009
+    code: 0xe728
     css: compass
     search: [compass]
 
 
 
   - file: trash
-    code: 0xe0da
+    code: 0xe729
     css: trash
     search: [trash, delete]
 
   - file: document
-    code: 0xe048
+    code: 0xe730
     css: doc
     search: [doc, article]
   - file: documents
-    code: 0xe049
+    code: 0xe736
     css: docs
     search: [doc, article]
   - file: landscape-documents
-    code: 0xe04a
+    code: 0xe737
     css: docs-landscape
     search: [doc, article]
+
   - file: text-document
     code: 0x1f4c4
     css: doc-text
@@ -474,14 +475,14 @@ glyphs:
     search: [folder]
 
   - file: archive
-    code: 0xe01e
+    code: 0xe738
     css: archive
     search: [archive]
 
 
 
   - file: rss
-    code: 0xe01b
+    code: 0xe73a
     css: rss
     search: [rss]
 
@@ -496,12 +497,12 @@ glyphs:
     search: [settings, cog, gear]
 
   - file: share
-    code: 0xe01c
+    code: 0xe73c
     css: share
     search: [share]
 
   - file: shopping-bag
-    code: 0xe000
+    code: 0xe73d
     css: basket
     search: [basket, shopping, cart]
 
@@ -525,7 +526,7 @@ glyphs:
     css: volume-up
     search: [volume, sound]
   - file: volume
-    code: 0xe057
+    code: 0xe742
     css: volume
     search: [volume, sound]
 
@@ -564,33 +565,33 @@ glyphs:
 
 
   - file: full-screen
-    code: 0xe063
+    code: 0xe744
     css: resize-full
     search: [resize, fullscreen]
   - file: small-screen
-    code: 0xe064
+    code: 0xe746
     css: resize-small
     search: [resize]
 
 
   - file: popup
-    code: 0xe060
+    code: 0xe74c
     css: popup
     search: [popup, window]
 
   - file: publish
-    code: 0xe061
+    code: 0xe74d
     css: publish
     search: [publish]
 
   - file: browser
-    code: 0xe059
+    code: 0xe74e
     css: window
     search: [window]
 
 
   - file: select-box-arrow
-    code: 0xe058
+    code: 0xe74f
     css: arrow-combo
     search: [arrow, dropdown, combobox]
 
@@ -598,38 +599,38 @@ glyphs:
 
     # Arrows
   - file: down-circle-arrow
-    code: 0xe020
+    code: 0xe758
     css: down-circle2
     search: [arrow, down, download]
   - file: left-circle-arrow
-    code: 0xe021
+    code: 0xe759
     css: left-circle2
     search: [arrow, left]
   - file: right-circle-arrow
-    code: 0xe022
+    code: 0xe75a
     css: right-circle2
     search: [arrow, right]
   - file: up-circle-arrow
-    code: 0xe023
+    code: 0xe75b
     css: up-circle2
     search: [arrow, up, upload]
 
 
     # Arrows
   - file: open-arrow-down
-    code: 0xe024
+    code: 0xe75c
     css: down-open
     search: [arrow, down]
   - file: open-arrow-left
-    code: 0xe025
+    code: 0xe75d
     css: left-open
     search: [arrow, left]
   - file: open-arrow-right
-    code: 0xe026
+    code: 0xe75e
     css: right-open
     search: [arrow, right]
   - file: open-arrow-up
-    code: 0xe027
+    code: 0xe75f
     css: up-open
     search: [arrow, up]
 
@@ -770,19 +771,19 @@ glyphs:
 
     # Progress
   - file: charge-empty
-    code: 0xe030
+    code: 0xe768
     css: progress-0
     search: [progress, charge]
   - file: charge-one-third
-    code: 0xe031
+    code: 0xe769
     css: progress-1
     search: [progress, charge]
   - file: charge-two-thirds
-    code: 0xe032
+    code: 0xe76a
     css: progress-2
     search: [progress, charge]
   - file: charge-full
-    code: 0xe033
+    code: 0xe76b
     css: progress-3
     search: [progress, charge]
 
@@ -806,7 +807,7 @@ glyphs:
     search: [add, list]
 
   - file: broadcast
-    code: 0xe006
+    code: 0xe770
     css: signal
     search: [broadcast, wifi, signal]
 
@@ -824,7 +825,7 @@ glyphs:
     search: [battery]
 
   - file: back-in-time
-    code: 0xe040
+    code: 0xe771
     css: back-in-time
     search: [back, time]
 
@@ -841,7 +842,7 @@ glyphs:
     search: [mobile, iphone]
 
   - file: network
-    code: 0xe05e
+    code: 0xe776
     css: net
     search: [net]
 
@@ -851,18 +852,18 @@ glyphs:
     search: [cd, vinyl]
 
   - file: inbox
-    code: 0xe05b
+    code: 0xe777
     css: inbox
     search: [inbox]
 
   - file: install
-    code: 0xe05c
+    code: 0xe778
     css: install
     search: [install]
 
 
   - file: globe
-    code: 0xe065
+    code: 0x1d30d
     css: globe 
     search: [globe]
 
@@ -892,58 +893,58 @@ glyphs:
     search: [leaf]
 
   - file: lifebuoy
-    code: 0xe010
+    code: 0xe788
     css: lifebuoy
     search: [lifebuoy]
 
   - file: mouse-website
-    code: 0xe014
+    code: 0xe789
     css: mouse
     search: [mouse, website]
 
   - file: suitecase
-    code: 0xe05d
+    code: 0xe78a
     css: bag
     search: [bag]
 
 
   - file: dot
-    code: 0xe050
+    code: 0xe78b
     css: dot
     search: [dot]
   - file: dots-two
-    code: 0xe051
+    code: 0xe78c
     css: dot-2
     search: [dot, flickr]
   - file: dots-three
-    code: 0xe052
+    code: 0xe78d
     css: dot-3
     search: [dot]
 
 
   - file: google-circles
-    code: 0xe00d
+    code: 0xf310
     css: google-circles
     search: [google, circles]
 
 
   - file: creative-commons
-    code: 0xe183
+    code: 0xe7a5
     css: cc
     search: [creative, commons]
 
   - file: entypo-square
-    code: 0xe180
+    code: 0xf600
     css: logo-entypo
     search: [entypo]
 
   - file: sweden
-    code: 0xe181
+    code: 0xf601
     css: flag-sw
     search: [sweden]
 
   - file: db-signature
-    code: 0xe182
+    code: 0xf603
     css: logo-db
     search: [daniel, bruce]
 
