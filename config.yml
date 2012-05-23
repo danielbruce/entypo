@@ -108,159 +108,189 @@ glyphs:
 
   - file: music
     code: 0x266a
+    uid: 39e2e6682c28e1e3b5f49825a19717c4
     css: music
     search: [music, note, song]
 
   - file: song
     code: 0x1f3b5
+    uid: f2a036a85c0a6a46b0c9709a70e1bb70
     css: music-alt
     search: [song, music, sound]
 
 
   - file: classic-search
     code: 0x1f50d
+    uid: 7222571caa5c15f83dcfd447c58d68d9
     css: search
     search: [search, find]
 
   - file: search
     code: 0x1f50e
+    uid: c9b928dc82d7d77033644fcf59dca3b3
     css: search-alt
     search: [search, find]
 
 
   - file: email
     code: 0x2709
+    uid: e335adbc2d898c7d85d40c507796e7b4
     css: mail
     search: [mail, email]
 
 
   - file: heart
     code: 0x2665
+    uid: 0eabe5f8d71cc838484ff39436426d2d
     css: heart
     search: [heart]
   - file:  heart-outlined
     code: 0x2661
+    uid: d18071bbf8f0a8cec8d1f556c91c6af0
     css: heart-empty
     search: [heart]
 
 
   - file: star
     code: 0x2605
+    uid: 25b34dea4784f72c710454f32ff8fa2b
     css: star
     search: [star]
 
   - file: star-outlined
     code: 0x2606
+    uid: 0e3f1335f83cca67329b2c4bcb3aaec5
     css: star-empty
     search: [star]
 
 
   - file: contact-user
     code: 0x1f464
+    uid: bbd66ef66bb8fa9edde54d9a90b89150
     css: user
     search: [profile, contact, user]
 
   - file: contacts-users
     code: 0x1f465
+    uid: ecf8edb95c3f45eb433b4cce7ba9f740
     css: users
     search: [users, contacts, friends]
 
   - file: add-contact-add-user
     code: 0xe700
+    uid: 6274e0601f2feef7eced89146e708de0
     css: user-add
     search: [profile, contact, user, add]
 
 
   - file: movie
     code: 0x1f3ac
+    uid: 6341ebcbe1ed1f6777c1b9527ead368e
     css: video
     search: [movie, video, film]
 
   - file: image
     code: 0x1f304
+    uid: 3def559c3c39b8500882e02892b7daa8
     css: picture
     search: [image, picture, photo]
 
   - file: camera
     code: 0x1f4f7
+    uid: 85017ab6ca074831a8de771b40e9640c
     css: camera
     search: [camera, photo]
 
 
   - file: image-list
     code: 0x268f
+    uid: 5e9f01871d44e56b45ecbfd00f4dbc3a
     css: th
     search: [image, list, thumbnails]
 
   - file: list
     code: 0x2630
+    uid: 2cfb3f2b46b34a1790aec0aa846297b6
     css: th-list
     search: [list]
 
 
   - file: check-ok
     code: 0x2713
+    uid: 14017aae737730faeda4a6fd8fb3a5f0
     css: ok
     search: [ok, yes, check, mark]
 
   - file: check-not-ok
     code: 0x2715
+    uid: c709da589c923ba3c2ad48d9fc563e93
     css: cancel
     search: [close, cancel, reject]
 
   - file: close-circle
     code: 0x2716
+    uid: c759418c008e9562944080fee617fc76
     css: cancel-circle
     search: [close, cancel, reject]
 
   - file: plus
     code: 0x2b
+    uid: 70370693ada58ef0a60fa0984fe8d52a
     css: plus
     search: [plus]
 
   - file: plus-circle
     code: 0x2795
+    uid: a66cdc7278e6b33b8bd44a141f5e1a8d
     css: plus-circle
     search: [plus]
 
   - file: minus
     code: 0x2d
+    uid: 1256e3054823e304d7e452a589cf8bb8
     css: minus
     search: [minus]
 
   - file: minus-circle
     code: 0x2796
+    uid: 3eb93689881ad0804f87052a53edc2b6
     css: minus-circle
     search: [minus]
 
   - file: help
     code: 0x2753
+    uid: 3a230e539a4f3b904debd04c6c155034
     css: help
     search: [help, question]
 
   - file: help-circle
     code: 0xe704
+    uid: de9a631a7d18106aea1c89ba51b1990a
     css: help-circle
     search: [help, question]
 
   - file: info
     code: 0x2139
+    uid: 63b86fedd4ee9ad2105f54f4888e7088
     css: info
     search: [info]
 
   - file: info-circle
     code: 0xe705
+    uid: 7e4164950ffa4990961958b2d6318658
     css: info-circle
     search: [info]
 
 
   - file: back
     code: 0xe706
+    uid: 3ba4275937db277075fc47d6b5a69a2e
     css: back
     search: [back, return]
 
   - file: back-alt
     code: 0xe707
+    uid: 5308d824454af8ec7835786e272361a9
     css: back-alt
     search: [back, return]
 
@@ -268,143 +298,171 @@ glyphs:
 
   - file: home
     code: 0x2302
+    uid: 513ac180ff85bd275f2b736720cbbf5e
     css: home
     search: [home]
 
   - file: link
     code: 0x1f517
+    uid: 815503841e980c848f55e0271deacead
     css: link
     search: [link, url]
 
   - file: attach
     code: 0x1f4ce
+    uid: 44b9e75612c5fad5505edd70d071651f
     css: attach
     search: [attach, clip]
 
   - file: lock
     code: 0x1f512
+    uid: 1a7104205ea96e6f40ac716d0ca72f21
     css: lock
     search: [lock]
 
   - file: unlocked
     code: 0x1f513
+    uid: e81fc3a0d39ace6ee735d7b24eedd56d
     css: lock-open
     search: [lock, unlock]
 
   - file: view-eye
     code: 0xe70a
+    uid: 25fc99a30fecc4021fdcae5fff5ba9ac
     css: eye
     search: [eye, subscribe]
 
   - file: offer-price-tag
     code: 0xe70c
+    uid: 875ab0f6d417223f6ec76ff7f0a4baed
     css: tag
     search: [tag, price, offer]
 
   - file: bookmark
     code: 0x1f516
+    uid: 23912d5623126e14b7b137c3ba557168
     css: bookmark
     search: [bookmark]
 
   - file: flag
     code: 0x2691
+    uid: 1d2a6c3d9236b88b0f185c7c4530fa52
     css: flag
     search: [flag]
 
   - file: like-thumbs-up
     code: 0x1f44d
+    uid: 7ad4d2306ebda8452e5e3eff3cd8241c
     css: thumbs-up
     search: [thumbs, up, like, vote]
 
 
   - file: download
     code: 0x1f4e5
+    uid: b08cfe8039de2ce815686aced2caef06
     css: download
     search: [download]
   - file: upload
     code: 0x1f4e4
+    uid: 44199a54057e6e264fde61a49b034171
     css: upload
     search: [upload]
   - file: upload-to-cloud
     code: 0xe711
+    uid: 5d595124cecf472869d1cdc020da0ccc
     css: upload-cloud
     search: [upload, cloud]
 
 
   - file: reply
     code: 0xe712
+    uid: b6fc2f656ef87275889422e19550680a
     css: reply
     search: [reply]
 
   - file: reply-to-all
     code: 0xe713
+    uid: 1a4b54ba5618e5364fc47a3d26c1cf59
     css: reply-all
     search: [reply]
 
   - file: forward
     code: 0x27a6
+    uid: ec347024a3640deebeeab53fd0d5ad03
     css: forward
     search: [forward]
 
   - file: quote
     code: 0x275e
+    uid: c3e5dafba1739ef33cc574c7484febf7
     css: quote-right
     search: [quote]
 
   - file: code
     code: 0xe714
+    uid: b6f32db98a3de777f5ae3005191b1831
     css: code
     search: [code]
 
   - file: export
     code: 0xe715
+    uid: 390d6d13398cbf8c8c3c5493f7d34088
     css: export
     search: [export, share]
 
   - file: write-new
     code: 0x270e
+    uid: c77fd2fd065b5fe16d6f2b41e190b266
     css: pencil
     search: [pencil, write, reply, edit]
 
   - file: feather
     code: 0x2712
+    uid: bcb868184ff9c35f8aef564f50c0d649
     css: feather
     search: [pen, write, reply, edit, feather]
 
   - file: print
     code: 0xe716
+    uid: 28f124a10127a47b9d9472699193d75a
     css: print
     search: [print]
 
   - file: retweet
     code: 0xe717
+    uid: 216891b0093d4dbef19877d5b00d1b16
     css: retweet
     search: [retweet, twitter]
 
   - file: keyboard
     code: 0x2328
+    uid: 005a38f6af74b31aeb817fedb09d2175
     css: keyboard
     search: [keyboard]
 
 
   - file: comment
     code: 0xe718
+    uid: 16890362e811b4cb8de36282b071fe30
     css: comment
     search: [comment, reply, write]
 
   - file: chat
     code: 0xe720
+    uid: 2c0b53280f82068f6bab4e2200025d9f
     css: chat
     search: [chat, talk]
 
 
   - file: alert
     code: 0x1f514
+    uid: 2c5335c6e56b876139d7a58ab2f4b2fe
     css: bell
     search: [alert, bell, jingle]
 
   - file: warning
     code: 0x26a0
+    uid: 97902f87200ce74d181044df02a0458d
     css: attention
     search: [attention, warning, alert]
 
@@ -412,31 +470,37 @@ glyphs:
 
   - file: contact-card
     code: 0xe722
+    uid: 457c8e2b305e7af74c1be4f07a01ca92
     css: vcard
     search: [contact, card, vcard]
 
   - file: address
     code: 0xe723
+    uid: 540b6a4262be769515c79700618b4aea
     css: address
     search: [address]
 
   - file: location
     code: 0xe724
+    uid: a42b598e4298f3319b25a2702a02e7ff
     css: location
     search: [location, mark, marker]
 
   - file: map
     code: 0xe727
+    uid: 64f5a50cf7ac972a56a9a511acb5d28e
     css: map
     search: [down]
 
   - file: direction
     code: 0x27a2
+    uid: f8513213799b244e66b2836aeee88531
     css: direction
     search: [direction]
 
   - file: compass
     code: 0xe728
+    uid: c117f17c0316ef71fb2a658c4c273002
     css: compass
     search: [compass]
 
@@ -444,38 +508,46 @@ glyphs:
 
   - file: trash
     code: 0xe729
+    uid: 9bdc80f58999873c5a8079ad2d7f4143
     css: trash
     search: [trash, delete]
 
   - file: document
     code: 0xe730
+    uid: 49bd3e825b8267f976f6d1ad391e2f4d
     css: doc
     search: [doc, article]
   - file: documents
     code: 0xe736
+    uid: 922ab2cb66943a83de969990289ef1dc
     css: docs
     search: [doc, article]
   - file: landscape-documents
     code: 0xe737
+    uid: 8782cc70184b33096ae927590d1fadc4
     css: docs-landscape
     search: [doc, article]
 
   - file: text-document
     code: 0x1f4c4
+    uid: 1189604bf305b6b03a74685ce60e6632
     css: doc-text
     search: [doc, text, article]
   - file: book
     code: 0x1f4d6
+    uid: 51727ca007aa35ceabcaffc28934faee
     css: book-open
     search: [book, doc]
 
   - file: folder
     code: 0x1f4c1
+    uid: 0ccb084ddeeae372673793ed0b45bb4a
     css: folder
     search: [folder]
 
   - file: archive
     code: 0xe738
+    uid: 96ea1be71f597a5bdfc8f791ada4f651
     css: archive
     search: [archive]
 
@@ -483,31 +555,37 @@ glyphs:
 
   - file: rss
     code: 0xe73a
+    uid: 3e617d8049807e128c80d0344ba09e37
     css: rss
     search: [rss]
 
   - file: phone
     code: 0x1f4de
+    uid: 5854855e963044f93b15738a5bb27a29
     css: phone
     search: [phone, telephone, call]
 
   - file: settings
     code: 0x2699
+    uid: bc64550dd022ce21604f97309b346cea
     css: cog
     search: [settings, cog, gear]
 
   - file: share
     code: 0xe73c
+    uid: 91426c82d94428a33353e495418435e3
     css: share
     search: [share]
 
   - file: shopping-bag
     code: 0xe73d
+    uid: 2c71ee1c65e1992ba32d5ffc5ee7f337
     css: basket
     search: [basket, shopping, cart]
 
   - file: calendar
     code: 0x1f4c5
+    uid: 413717f5ea649e8d8b93938be277264a
     css: calendar
     search: [calendar, date]
 
@@ -515,18 +593,22 @@ glyphs:
     # Sound
   - file: mic
     code: 0x1f3a4
+    uid: 1e099a876c8a6a83f10c9bafa9886614
     css: mic
     search: [mic]
   - file: mute
     code: 0x1f507
+    uid: 2f750a9be253e8e451209574336e7020
     css: volume-off
     search: [volume, sound, mute]
   - file: sound
     code: 0x1f50a
+    uid: ef51920c7a9bed4d87f53709db115e34
     css: volume-up
     search: [volume, sound]
   - file: volume
     code: 0xe742
+    uid: edd88296295d95d6510e66d9a6bbd6c3
     css: volume
     search: [volume, sound]
 
@@ -534,64 +616,76 @@ glyphs:
 
   - file: time-clock
     code: 0x1f554
+    uid: 8663320a860b00f26e94d3d15c9ba99a
     css: clock
     search: [clock, time]
 
   - file: time-glass
     code: 0x23f3
+    uid: 7f6916533c0842b6cec699fd773693d3
     css: hourglass
     search: [clock, hourglass, busy, wait]
 
 
   - file: light-bulb
     code: 0x1f4a1
+    uid: 4b20e1deee87faf4c3fab735fbd4bc1a
     css: lamp
     search: [idea, lamp, light]
 
   - file: light-down
     code: 0x1f505
+    uid: 2d14369ed7f129e779eaa30195368218
     css: light-down
     search: [light, dim, bright]
   - file: light-up
     code: 0x1f506
+    uid: f8e120c48c070f8afd2d072651b4fb9f
     css: light-up
     search: [light, dim, bright]
 
 
   - file: block
     code: 0x1f6ab
+    uid: 29e7f6072d5935d7818204d9b088508b
     css: block
     search: [block, deny]
 
 
   - file: full-screen
     code: 0xe744
+    uid: 3a3f65b92c9b2fcbb3a8dcd0d42ee806
     css: resize-full
     search: [resize, fullscreen]
   - file: small-screen
     code: 0xe746
+    uid: 108c8ac13badc00ce66da014436e6eb1
     css: resize-small
     search: [resize]
 
 
   - file: popup
     code: 0xe74c
+    uid: 9248ce8062fb4707a6919bfe9ac1af8e
     css: popup
     search: [popup, window]
 
   - file: publish
     code: 0xe74d
+    uid: 77bcf90f0c68635bab5abfb4ed736696
     css: publish
     search: [publish]
 
   - file: browser
     code: 0xe74e
+    uid: 744a71fe4b5ab7c4f4b7cd598e9bf75a
     css: window
     search: [window]
 
 
   - file: select-box-arrow
     code: 0xe74f
+    uid: 0a3192de65a73ca1501b073ad601f87d
     css: arrow-combo
     search: [arrow, dropdown, combobox]
 
@@ -600,18 +694,22 @@ glyphs:
     # Arrows
   - file: down-circle-arrow
     code: 0xe758
+    uid: 40ef3542646bed70cb63f1290c9d98c9
     css: down-circle2
     search: [arrow, down, download]
   - file: left-circle-arrow
     code: 0xe759
+    uid: 0db0310883e0bdacfd1bb2d394238e8a
     css: left-circle2
     search: [arrow, left]
   - file: right-circle-arrow
     code: 0xe75a
+    uid: 52725ff4d4042964bd3a60609bf3695b
     css: right-circle2
     search: [arrow, right]
   - file: up-circle-arrow
     code: 0xe75b
+    uid: 64691230b90991883f94c6dfb2afc90a
     css: up-circle2
     search: [arrow, up, upload]
 
@@ -619,18 +717,22 @@ glyphs:
     # Arrows
   - file: open-arrow-down
     code: 0xe75c
+    uid: 8704cd847a47b64265b8bb110c8b4d62
     css: down-open
     search: [arrow, down]
   - file: open-arrow-left
     code: 0xe75d
+    uid: c311c48d79488965b0fab7f9cd12b6b5
     css: left-open
     search: [arrow, left]
   - file: open-arrow-right
     code: 0xe75e
+    uid: 749e7d90a9182938180f1d2d8c33584e
     css: right-open
     search: [arrow, right]
   - file: open-arrow-up
     code: 0xe75f
+    uid: 9c7ff134960bb5a82404e4aeaab366d9
     css: up-open
     search: [arrow, up]
 
@@ -638,18 +740,22 @@ glyphs:
     # Arrows
   - file: thin-arrow-down
     code: 0x2b07
+    uid: d5098cb09be5827a2911dbab5af49ad2
     css: down-thin
     search: [arrow, down]
   - file: thin-arrow-left
     code: 0x2b05
+    uid: 6acd5cf005d48f96787350e72bd45688
     css: left-thin
     search: [arrow, left]
   - file: thin-arrow-right
     code: 0x27a1
+    uid: 9e67bfab0143d9511f8eef6897caeb88
     css: right-thin
     search: [arrow, right]
   - file: thin-arrow-up
     code: 0x2b06
+    uid: 43c4064ec1260d0e55c37e0467c75cbb
     css: up-thin
     search: [arrow, up]
 
@@ -657,18 +763,22 @@ glyphs:
     # Arrows
   - file: direction-arrow-down
     code: 0x25be
+    uid: 7e89c12b577c31bc91bfb61bb597f01f
     css: down-dir
     search: [arrow, down]
   - file: direction-arrow-left
     code: 0x25c2
+    uid: 9aeaf29161eb005a308bbd624d6e066a
     css: left-dir
     search: [arrow, left]
   - file: direction-arrow-right
     code: 0x25b8
+    uid: ff9a85aa20950dcc0615a2707a2b3f8e
     css: right-dir
     search: [arrow, right]
   - file: direction-arrow-up
     code: 0x25b4
+    uid: 401b644723fb2f20b0df30cce7745c18
     css: up-dir
     search: [arrow, up]
 
@@ -676,18 +786,22 @@ glyphs:
     # Arrows
   - file: bold-down-arrow
     code: 0xe4b0
+    uid: 78944e4652d6f9b8b506eaef331308cd
     css: down-bold
     search: [arrow, down]
   - file: bold-left-arrow
     code: 0xe4ad
+    uid: 0222089fb4194cc714dcc1ffd2525c11
     css: left-bold
     search: [arrow, left]
   - file: bold-right-arrow
     code: 0xe4ae
+    uid: 1a90b06af8614b12d8c8a5b90cc19ab3
     css: right-bold
     search: [arrow, right]
   - file: bold-up-arrow
     code: 0xe4af
+    uid: 8c8f768607b8fc4c92c0f85b488e87e8
     css: up-bold
     search: [arrow, up]
 
@@ -695,18 +809,22 @@ glyphs:
     # Arrows
   - file: down-arrow
     code: 0x2193
+    uid: a30a32d49f80bb534c062ae1743ef433
     css: down
     search: [arrow, down]
   - file: left-arrow
     code: 0x2190
+    uid: 8d8f4722d16e95290858eaf294d9d830
     css: left
     search: [arrow, left]
   - file: right-arrow
     code: 0x2192
+    uid: ef3eda51383ce050517892df3fc05ffc
     css: right
     search: [arrow, right]
   - file: up-arrow
     code: 0x2191
+    uid: dbc97808cba7d0c135c7054e7a85fb86
     css: up
     search: [arrow, up]
 
@@ -714,21 +832,25 @@ glyphs:
 
   - file: reload-CCW
     code: 0x27f2
+    uid: 465bb89b6f204234e5787c326b4ae54c
     css: ccw
     search: [reload, undo]
 
   - file: reload-CW
     code: 0x27f3
+    uid: bb46b15cb78cc4cc05d3d715d522ac4d
     css: cw
     search: [reload, redo, repeat]
 
   - file: level-down
     code: 0x21b3
+    uid: fa0118a65fc8dee739469f6901bbd189
     css: level-down
     search: [down]
 
   - file: shuffle
     code: 0x1f500
+    uid: 3d349daaea304032a7669b4f24931b6c
     css: shuffle
     search: [shuffle, random]
 
@@ -737,34 +859,42 @@ glyphs:
     # Player
   - file: play
     code: 0x25b6
+    uid: cb13afd4722a849d48056540bb74c47e
     css: play
     search: [play, player]
   - file: stop
     code: 0x25aa
+    uid: 48f2e18872fe74d4579a4c8a1527fc1e
     css: stop
     search: [stop, player]
   - file: paus
     code: 0x2389
+    uid: d8d378d0ce413f231dfa37592e39c227
     css: pause
     search: [pause, player]
   - file: record
     code: 0x26ab
+    uid: e188c02f740feff7e2d2bce1950b75fa
     css: record
     search: [record, player]
   - file: jump-to-end
     code: 0x23ed
+    uid: 0afbb00323696f49e9c47f4d9fe6390b
     css: to-end
     search: [right, player]
   - file: jump-to-start
     code: 0x23ee
+    uid: ceefe7653a4f6edaacce9e7f196cec5a
     css: to-start
     search: [left, player]
   - file: fast-forward
     code: 0x23e9
+    uid: 18f7c393e3532e40edd45607c9d99988
     css: fast-fw
     search: [right, player]
   - file: fast-backward
     code: 0x23ea
+    uid: 85806fd8ab907f45d34f976354a0df23
     css: fast-bw
     search: [left, player]
 
@@ -772,18 +902,22 @@ glyphs:
     # Progress
   - file: charge-empty
     code: 0xe768
+    uid: be998d5ee625a58912ae630f34cc8419
     css: progress-0
     search: [progress, charge]
   - file: charge-one-third
     code: 0xe769
+    uid: 054519608bca087aa306252471dda9c4
     css: progress-1
     search: [progress, charge]
   - file: charge-two-thirds
     code: 0xe76a
+    uid: 3e49435dd1950a0b7543e13256c89e52
     css: progress-2
     search: [progress, charge]
   - file: charge-full
     code: 0xe76b
+    uid: d924bc68683f68ecf5e09e49731fd59a
     css: progress-3
     search: [progress, charge]
 
@@ -791,11 +925,13 @@ glyphs:
 
   - file: center-crosshair
     code: 0x1f3af
+    uid: 3eadc3e443cf1c7e17f1b44d21254c00
     css: target
     search: [target]
 
   - file: palette
     code: 0x1f3a8
+    uid: 80451d627470ea7f977a263fdb771d7b
     css: palette
     search: [palette]
 
@@ -803,11 +939,13 @@ glyphs:
 
   - file: add-to-list
     code: 0xe003
+    uid: 97bd5542ed3e143d2ee9b60e14487615
     css: list-add
     search: [add, list]
 
   - file: broadcast
     code: 0xe770
+    uid: 84a7262985600b683bbab0da9298776d
     css: signal
     search: [broadcast, wifi, signal]
 
@@ -815,17 +953,20 @@ glyphs:
 
   - file: top-list
     code: 0x1f3c6
+    uid: 978aa8facd816df874039e139cb0cdde
     css: top-list
     search: [top, trophy]
 
 
   - file: battery
     code: 0x1f50b
+    uid: a51290161c48d96d7f2e2151a4cbcde1
     css: battery
     search: [battery]
 
   - file: back-in-time
     code: 0xe771
+    uid: 89eb512cb82a1c3fe83cb16134f9876c
     css: back-in-time
     search: [back, time]
 
@@ -833,118 +974,141 @@ glyphs:
 
   - file: tv-screen
     code: 0x1f4bb
+    uid: b7a336095aa4535c3689cb557edf23db
     css: monitor
     search: [tv, screen, monitor]
 
   - file: mobile
     code: 0x1f4f1
+    uid: 767fede84586366cd7d6c835be745454
     css: mobile
     search: [mobile, iphone]
 
   - file: network
     code: 0xe776
+    uid: 414fe97e4af5215a06d29be0f2cecdf5
     css: net
     search: [net]
 
   - file: vinyl-record
     code: 0x1f4bf
+    uid: 16f88519423df34fc5c48be7ded81b8f
     css: cd
     search: [cd, vinyl]
 
   - file: inbox
     code: 0xe777
+    uid: b32d88adf7cd6bfa8d0e177dfa642a4d
     css: inbox
     search: [inbox]
 
   - file: install
     code: 0xe778
+    uid: d83b7429002f7b0b206c8d550034212b
     css: install
     search: [install]
 
 
   - file: globe
     code: 0x1d30d
+    uid: 6a12c2b74456ea21cc984e11dec227a1
     css: globe 
     search: [globe]
 
   - file: cloud
     code: 0x2601
+    uid: 114fed43140e2b5ce42c48b95c19375b
     css: cloud
     search: [cloud]
 
   - file: flash
     code: 0x26a1
+    uid: 98c63f6b98c543b52d4c43bcd486d28f
     css: flash
     search: [flash, bolt]
 
   - file: sleep
     code: 0x263d
+    uid: 0d03db7afd4857accf1821efdc8ea72b
     css: moon
     search: [moon, sleep]
 
   - file: flight
     code: 0x2708
+    uid: 6e8aea8fff9525dfc5149f0c03669091
     css: flight
     search: [flight, plane, airplane]
 
   - file: leaf
     code: 0x1f342
+    uid: 41d534223ef447a01af3e2f629ec70eb
     css: leaf
     search: [leaf]
 
   - file: lifebuoy
     code: 0xe788
+    uid: 2f9f67ee4354feef8c1f51e03bac6ef3
     css: lifebuoy
     search: [lifebuoy]
 
   - file: mouse-website
     code: 0xe789
+    uid: 97c6901d8db077614e77b089d4eedac8
     css: mouse
     search: [mouse, website]
 
   - file: suitecase
     code: 0xe78a
+    uid: 9ea7cce5e08e5ac2c225fabf2e6dc353
     css: bag
     search: [bag]
 
 
   - file: dot
     code: 0xe78b
+    uid: d2c6b59d9a239140cb76be0627480855
     css: dot
     search: [dot]
   - file: dots-two
     code: 0xe78c
+    uid: 13b11ab72c6ae9c97ee12428e17f3a4e
     css: dot-2
     search: [dot, flickr]
   - file: dots-three
     code: 0xe78d
+    uid: d10920db2e79c997c5e783279291970c
     css: dot-3
     search: [dot]
 
 
   - file: google-circles
     code: 0xf310
+    uid: ea1225fead573e185817d60729569b44
     css: google-circles
     search: [google, circles]
 
 
   - file: creative-commons
     code: 0xe7a5
+    uid: 4a413ef43c364dafa42766e74c31bbca
     css: cc
     search: [creative, commons]
 
   - file: entypo-square
     code: 0xf600
+    uid: e9ede58f5f90bbc3e52bf4bf53da71c0
     css: logo-entypo
     search: [entypo]
 
   - file: sweden
     code: 0xf601
+    uid: c22c5fa36d200793ad39b984fb5c8610
     css: flag-sw
     search: [sweden]
 
   - file: db-signature
     code: 0xf603
+    uid: ea16996158db7b9fedf060a4f44b27ee
     css: logo-db
     search: [daniel, bruce]
 
