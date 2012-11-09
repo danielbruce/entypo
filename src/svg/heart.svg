@@ -1,11 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="1000px" height="1000px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
-<g>
-	<path d="M859.945,208.602c-83.594-76.719-219.109-76.719-302.711,0l-56.766,52.094l-56.773-52.094
-		c-83.586-76.719-219.102-76.719-302.695,0c-94.047,86.305-94.047,226.234,0,312.539l359.469,329.922l359.477-329.922
-		C953.984,434.836,953.984,294.906,859.945,208.602z"/>
-</g>
+<svg height="1000px" width="860px" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <path d="M790 206c46.667 42.667 70 94.667 70 156c0 61.333 -23.333 114 -70 158c0 0 -360 330 -360 330c0 0 -360 -330 -360 -330c-46.667 -44 -70 -96.667 -70 -158c0 -61.333 23.333 -113.333 70 -156c41.333 -38.667 91.667 -58 151 -58c59.333 0 110.333 19.333 153 58c0 0 56 52 56 52c0 0 58 -52 58 -52c41.333 -38.667 91.333 -58 150 -58c58.667 0 109.333 19.333 152 58c0 0 0 0 0 0" />
+  </g>
 </svg>
