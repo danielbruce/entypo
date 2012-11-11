@@ -433,10 +433,9 @@ glyphs:
     uid: 2c5335c6e56b876139d7a58ab2f4b2fe
     search: [alert, bell, jingle]
 
-  - file: warning
+  - css: attention
     code: 0x26a0
     uid: 97902f87200ce74d181044df02a0458d
-    css: attention
     search: [attention, warning, alert]
 
   - css: alert
@@ -783,25 +782,21 @@ glyphs:
 
 
     # Arrows
-  - file: direction-arrow-down
+  - css: down-dir
     code: 0x25be
     uid: 7e89c12b577c31bc91bfb61bb597f01f
-    css: down-dir
     search: [arrow, down]
-  - file: direction-arrow-left
+  - css: left-dir
     code: 0x25c2
     uid: 9aeaf29161eb005a308bbd624d6e066a
-    css: left-dir
     search: [arrow, left]
-  - file: direction-arrow-right
+  - css: right-dir
     code: 0x25b8
     uid: ff9a85aa20950dcc0615a2707a2b3f8e
-    css: right-dir
     search: [arrow, right]
-  - file: direction-arrow-up
+  - css: up-dir
     code: 0x25b4
     uid: 401b644723fb2f20b0df30cce7745c18
-    css: up-dir
     search: [arrow, up]
 
 
@@ -848,7 +843,7 @@ glyphs:
   - css: ccw
     code: 0x27f2
     uid: 465bb89b6f204234e5787c326b4ae54c
-    search: [reload, undo]
+    search: [reload, undo, arrow]
 
   - css: cw
     code: 0x27f3
