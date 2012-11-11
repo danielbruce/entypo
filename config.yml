@@ -309,7 +309,7 @@ glyphs:
   - css: lock-open
     code: 0x1f513
     uid: e81fc3a0d39ace6ee735d7b24eedd56d
-    search: [lock, unlock]
+    search: [lock, open, unlock]
 
   - code: 0xe70a
     uid: 25fc99a30fecc4021fdcae5fff5ba9ac
@@ -1217,7 +1217,7 @@ glyphs:
     code: 0xe755
     from: 0x1f4fd
     uid: 603d5ccab42d916e79d7c0fcdb56a614
-    search: [drive, disk]
+    search: [drive, disk, hdd]
 
   - css: bucket
     code: 0xe756
