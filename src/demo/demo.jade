@@ -20,6 +20,7 @@ html
         background-color #fff
         border-bottom 1px solid #ddd
         padding-top 10px
+        z-index 10
 
       .the-icons li
         font-size 14px
@@ -57,7 +58,9 @@ html
 
   body
     .container.header
-      h1 #{font.fullname} font icons demo
+      h1 #{font.fullname}
+        |  
+        small font demo
       label.switch
         input(type='checkbox', onclick='toggleCodes(this.checked)')
         | show codes
