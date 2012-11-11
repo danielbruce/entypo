@@ -1,0 +1,37 @@
+!!! 5
+html
+  head
+    //if lt IE 9
+      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+
+    meta(charset='UTF-8')
+
+    :stylus
+      @import "bootstrap"
+
+      .the-icons
+          list-style: none outside none;
+          margin-left: 0;
+
+      .the-icons li
+        font-size: 14px;
+        line-height: 24px;
+        height: 24px;
+
+    include demo.codes.jade
+
+  body
+    .container
+      .page-header
+        h1 #{font.fullname} font icons demo
+      .row
+        - var col_class = "span" + Math.ceil(12 / meta.columns)
+        - var chunk_size = Math.ceil(glyphs.length / meta.columns)
+        - for (var i = 0; i < meta.columns; i++)
+          div(class=col_class)
+            ul.the-icons
+              - var offset = i * chunk_size
+              - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
+                - var g = glyphs[offset + c]
+                - var css_class = meta.css_prefix + (g.css || g.file)
+                | <li><i class="#{css_class}"></i> #{css_class}</li>

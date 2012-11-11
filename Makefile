@@ -70,9 +70,7 @@ support:
 
 
 html:
-	CONFIG=$$(js-yaml --to-json ./config.yml) && \
-		jade --pretty --obj "$$CONFIG" --out ./font ./src/demo.jade
-	fontdemo.py -c ./config.yml ./src/css.mustache ./font/$(FONT_NAME).css
+	tpl-render.js --locals config.yml --input ./src/demo/demo.jade --output ./font/demo.html
 
 
 gh-pages:
