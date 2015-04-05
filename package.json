@@ -1,0 +1,28 @@
+{
+  "name": "entypo",
+  "version": "2.0.0",
+  "description": "411 carefully crafted premium pictograms by Daniel Bruce",
+  "main": "font/demo.html",
+  "style": "font/entypo.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielbruce/entypo.git"
+  },
+  "keywords": [
+    "entypo",
+    "icons",
+    "css",
+    "svg",
+    "font"
+  ],
+  "author": "Daniel Bruce <me@danielbruce.se> (http://www.danielbruce.se)",
+  "license": "SIL",
+  "bugs": {
+    "url": "https://github.com/danielbruce/entypo/issues"
+  },
+  "homepage": "http://www.entypo.com"
+}
