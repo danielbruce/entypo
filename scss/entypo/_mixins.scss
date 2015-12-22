@@ -1,0 +1,28 @@
+
+@mixin entypo-icon-base() {
+	font-family: $entypo-font-family;
+	font-style: normal;
+	font-size: $entypo-font-size-base;
+	display: inline-block;
+	width: $entypo-icon-width;
+	text-align: center;
+}
+
+@mixin entypo-icon($var) {
+	@include entypo-icon-base;
+	content: '#{$var}';
+}
+
+@mixin entypo-icon-before($var){
+	&:before {
+		@include entypo-icon($var);
+		margin-right: $entypo-before-margin;
+	}
+}
+
+@mixin entypo-icon-after($var){
+	&:after {
+		@include entypo-icon($var);
+		margin-left: $entypo-after-margin;
+	}
+}
