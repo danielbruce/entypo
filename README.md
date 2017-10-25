@@ -15,8 +15,7 @@ Artwork by Daniel Bruce:
 - [twitter](http://twitter.com/danielbruce_)
 - [dribble](http://dribbble.com/danielbruce)
 
-All icons are distributed under
-[CC BY-SA](http://creativecommons.org/licenses/by-sa/3.0/) licence.
+All icons are distributed under [CC BY-SA](http://creativecommons.org/licenses/by-sa/3.0/) licence.
 
 Font is distributed under
 [SIL](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL) licence.
